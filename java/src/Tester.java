@@ -8,12 +8,12 @@ public class Tester {
     public static void main(String[] args)
     {
         System.out.println("Hello world");
-        VideoImporter videoImporter = new VideoImporter();
+        PostImporter videoImporter = new PostImporter();
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter post ID: ");
         String postID = scan.next();
-        videoImporter.importVideo(postID);
+        videoImporter.importPost(postID);
 
     }
 }
