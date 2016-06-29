@@ -1,11 +1,4 @@
-/**
- * Created by Shakib on 6/25/2016.
- *
- * The purpose of this class is to retrieve files from a post and its post metadata stored on OSU's DALN website.
- * Each record in the DALN has a unique identifier, so the method will take this ID as input, find the file(s)
- * posted in that record (if any) along with post metadata, then store it in the working directory.
- */
-
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,6 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.ArrayList;
+
+/**
+ * Created by Shakib on 6/25/2016.
+ *
+ * The purpose of this class is to retrieve files from a post and its post metadata stored on OSU's DALN website.
+ * Each record in the DALN has a unique identifier, so the method will take this ID as input, find the file(s)
+ * posted in that record (if any) along with post metadata, then store it in the working directory.
+ */
 
 public class PostImporter
 {
@@ -73,10 +74,13 @@ public class PostImporter
             fileLinks.add(fileInfoTableRows.get(i).child(0).child(0).attr("abs:href"));
         }
 
+        /**Storing post metadata in a text file**/
+        File newFolder = new File("downloads/"+ postID);
+        newFolder.mkdir(); //create a new folder with the post ID
 
-        /**Storing post metadata in a text file **/
+        //Write the file
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("downloads/Post #"+postID + " Data.txt"), "utf-8")))
+                new FileOutputStream("downloads/"+postID+ "/Post #"+postID + " Data.txt"), "utf-8")))
         {
             writer.write("Link: " + website
                         +"\r\nTitle: " + titleData
@@ -97,14 +101,8 @@ public class PostImporter
             e.printStackTrace();
         }
 
-        /*System.out.println("Title: " + titleData);
-        System.out.println("Description: " + descriptionData);
-        System.out.println("Author: " + authorData);
-        System.out.println("Date: " + dateData);*/
-
         /**Download file(s) to working directory**/
         URL url = null;
-        FileSystem fs = FileSystems.getDefault();
         int i = 0;
         //Navigate to each file and download
         for(String link : fileLinks) {
@@ -116,15 +114,13 @@ public class PostImporter
                 e.printStackTrace();
             }
 
-            Path target = fs.getPath("downloads/"+fileNames.get(0)); //define location and name of video here
-            i++;
-
             //download with specified target and name
-            try (InputStream in = url.openStream()) {
-                Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
+            try {
+                FileUtils.copyURLToFile(url, new File("downloads/"+postID +"/"+fileNames.get(i)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            i++;
 
         }
     }

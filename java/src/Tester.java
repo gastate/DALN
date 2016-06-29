@@ -9,11 +9,17 @@ public class Tester {
     {
         System.out.println("Hello world");
         PostImporter videoImporter = new PostImporter();
+        FileUploader fileUploader = new FileUploader();
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter post ID: ");
-        String postID = scan.next();
-        videoImporter.importPost(postID);
+        System.out.println("Enter post ID to download: ");
+        String postID1 = scan.next();
+        videoImporter.importPost(postID1);
+
+        System.out.println("Enter post ID to upload files: ");
+        String postID2 = scan.next();
+        fileUploader.upload(postID2);
+
 
     }
 }
