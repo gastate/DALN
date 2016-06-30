@@ -26,6 +26,7 @@ public class PostImporter
         String website = "http://daln.osu.edu/handle/2374.DALN/" + postID;
         Document doc = null;
         try {
+            System.out.println("Connecting to " + website + "...");
             doc = Jsoup.connect(website).get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +75,7 @@ public class PostImporter
             fileLinks.add(fileInfoTableRows.get(i).child(0).child(0).attr("abs:href"));
         }
 
+        System.out.println("Downloading metadata and files to directory");
         /**Storing post metadata in a text file**/
         File newFolder = new File("downloads/"+ postID);
         newFolder.mkdir(); //create a new folder with the post ID
@@ -123,5 +125,6 @@ public class PostImporter
             i++;
 
         }
+        System.out.println("Post #"+postID+" downloaded to working directory.");
     }
 }
