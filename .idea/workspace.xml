@@ -2,19 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10809723-4f11-45be-aa6d-080d5bcb7f62" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/aws_java_sdk_1_11_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_databind.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_annotations_2_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/joda_time_2_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/java/src/Asset.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/java/src/DynamoDBClient.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/java/src/Post.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/downloads/4062/Post #4062 Data.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/downloads/4062/Why do I write.docx" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/production/java/VideoImporter.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/FileUploader.class" afterPath="$PROJECT_DIR$/production/java/FileUploader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/PostImporter.class" afterPath="$PROJECT_DIR$/production/java/PostImporter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/Tester.class" afterPath="$PROJECT_DIR$/production/java/Tester.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DALN.iml" afterPath="$PROJECT_DIR$/.idea/DALN.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/java.iml" afterPath="$PROJECT_DIR$/java/java.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/FileUploader.java" afterPath="$PROJECT_DIR$/java/src/FileUploader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/PostImporter.java" afterPath="$PROJECT_DIR$/java/src/PostImporter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/Tester.java" afterPath="$PROJECT_DIR$/java/src/Tester.java" />
@@ -42,11 +40,11 @@
       <file leaf-file-name="PostImporter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="77" column="71" selection-start-line="77" selection-start-column="71" selection-end-line="77" selection-end-column="71" />
+            <state relative-caret-position="382">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding>
-                <element signature="e#2846#2854#0" expanded="true" />
-                <element signature="e#2909#2917#0" expanded="true" />
+                <element signature="e#3229#3237#0" expanded="true" />
+                <element signature="e#3292#3300#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,8 +53,8 @@
       <file leaf-file-name="FileUploader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-234">
-              <caret line="136" column="70" selection-start-line="136" selection-start-column="70" selection-end-line="136" selection-end-column="70" />
+            <state relative-caret-position="528">
+              <caret line="190" column="29" selection-start-line="190" selection-start-column="29" selection-end-line="190" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -64,11 +62,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tester.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DynamoDBClient.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="625">
+              <caret line="72" column="107" selection-start-line="72" selection-start-column="107" selection-end-line="72" selection-end-column="107" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Post.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/Post.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Asset.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/Asset.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tester.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+            <state relative-caret-position="194">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -100,9 +132,13 @@
         <option value="$PROJECT_DIR$/src/daln/Tester.java" />
         <option value="$PROJECT_DIR$/java/src/VideoImporter.java" />
         <option value="C:/Program Files (x86)/Java/jdk1.7.0_25/jre/lib/rt.jar!/sun/org/mozilla/javascript/internal/Context.class" />
-        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
         <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
+        <option value="$PROJECT_DIR$/java/src/PostItem.java" />
         <option value="$PROJECT_DIR$/java/src/Tester.java" />
+        <option value="$PROJECT_DIR$/java/src/Post.java" />
+        <option value="$PROJECT_DIR$/java/src/Asset.java" />
+        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
+        <option value="$PROJECT_DIR$/java/src/DynamoDBClient.java" />
       </list>
     </option>
   </component>
@@ -222,6 +258,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DALN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DALN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="downloads" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -257,6 +307,9 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Shakib\Documents\Programming\IdeaProjects\DALN\lib" />
       <recent name="C:\Users\Shakib\Documents\Programming\IdeaProjects\DALN" />
@@ -708,12 +761,12 @@
       <option name="presentableId" value="Default" />
       <updated>1466847420662</updated>
       <workItem from="1466847422845" duration="2948000" />
-      <workItem from="1466891585186" duration="67285000" />
+      <workItem from="1466891585186" duration="98125000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70233000" />
+    <option name="totallyTimeSpent" value="101073000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -723,18 +776,19 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33747178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44582394" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844242" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25590128" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39954853" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -744,7 +798,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -760,7 +813,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -782,8 +835,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2846#2854#0" expanded="true" />
-            <element signature="e#2909#2917#0" expanded="true" />
+            <element signature="e#3229#3237#0" expanded="true" />
+            <element signature="e#3292#3300#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -823,32 +876,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
+    <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234">
-          <caret line="136" column="70" selection-start-line="136" selection-start-column="70" selection-end-line="136" selection-end-column="70" />
+        <state relative-caret-position="382">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3229#3237#0" expanded="true" />
+            <element signature="e#3292#3300#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
+    <entry file="jar://$PROJECT_DIR$/lib/aws-java-sdk-1.11.12.jar!/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBMapper.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="77" column="71" selection-start-line="77" selection-start-column="71" selection-end-line="77" selection-end-column="71" />
+        <state relative-caret-position="152">
+          <caret line="355" column="0" selection-start-line="355" selection-start-column="0" selection-end-line="355" selection-end-column="0" />
           <folding>
-            <element signature="e#2846#2854#0" expanded="true" />
-            <element signature="e#2909#2917#0" expanded="true" />
+            <element signature="e#16963#16964#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+        <state relative-caret-position="194">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/Asset.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/Post.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="190" column="29" selection-start-line="190" selection-start-column="29" selection-end-line="190" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="72" column="107" selection-start-line="72" selection-start-column="107" selection-end-line="72" selection-end-column="107" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -15,16 +15,19 @@ public class Tester {
 
         PostImporter videoImporter = new PostImporter();
         FileUploader fileUploader = new FileUploader();
+        DynamoDBClient client = new DynamoDBClient();
+
 
 
         System.out.println("Enter post ID to download: ");
         String postID1 = scan.next();
-        videoImporter.importPost(postID1);
+        //videoImporter.importPost(postID1);
 
         //System.out.println("Enter post ID to upload files: ");
         //String postID2 = scan.next();
         fileUploader.upload(postID1);
 
+       //client.insertPost(postID1);
 
     }
 }

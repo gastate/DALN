@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -37,6 +38,7 @@ import java.util.Scanner;
 public class FileUploader {
     public void upload(String postID) {
         System.out.println("You are uploading post #" + postID + ".");
+
         /**Extract metadata from text file**/
         File metadata = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
         Scanner readMetadata = null;
@@ -62,6 +64,8 @@ public class FileUploader {
         while (readMetadata.hasNextLine())
             fileNames.add(readMetadata.nextLine().trim());
 
+
+
         /**Connect to SproutVideo**/
         System.out.println("Connecting to SproutVideo...");
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -70,20 +74,21 @@ public class FileUploader {
 
         /**Connect to S3**/
         System.out.println("Connecting to S3...");
-        String keyName = "AKIAJJUCBKSEHQK2Q5JA";
-        String secretKeyName = "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";
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(keyName,secretKeyName);
-        AmazonS3 s3Client = new AmazonS3Client(awsCreds);
+        //access key and secret access key stored in credentials file on local machine
+        //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
+        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider("shakib"));
 
         /**Upload post folder and metadata to S3**/
         String bucketName = "daln";
         String folderName = postID;
 
         System.out.println("Creating post folder in S3");
+/*
         //data for folder
         ObjectMetadata folderMetadata = new ObjectMetadata();
         folderMetadata.setContentLength(0);
         InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
+
         //PutObjectRequest used for creating an object to be uploaded
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,
                 "Posts/"+folderName + "/", emptyContent, folderMetadata);
@@ -91,13 +96,13 @@ public class FileUploader {
         s3Client.putObject(putObjectRequest);
 
         System.out.println("Uploading post metadata");
+
         // upload metadata to folder and set it to public
         s3Client.putObject(new PutObjectRequest(bucketName, "Posts/"+postID+"/"+metadata.getName(), metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
-
         /**Iterate through each file contained in the post, then upload to the service based on its extension**/
-        for (String fileName : fileNames) {
+ /*       for (String fileName : fileNames) {
 
             if (fileName.contains(".mov") || fileName.contains(".mp4") || fileName.contains(".wav") || fileName.contains(".avi")) {
                 //upload to SproutVideo
@@ -137,6 +142,7 @@ public class FileUploader {
                     System.out.println("Uploading " + fileName + "...");
                     //upload file from working directory
                     File file = new File("downloads/"+postID+"/"+fileName);
+                    //store file in specified s3 folder
                     s3Client.putObject(new PutObjectRequest(bucketName, "Posts/"+postID+"/"+fileName, file)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
 
@@ -161,6 +167,33 @@ public class FileUploader {
 
                 System.out.println(fileName + " uploaded to S3.");
             }
-        }
+        }*/
+
+        DynamoDBClient client = new DynamoDBClient();
+
+        //Store the details of the post in a hashmap which will be passed on to the db client
+        HashMap<String, Object> postDetails = new HashMap<>();
+        postDetails.put("DalnId", postID);
+        postDetails.put("Description", description);
+        postDetails.put("Author", author);
+        postDetails.put("Title", title);
+        postDetails.put("UploadDate", date);
+
+        //the insert post method returns the post ID.
+        //It will be attributed to each of the assets that the post contains
+        String postUUID = client.insertPost(postDetails);
+
+        //Create a hashmap of the details of each file, which will be passed on to insert into the asset table in the db
+        HashMap<String, Object> assetDetails = new HashMap<>();
+        assetDetails.put("PostId", postUUID);
+        assetDetails.put("AssetList", fileNames);
+        //get asset types
+        //get asset locations
+        assetDetails.put("DalnId", postID);
+        client.insertAsset(assetDetails);
+
+
+
     }
+
 }

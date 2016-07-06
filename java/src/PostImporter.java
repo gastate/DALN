@@ -29,17 +29,27 @@ public class PostImporter
             System.out.println("Connecting to " + website + "...");
             doc = Jsoup.connect(website).get();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("The post you entered does not exist on the DALN website.");
+            System.exit(1);
         }
 
         /**There are two tables of information from the page that we need. The first table includes the title, author,
          * description, and date of the post. The second table includes the list of files that are contained within the post.
          */
-        Elements pageTables = doc.select("table");
+        Elements pageTables = null, postInfoTableRows = null;
+        Element postInfoBody = null;
+        try {
+            pageTables = doc.select("table");
 
-        /**Getting the post info**/
-        Element postInfoBody = pageTables.get(0).child(0); //first table of the page
-        Elements postInfoTableRows = postInfoBody.select("tr");
+            /**Getting the post info**/
+            postInfoBody = pageTables.get(0).child(0); //first table of the page
+            postInfoTableRows = postInfoBody.select("tr");
+        }
+        catch(IndexOutOfBoundsException e)
+        {
+            System.out.println("The post you entered does not exist on the DALN website.");
+            System.exit(1);
+        }
 
         String titleData = "None", descriptionData = "None", authorData = "None", dateData = "None";
         //Checks each row in the first table, determines its category, then extracts the contents of the category
@@ -76,6 +86,7 @@ public class PostImporter
         }
 
         System.out.println("Downloading metadata and files to directory");
+
         /**Storing post metadata in a text file**/
         File newFolder = new File("downloads/"+ postID);
         newFolder.mkdir(); //create a new folder with the post ID
@@ -84,6 +95,7 @@ public class PostImporter
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("downloads/"+postID+ "/Post #"+postID + " Data.txt"), "utf-8")))
         {
+            //list information about the post
             writer.write("Link: " + website
                         +"\r\nTitle: " + titleData
                         +"\r\nDescription: " + descriptionData
@@ -91,6 +103,7 @@ public class PostImporter
                         +"\r\nDate: " + dateData
                         +"\r\nFiles: " + numOfFiles + "\r\n");
 
+            //list every file name contained in the post
             for(String file : fileNames)
                 writer.write("      " +file + "\r\n");
 
