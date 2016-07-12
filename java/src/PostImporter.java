@@ -72,6 +72,8 @@ public class PostImporter
            }
         }
 
+        //HERE I SOMEHOW GET THE HIDDEN METADATA FOR EACH POST LIKE KEYWORDS, LANGUAGE ETC.
+
         /**Getting the file(s) info**/
         Element fileInfoBody = pageTables.get(1).child(0); //second table of the page
 

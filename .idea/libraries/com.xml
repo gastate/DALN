@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/com.soundcloud" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

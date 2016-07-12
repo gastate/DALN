@@ -1,17 +1,12 @@
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.*;
-import com.sun.xml.internal.ws.spi.db.PropertyAccessor;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,11 +17,11 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import com.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -43,15 +38,45 @@ import java.util.Scanner;
  * SproutVideo, while the rest are uploaded to S3.
  */
 public class FileUploader {
-    public FileUploader() {
 
+    private AmazonS3 s3Client;
+    private CloseableHttpClient httpClient;
+    private HttpPost uploadFile;
+    private HttpPost uploadSound;
+    private HttpGet getFile;
+    private HttpGet getSound;
+    private DynamoDBClient client;
+    private File metadata;
+
+    public FileUploader()
+    {
+        /**Connect to SproutVideo**/
+        System.out.println("Connecting to SproutVideo...");
+        httpClient = HttpClients.createDefault();
+        uploadFile = new HttpPost("https://api.sproutvideo.com/v1/videos");
+        getFile = new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=title");
+        uploadFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
+        getFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
+
+        /**Connect to Clyp**/
+        System.out.println("Connecting to Clyp");
+        uploadSound = new HttpPost("https://upload.clyp.it/upload");
+
+        /**Connect to S3**/
+        System.out.println("Connecting to S3...");
+        //access key and secret access key stored in credentials file on local machine
+        //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
+        s3Client = new AmazonS3Client(new ProfileCredentialsProvider("daln"));
+
+        /**Connect to DynamoDB**/
+        client = new DynamoDBClient();
     }
 
     public void upload(String postID) {
         System.out.println("You are uploading post #" + postID + ".");
 
         /**Extract metadata from text file**/
-        File metadata = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
+        metadata = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
         Scanner readMetadata = null;
         try {
             readMetadata = new Scanner(metadata); //Scanner object to read file
@@ -69,56 +94,20 @@ public class FileUploader {
         author = author.substring(author.indexOf(':') + 1).trim();
         String date = readMetadata.nextLine();
         date = date.substring(date.indexOf(':') + 1).trim();
-        String files = readMetadata.nextLine();
-        int numOfFiles = Integer.parseInt(files.substring(files.indexOf(':') + 1).trim());
+        readMetadata.nextLine(); //skips "Files" line
+
+        //HERE I SOMEHOW GET THE INFO FOR THE HIDDEN METADATA FOR EACH
+
         ArrayList<String> fileNames = new ArrayList<>();
+        ArrayList<String> fileTypes = new ArrayList<>();
+        ArrayList<String> fileLocations = new ArrayList<>();
         while (readMetadata.hasNextLine())
             fileNames.add(readMetadata.nextLine().trim());
-        ArrayList<String> fileTypes = new ArrayList<>();
-        for (String fileName : fileNames) {
+        for (String fileName : fileNames)
             fileTypes.add(checkFiletype(fileName));
-        }
-        ArrayList<String> fileLocations = new ArrayList<>();
 
-
-        /**Connect to SproutVideo**/
-        System.out.println("Connecting to SproutVideo...");
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost uploadFile = new HttpPost("https://api.sproutvideo.com/v1/videos");
-        HttpGet getFile = new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=title");
-        uploadFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
-        getFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
-
-        /**Connect to S3**/
-        System.out.println("Connecting to S3...");
-        //access key and secret access key stored in credentials file on local machine
-        //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
-        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider("daln"));
-
-        /**Upload post folder and metadata to S3**/
-        String bucketName = "daln";
-        String folderName = postID;
-
-        System.out.println("Creating post folder in S3");
-
-        //data for folder
-        ObjectMetadata folderMetadata = new ObjectMetadata();
-        folderMetadata.setContentLength(0);
-        InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-
-        //PutObjectRequest used for creating an object to be uploaded
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,
-                "Posts/" + folderName + "/", emptyContent, folderMetadata);
-        // send request to S3 to create folder
-        s3Client.putObject(putObjectRequest);
-
-        System.out.println("Uploading post metadata");
-
-        // upload metadata to folder and set it to public
-        s3Client.putObject(new PutObjectRequest(bucketName, "Posts/" + postID + "/" + metadata.getName(), metadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-
-        DynamoDBClient client = new DynamoDBClient();
+        //call method that will upload the folder and post metadata to S3
+        uploadPostFolder(postID);
 
         //Store the details of the post in a hashmap which will be passed on to the db client
         HashMap<String, Object> postDetails = new HashMap<>();
@@ -137,8 +126,8 @@ public class FileUploader {
         assetDetails.put("PostId", postUUID);
         assetDetails.put("AssetList", fileNames);
         assetDetails.put("FileType", fileTypes);
-        //get asset locations
         assetDetails.put("DalnId", postID);
+
         ArrayList<String> allAssetUUIDs = client.insertAsset(assetDetails);
 
         int i = 0;
@@ -146,14 +135,11 @@ public class FileUploader {
         for (String fileName : fileNames) {
 
             if (fileTypes.get(i).equals("Audio/Video")) {
-
                 //upload to SproutVideo
-
-                String fileNameNoExt = fileName.substring(0, fileName.lastIndexOf('.'));
 
                 //These are used for inputs of the SproutVideo upload
                 String fullTitle = allAssetUUIDs.get(i);
-                System.out.println("Uploading " + fileName + " as " + fullTitle + " to SproutVideo");
+                System.out.println("Uploading the video file " + fileName + " as " + fullTitle + " to SproutVideo");
 
                 // String fullTitle = title + " - " + fileNameNoExt;
 
@@ -163,7 +149,7 @@ public class FileUploader {
                         + "\nAuthor: " + author
                         + "\nOriginal Date Posted: " + date;
 
-                //SproutVideo API uploads accepts Multipart or Formdata as its format
+                //SproutVideo API uploads accept Multipart or Formdata as its format
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
                 //Inputs for the video submission
                 builder.addTextBody("title", fullTitle, ContentType.TEXT_PLAIN);
@@ -173,27 +159,60 @@ public class FileUploader {
                 HttpEntity multipart = builder.build();
                 uploadFile.setEntity(multipart);
 
-                CloseableHttpResponse response = null;
+                CloseableHttpResponse postResponse = null;
+                CloseableHttpResponse getResponse = null;
                 try {
-                    httpClient.execute(uploadFile);
-                    response = httpClient.execute(getFile);
+                    postResponse = httpClient.execute(uploadFile);
+                    getResponse = httpClient.execute(getFile);
+
 
                 } catch (IOException e) {
                     System.out.println(fileName + " could not be uploaded to SproutVideo.");
                 }
-                //HttpEntity responseEntity = response.getEntity();
 
-                fileLocations.add(getSpoutVideoLocation(response, fullTitle));
+                fileLocations.add(getSpoutVideoLocation(getResponse, fullTitle));
                 System.out.println(fileName + " uploaded to SproutVideo as " + fullTitle);
 
-            } else {
+            }
+            else if(fileTypes.get(i).equals("Audio"))
+            {
+                String fullTitle = allAssetUUIDs.get(i);
+                System.out.println("Uploading the audio file " + fileName + " as " + fullTitle + " to Clyp");
+
+                //Clyp API uploads accept Multipart
+                MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                //Inputs for the audio submission
+                builder.addTextBody("description", description, ContentType.TEXT_PLAIN);
+                builder.addBinaryBody("audioFile", new File("downloads/" + postID + "/" + fileName), ContentType.APPLICATION_OCTET_STREAM, fullTitle + ".mp3");
+                HttpEntity multipart = builder.build();
+                uploadSound.setEntity(multipart);
+
+                CloseableHttpResponse getClypResponse = null;
+                try {
+                    getClypResponse = httpClient.execute(uploadSound);
+                    String jsonString = EntityUtils.toString(getClypResponse.getEntity());
+                    JSONParser parser = new JSONParser();
+                    JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
+                    fileLocations.add(jsonObject.get("Mp3Url").toString());
+                    System.out.println(jsonObject.get("Mp3Url"));
+                    //System.out.println(soundURLObject.toString());
+
+                } catch (IOException e) {
+                    System.out.println(fileName + " could not be uploaded to Clyp.");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            else {
                 //upload all other files to S3
                 try {
                     System.out.println("Uploading " + fileName + "...");
                     //upload file from working directory
                     File file = new File("downloads/" + postID + "/" + fileName);
                     //store file in specified s3 folder
-                    s3Client.putObject(new PutObjectRequest(bucketName, "Posts/" + postID + "/" + fileName, file)
+                    s3Client.putObject(new PutObjectRequest("daln", "Posts/" + postID + "/" + fileName, file)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
                     fileLocations.add("https://s3-us-west-1.amazonaws.com/daln/Posts/" + postID + "/" + fileName);
 
@@ -215,8 +234,6 @@ public class FileUploader {
                             "such as not being able to access the network.");
                     System.out.println("Error Message: " + ace.getMessage());
                 }
-
-                fileLocations.add("some file location");
                 System.out.println(fileName + " uploaded to S3.");
             }
             i++;
@@ -225,8 +242,31 @@ public class FileUploader {
         client.setAssetLocations(fileLocations);
         client.updatePostsAndAssets();
     }
+    private void uploadPostFolder(String postID)
+    {
+        /**Upload post folder and metadata to S3**/
+        System.out.println("Creating post folder in S3");
 
-    public String getSpoutVideoLocation(HttpResponse response, String uploadedVideoTitle) {
+        //data for folder
+        ObjectMetadata folderMetadata = new ObjectMetadata();
+        folderMetadata.setContentLength(0);
+        InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
+
+        //PutObjectRequest used for creating an object to be uploaded
+        PutObjectRequest putObjectRequest = new PutObjectRequest("daln",
+                "Posts/" + postID + "/", emptyContent, folderMetadata);
+        // send request to S3 to create folder
+        s3Client.putObject(putObjectRequest);
+
+        System.out.println("Uploading post metadata");
+
+        // upload metadata to folder and set it to public
+        s3Client.putObject(new PutObjectRequest("daln", "Posts/" + postID + "/" + metadata.getName(), metadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
+    }
+
+    private String getSpoutVideoLocation(HttpResponse response, String uploadedVideoTitle) {
         String videoLocation = "";
         try {
             String jsonString = EntityUtils.toString(response.getEntity());
@@ -242,15 +282,13 @@ public class FileUploader {
                     return videoLocation;
                 }
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
         return videoLocation;
     }
 
-    public String checkFiletype(String fileName)
+    private String checkFiletype(String fileName)
     {
         switch(fileName.substring(fileName.lastIndexOf('.')))
         {
@@ -258,9 +296,9 @@ public class FileUploader {
                 return "Text";
             case ".jpg": case ".jpeg":case ".gif":case ".png":case ".tiff":
                 return "Image";
-            case ".mp3":
+            case ".mp3":case ".wav":case ".m4a":
                 return "Audio";
-            case ".mp4":case ".mov":case ".wav":case ".avi":
+            case ".mp4":case ".mov":case ".avi":case ".wmv":
                 return "Audio/Video";
             case ".htm":case ".html":
                 return "Web";

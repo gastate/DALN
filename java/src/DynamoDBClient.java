@@ -2,7 +2,6 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
@@ -15,6 +14,7 @@ public class DynamoDBClient {
     DynamoDBMapper mapper;
     ArrayList<String> allAssetUUIDs, videoAssetUUIDs, assetLocations;
     Post currentPost;
+
     public DynamoDBClient()
     {
         /**Connect to DynamoDB with credentials and initialize wrapper**/
@@ -23,12 +23,6 @@ public class DynamoDBClient {
     }
     public String insertPost(HashMap postDetails)
     {
-        /**Connect to DynamoDB with credentials and initialize wrapper**/
-        AmazonDynamoDB dynamoDBClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("daln"));
-        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDBClient);
-        //DynamoDB dynamoDBClient = new DynamoDB(new AmazonDynamoDBClient(new ProfileCredentialsProvider("shakib")));
-        //Table table = dynamoDBClient.getTable("DALN-Posts");
-
         //Create an instance of the post class, and fill it with information passed from the FileUploader class
         Post post = new Post();
         post.setTitle(postDetails.get("Title").toString());
@@ -39,15 +33,14 @@ public class DynamoDBClient {
         //Enter it into the DB
         mapper.save(post);
 
-        return post.getPostId();
+        return post.getPostId(); //return the UUID generated from the insertion into DB
     }
 
     public ArrayList<String> insertAsset(HashMap assetDetails)
     {
         allAssetUUIDs = new ArrayList<>(); //create a list of all the assetIDs to be generated
-        videoAssetUUIDs = new ArrayList<>();
 
-        ArrayList<String> fileNames = (ArrayList<String>) assetDetails.get("AssetList"); //retrieve file names of method variable
+        ArrayList<String> fileNames = (ArrayList<String>) assetDetails.get("AssetList"); //retrieve file names from the method variable
         ArrayList<String> fileTypes = (ArrayList<String>) assetDetails.get("FileType");
         Integer numOfFiles = fileNames.size(); //retrieve size so that every file in a post will be visited
 
@@ -59,8 +52,6 @@ public class DynamoDBClient {
             //set other asset information here
             mapper.save(asset);
             allAssetUUIDs.add(asset.getAssetId());//save all asset UUIDs. They will be added to the post its associated with
-            if(fileTypes.get(i).equals("Audio/Video"))
-                videoAssetUUIDs.add(asset.getAssetId());
         }
         currentPost = mapper.load(Post.class, assetDetails.get("PostId")); //load the post that was created earlier
         return allAssetUUIDs;

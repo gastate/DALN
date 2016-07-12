@@ -1,8 +1,0 @@
-Link: http://daln.osu.edu/handle/2374.DALN/227
-Title: Learning to read and write
-Description: This is a literacy narrative about who teaches reading and writing.
-Author: Schlatter, Rhonda
-Date: 2009-03-13
-Files: 2
-      Rhonda Schlatter.mov
-      RhondaSchlatter - Learning to Read and Write.txt
