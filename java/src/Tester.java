@@ -27,19 +27,43 @@ public class Tester {
 
         PostImporter videoImporter = new PostImporter();
         FileUploader fileUploader = new FileUploader();
-        DynamoDBClient client = new DynamoDBClient();
+       // DynamoDBClient client = new DynamoDBClient();
 
-        System.out.println("Enter post ID to download: ");
-
-        String postID1 = scan.next();
-        videoImporter.importPost(postID1);
-
-        //System.out.println("Enter post ID to upload files: ");
-        //String postID2 = scan.next();
-        fileUploader.upload(postID1);
-
-        //client.insertPost(postID1);
-
+        System.out.println("Enter post ID: ");
+        String postID = scan.next();
+        System.out.println("\nOptions:" +
+                "\n1) Download post #" + postID + " from DALN, upload, and add to database." +
+                "\n2) Download post #" + postID + " from DALN only." +
+                "\n3) Upload post #" + postID + " and add to database only." +
+                "\nEnter option number (-1 to quit): ");
+        int opt = 0;
+        try
+        {
+            opt = Integer.parseInt(scan.next());
+            switch(opt)
+            {
+                case 1:
+                    videoImporter.importPost(postID);
+                    fileUploader.upload(postID);
+                    break;
+                case 2:
+                    videoImporter.importPost(postID);
+                    break;
+                case 3:
+                    fileUploader.upload(postID);
+                    break;
+                case -1:
+                    System.exit(1);
+                default:
+                    System.out.println("You didn't enter a valid option.");
+                    System.exit(1);
+            }
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("You have to enter a number.");
+            System.exit(1);
+        }
     }
 }
 

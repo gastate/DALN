@@ -8,11 +8,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 /**
  * Created by Shakib on 7/5/2016.
+ *
+ * The purpose of this class is to act as the client between the program and DynamoDB. It includes methods to insert
+ * a post in the post table, assets in the assets table, and other methods to fill in needed fields in both tables.
  */
+
 public class DynamoDBClient {
     AmazonDynamoDB dynamoDBClient;
     DynamoDBMapper mapper;
-    ArrayList<String> allAssetUUIDs, videoAssetUUIDs, assetLocations;
+    ArrayList<String> allAssetUUIDs, assetLocations;
     Post currentPost;
 
     public DynamoDBClient()
@@ -31,12 +35,12 @@ public class DynamoDBClient {
         post.setDescription(postDetails.get("Description").toString());
         post.setDalnId(postDetails.get("DalnId").toString());
         //Enter it into the DB
-        mapper.save(post);
+        mapper.save(post); //post UUID is generated once this function is called
 
         return post.getPostId(); //return the UUID generated from the insertion into DB
     }
 
-    public ArrayList<String> insertAsset(HashMap assetDetails)
+    public ArrayList<String> insertAssets(HashMap assetDetails)
     {
         allAssetUUIDs = new ArrayList<>(); //create a list of all the assetIDs to be generated
 
@@ -49,11 +53,12 @@ public class DynamoDBClient {
             Asset asset = new Asset();  //each asset is a new entry in the Assets table in the DB
             asset.setDalnId(assetDetails.get("DalnId").toString());
             asset.setAssetType(fileTypes.get(i));
-            //set other asset information here
-            mapper.save(asset);
+            mapper.save(asset); //asset UUID only generated once this function is called
             allAssetUUIDs.add(asset.getAssetId());//save all asset UUIDs. They will be added to the post its associated with
         }
-        currentPost = mapper.load(Post.class, assetDetails.get("PostId")); //load the post that was created earlier
+
+        //load the post that is being created, it will be used in the updatePostsAndAssets method
+        currentPost = mapper.load(Post.class, assetDetails.get("PostId"));
         return allAssetUUIDs;
     }
 
@@ -62,6 +67,7 @@ public class DynamoDBClient {
         this.assetLocations = assetLocations;
     }
 
+    //This method will associate the post UUID with its asset UUIDs and vice versa and insert the information in the DB
     public void updatePostsAndAssets()
     {
         //Iterate through every asset UUID, and set its postID to the post it belongs to

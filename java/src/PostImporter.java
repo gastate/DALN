@@ -29,7 +29,7 @@ public class PostImporter
             System.out.println("Connecting to " + website + "...");
             doc = Jsoup.connect(website).get();
         } catch (IOException e) {
-            System.out.println("The post you entered does not exist on the DALN website.");
+            System.out.println("Could not connect to the website, or the post you entered does not exist on the DALN website.");
             System.exit(1);
         }
 
@@ -140,6 +140,6 @@ public class PostImporter
             i++;
 
         }
-        System.out.println("Post #"+postID+" downloaded to working directory.");
+        System.out.println("Post #"+postID+" successfully downloaded to working directory.");
     }
 }

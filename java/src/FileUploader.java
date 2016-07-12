@@ -21,7 +21,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import com.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class FileUploader {
         getFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
 
         /**Connect to Clyp**/
-        System.out.println("Connecting to Clyp");
+        System.out.println("Connecting to Clyp...");
         uploadSound = new HttpPost("https://upload.clyp.it/upload");
 
         /**Connect to S3**/
@@ -81,7 +80,7 @@ public class FileUploader {
         try {
             readMetadata = new Scanner(metadata); //Scanner object to read file
         } catch (FileNotFoundException e) {
-            System.out.println("This post hasn't been downloaded yet or does not exist.");
+            System.out.println("This post hasn't been downloaded yet or this post does not exist.");
             System.exit(1);
         }
         String link = readMetadata.nextLine();
@@ -128,31 +127,29 @@ public class FileUploader {
         assetDetails.put("FileType", fileTypes);
         assetDetails.put("DalnId", postID);
 
-        ArrayList<String> allAssetUUIDs = client.insertAsset(assetDetails);
+        //The insert assets method returns a list of the generated UUIDs for every asset. This will be used as titles
+        //for video uploads
+        ArrayList<String> allAssetUUIDs = client.insertAssets(assetDetails);
 
         int i = 0;
         /**Iterate through each file contained in the post, then upload to the service based on its extension**/
-        for (String fileName : fileNames) {
+        for (String fileName : fileNames)
+        {
+            String newTitle = allAssetUUIDs.get(i);
+            String fullDescription = "Original Post Link: " + link
+                    + "\nFile Name: " + fileName
+                    + "\nDescription: " + description
+                    + "\nAuthor: " + author
+                    + "\nOriginal Date Posted: " + date;
 
             if (fileTypes.get(i).equals("Audio/Video")) {
                 //upload to SproutVideo
-
-                //These are used for inputs of the SproutVideo upload
-                String fullTitle = allAssetUUIDs.get(i);
-                System.out.println("Uploading the video file " + fileName + " as " + fullTitle + " to SproutVideo");
-
-                // String fullTitle = title + " - " + fileNameNoExt;
-
-                String fullDescription = "Original Post Link: " + link
-                        + "\nFile Name: " + fileName
-                        + "\nDescription: " + description
-                        + "\nAuthor: " + author
-                        + "\nOriginal Date Posted: " + date;
+                System.out.println("Uploading the video file " + fileName + " as " + newTitle + " to SproutVideo");
 
                 //SproutVideo API uploads accept Multipart or Formdata as its format
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
                 //Inputs for the video submission
-                builder.addTextBody("title", fullTitle, ContentType.TEXT_PLAIN);
+                builder.addTextBody("title", newTitle, ContentType.TEXT_PLAIN);
                 builder.addTextBody("description", fullDescription, ContentType.TEXT_PLAIN);
                 builder.addTextBody("privacy", 2 + "", ContentType.TEXT_PLAIN);
                 builder.addBinaryBody("source_video", new File("downloads/" + postID + "/" + fileName), ContentType.APPLICATION_OCTET_STREAM, fileName);
@@ -164,51 +161,44 @@ public class FileUploader {
                 try {
                     postResponse = httpClient.execute(uploadFile);
                     getResponse = httpClient.execute(getFile);
-
-
                 } catch (IOException e) {
                     System.out.println(fileName + " could not be uploaded to SproutVideo.");
                 }
 
-                fileLocations.add(getSpoutVideoLocation(getResponse, fullTitle));
-                System.out.println(fileName + " uploaded to SproutVideo as " + fullTitle);
+                fileLocations.add(getSpoutVideoLocation(getResponse, newTitle));
+                System.out.println(fileName + " uploaded to SproutVideo as " + newTitle);
 
             }
             else if(fileTypes.get(i).equals("Audio"))
             {
-                String fullTitle = allAssetUUIDs.get(i);
-                System.out.println("Uploading the audio file " + fileName + " as " + fullTitle + " to Clyp");
+                System.out.println("Uploading the audio file " + fileName + " to Clyp.");
 
                 //Clyp API uploads accept Multipart
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
                 //Inputs for the audio submission
                 builder.addTextBody("description", description, ContentType.TEXT_PLAIN);
-                builder.addBinaryBody("audioFile", new File("downloads/" + postID + "/" + fileName), ContentType.APPLICATION_OCTET_STREAM, fullTitle + ".mp3");
+                builder.addBinaryBody("audioFile", new File("downloads/" + postID + "/" + fileName), ContentType.APPLICATION_OCTET_STREAM, fileName);
                 HttpEntity multipart = builder.build();
                 uploadSound.setEntity(multipart);
 
                 CloseableHttpResponse getClypResponse = null;
                 try {
                     getClypResponse = httpClient.execute(uploadSound);
-                    String jsonString = EntityUtils.toString(getClypResponse.getEntity());
+                    String jsonResponse = EntityUtils.toString(getClypResponse.getEntity());
                     JSONParser parser = new JSONParser();
-                    JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
+                    JSONObject jsonObject = (JSONObject) parser.parse(jsonResponse);
                     fileLocations.add(jsonObject.get("Mp3Url").toString());
-                    System.out.println(jsonObject.get("Mp3Url"));
-                    //System.out.println(soundURLObject.toString());
-
                 } catch (IOException e) {
                     System.out.println(fileName + " could not be uploaded to Clyp.");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
 
             else {
                 //upload all other files to S3
                 try {
-                    System.out.println("Uploading " + fileName + "...");
+                    System.out.println("Uploading " + fileName + " to S3.");
                     //upload file from working directory
                     File file = new File("downloads/" + postID + "/" + fileName);
                     //store file in specified s3 folder
@@ -241,10 +231,13 @@ public class FileUploader {
 
         client.setAssetLocations(fileLocations);
         client.updatePostsAndAssets();
+        System.out.println("Post #" + postID + " successfully uploaded and added to database.");
+        //updatePostMetadata(postID, postUUID, fileNames, allAssetUUIDs, fileLocations);
     }
+
+    /**Upload post folder and metadata to S3**/
     private void uploadPostFolder(String postID)
     {
-        /**Upload post folder and metadata to S3**/
         System.out.println("Creating post folder in S3");
 
         //data for folder
@@ -265,7 +258,45 @@ public class FileUploader {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
     }
+/**this method will update the post metadata text file in S3 with post and asset UUIDs, as well as asset locations. WIP**
+    private void updatePostMetadata(String postID, String postUUID, ArrayList<String> assetNames, ArrayList<String> assetUUIDs, ArrayList<String> assetLocations) {
+        String oldFileName = metadata.getName();
+        String tmpFileName = "tmp_" + metadata.getName();
 
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        try {
+            br = new BufferedReader(new FileReader("downloads/" + postID + "/"+oldFileName));
+            bw = new BufferedWriter(new FileWriter("downloads/" + postID + "/"+tmpFileName));
+            String line;
+            while ((line = br.readLine()) != null) {
+                bw.write(line);
+            }
+
+            bw.write("Post UUID: " + postUUID + "\n");
+            bw.write("Asset UUIDs:\n");
+            int i = 0;
+            for(String id : assetUUIDs)
+            {
+                bw.write("\t"+assetNames.get(i)+"\t"+id+"\t"+assetLocations.get(i)+"\n");
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Once everything is complete, delete old file..
+        File oldFile = new File(oldFileName);
+        oldFile.delete();
+
+        // And rename tmp file's name to old file name
+        File newFile = new File(tmpFileName);
+        newFile.renameTo(oldFile);
+        uploadPostFolder(postID);
+
+    }
+*/
     private String getSpoutVideoLocation(HttpResponse response, String uploadedVideoTitle) {
         String videoLocation = "";
         try {

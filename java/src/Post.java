@@ -5,6 +5,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 /**
  * Created by Shakib on 7/5/2016.
+ *
+ * This class is a template for a post, specifically a post that will be inserted in the Posts
+ * table in DynamoDB. Special annotations are used to utilize the DynamoDB wrapper, which specify the
+ * table name, the primary key, and the rest of the attributes in the table.
  */
 
 @DynamoDBTable(tableName = "DALN-Posts")

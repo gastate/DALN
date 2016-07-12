@@ -7,6 +7,10 @@ import java.util.Set;
 
 /**
  * Created by Shakib on 7/5/2016.
+ *
+ * This class is a template for an asset (also referred to as a file), specifically an asset that will be inserted
+ * in the Assets table in DynamoDB. Special annotations are used to utilize the DynamoDB wrapper, which specify the
+ * table name, the primary key, and the rest of the attributes in the table.
  */
 
 @DynamoDBTable(tableName = "DALN-Assets")
