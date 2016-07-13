@@ -1,5 +1,4 @@
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
@@ -19,7 +18,7 @@ public class Post
     private String author;
     private String title;
     private String date;
-    private Set<String> assetList;
+    private List<HashMap<String,String>> assetList;
     private String dalnId;
 
     @DynamoDBHashKey(attributeName = "PostId")
@@ -39,9 +38,10 @@ public class Post
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
 
+    //@DynamoDBMarshalling (marshallerClass = AssetMarshaller.class)
     @DynamoDBAttribute(attributeName = "AssetList")
-    public void setAssetList(Set<String> assetList) {this.assetList = assetList;}
-    public Set<String> getAssetList() {return assetList;}
+    public List<HashMap<String,String>> getAssetList() { return assetList; }
+    public void setAssetList(List<HashMap<String,String>> assetList) { this.assetList = assetList; }
 
     @DynamoDBAttribute(attributeName = "Title")
     public String getTitle() {return title;}
@@ -50,5 +50,7 @@ public class Post
     @DynamoDBAttribute(attributeName = "DalnId")
     public String getDalnId() {return dalnId;}
     public void setDalnId(String dalnId) {this.dalnId = dalnId;}
+
+
 }
 

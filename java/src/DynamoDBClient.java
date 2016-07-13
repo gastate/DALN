@@ -35,6 +35,7 @@ public class DynamoDBClient {
         post.setDate(postDetails.get("UploadDate").toString());
         post.setDescription(postDetails.get("Description").toString());
         post.setDalnId(postDetails.get("DalnId").toString());
+        post.setAssetList((List<HashMap<String,String>>)postDetails.get("AssetList"));
         //Enter it into the DB
         mapper.save(post); //post UUID is generated once this function is called
 
@@ -52,10 +53,10 @@ public class DynamoDBClient {
         for(int i = 0; i < numOfFiles; i++) //
         {
             Asset asset = new Asset();  //each asset is a new entry in the Assets table in the DB
-            asset.setDalnId(assetDetails.get("DalnId").toString());
+            //asset.setDalnId(assetDetails.get("DalnId").toString());
             asset.setAssetType(fileTypes.get(i));
             mapper.save(asset); //asset UUID only generated once this function is called
-            allAssetUUIDs.add(asset.getAssetId());//save all asset UUIDs. They will be added to the post its associated with
+            //allAssetUUIDs.add(asset.getAssetId());//save all asset UUIDs. They will be added to the post its associated with
         }
 
         //load the post that is being created, it will be used in the updatePostsAndAssets method
@@ -76,7 +77,7 @@ public class DynamoDBClient {
         for(String assetUUID : allAssetUUIDs)
         {
             Asset asset = mapper.load(Asset.class, assetUUID);
-            asset.setPostId(currentPost.getPostId());
+            //asset.setPostId(currentPost.getPostId());
             asset.setAssetLocation(assetLocations.get(i));
             mapper.save(asset);
             i++;
@@ -86,7 +87,7 @@ public class DynamoDBClient {
         //The post will now include a String set which includes every Asset UUID that is associated with it
         HashSet<String> assetList = new HashSet<>();
         assetList.addAll(allAssetUUIDs);
-        currentPost.setAssetList(assetList);
+        //currentPost.setAssetList(assetList);
         mapper.save(currentPost);
     }
 

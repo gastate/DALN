@@ -24,10 +24,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Shakib on 6/28/2016.
@@ -92,19 +89,22 @@ public class FileUploader {
             System.exit(1);
         }
         String link = readMetadata.nextLine();
-        link = link.substring(link.indexOf(':') + 1).trim(); //extracts everything after ": "
+               link = link.substring(link.indexOf(':') + 1).trim(); //extracts everything after ": "
         String title = readMetadata.nextLine();
-        title = title.substring(title.indexOf(':') + 1).trim();
+               title = title.substring(title.indexOf(':') + 1).trim();
         String description = readMetadata.nextLine();
-        description = description.substring(description.indexOf(':') + 1).trim();
+               description = description.substring(description.indexOf(':') + 1).trim();
         String author = readMetadata.nextLine();
-        author = author.substring(author.indexOf(':') + 1).trim();
+               author = author.substring(author.indexOf(':') + 1).trim();
         String date = readMetadata.nextLine();
-        date = date.substring(date.indexOf(':') + 1).trim();
-        readMetadata.nextLine(); //skips "Files" line
+               date = date.substring(date.indexOf(':') + 1).trim();
+        String files = readMetadata.nextLine();
+        int numberOfAssets =Integer.parseInt(files.substring(files.indexOf(':')+1).trim());
+
 
         //HERE I SOMEHOW GET THE INFO FOR THE HIDDEN METADATA FOR EACH
 
+        ArrayList<String> fileUUIDs = new ArrayList<>();
         ArrayList<String> fileNames = new ArrayList<>();
         ArrayList<String> fileTypes = new ArrayList<>();
         ArrayList<String> fileLocations = new ArrayList<>();
@@ -122,34 +122,13 @@ public class FileUploader {
         System.out.println("Creating post folder in S3 and uploading metadata.");
         uploadPostFolder(postID);
 
-        //Store the details of the post in a hashmap which will be passed on to the db client
-        HashMap<String, Object> postDetails = new HashMap<>();
-        postDetails.put("DalnId", postID);
-        postDetails.put("Description", description);
-        postDetails.put("Author", author);
-        postDetails.put("Title", title);
-        postDetails.put("UploadDate", date);
-
-        //the insert post method returns the post ID.
-        //It will be attributed to each of the assets that the post contains
-        String postUUID = client.insertPost(postDetails);
-
-        //Create a hashmap of the details of each file, which will be passed on to insert into the asset table in the db
-        HashMap<String, Object> assetDetails = new HashMap<>();
-        assetDetails.put("PostId", postUUID);
-        assetDetails.put("AssetList", fileNames);
-        assetDetails.put("FileType", fileTypes);
-        assetDetails.put("DalnId", postID);
-
-        //The insert assets method returns a list of the generated UUIDs for every asset. This will be used as titles
-        //for video uploads
-        ArrayList<String> allAssetUUIDs = client.insertAssets(assetDetails);
-
         int i = 0;
         /**Iterate through each file contained in the post, then upload to the service based on its extension**/
         for (String fileName : fileNames)
         {
-            String newTitle = allAssetUUIDs.get(i);
+            String newTitle = UUID.randomUUID().toString();
+            fileUUIDs.add(newTitle);
+            //String newTitle = postID + "_" + fileName;
             String fullDescription = "Original Post Link: " + link
                     + "\nFile Name: " + fileName
                     + "\nDescription: " + description
@@ -244,9 +223,31 @@ public class FileUploader {
             i++;
         }
 
-        client.setAssetLocations(fileLocations);
-        client.updatePostsAndAssets();
-        updatePostMetadata(postID, postUUID, fileNames, allAssetUUIDs, fileLocations);
+        //client.setAssetLocations(fileLocations);
+        //client.updatePostsAndAssets();
+
+        List<HashMap<String,String>> assetList = new ArrayList<>();
+        for(int j = 0; j < numberOfAssets; j++)
+        {
+            HashMap<String,String> asset = new HashMap<>();
+            asset.put("Asset ID", fileUUIDs.get(j));
+            asset.put("Asset Location", fileLocations.get(j));
+            asset.put("Asset Type", fileTypes.get(j));
+            assetList.add(asset);
+        }
+        //Store the details of the post in a hashmap which will be passed on to the db client
+        HashMap<String, Object> postDetails = new HashMap<>();
+        postDetails.put("DalnId", postID);
+        postDetails.put("Description", description);
+        postDetails.put("Author", author);
+        postDetails.put("Title", title);
+        postDetails.put("UploadDate", date);
+        postDetails.put("AssetList", assetList);
+
+        //the insert post method returns the post ID.
+        //It will be attributed to each of the assets that the post contains
+        String postUUID = client.insertPost(postDetails);
+        updatePostMetadata(postID, postUUID, fileNames, fileUUIDs, fileTypes, fileLocations);
         System.out.println("Post #" + postID + " successfully uploaded and added to database.");
     }
 
@@ -270,7 +271,7 @@ public class FileUploader {
 
     }
 /**this method will update the post metadata text file in S3 with post and asset UUIDs, as well as asset locations. WIP**/
-    private void updatePostMetadata(String postID, String postUUID, ArrayList<String> assetNames, ArrayList<String> assetUUIDs, ArrayList<String> assetLocations) {
+    private void updatePostMetadata(String postID, String postUUID, ArrayList<String> assetNames, ArrayList<String> assetUUIDs, ArrayList<String> assetTypes, ArrayList<String> assetLocations) {
 
     System.out.println("Updating metadata with database information.");
         try {
@@ -282,7 +283,7 @@ public class FileUploader {
             lines.add("\r\nPost UUID: " + postUUID);
             lines.add("Asset Info:");
             for(int i = 0; i < assetNames.size(); i++)
-                lines.add("\t"+assetNames.get(i)+"\r\n\t"+assetUUIDs.get(i)+"\r\n\t"+assetLocations.get(i)+"\r\n\t");
+                lines.add("\t"+assetNames.get(i)+"\r\n\t"+assetUUIDs.get(i)+"\r\n\tType: "+assetTypes.get(i)+"\r\n\t"+assetLocations.get(i)+"\r\n\t");
             //metadata.setWritable(true);
             FileUtils.forceDelete(metadata);
             File newFile = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
@@ -299,6 +300,7 @@ public class FileUploader {
         String videoLocation = "";
         try {
             String jsonString = EntityUtils.toString(response.getEntity());
+            //System.out.println(jsonString);
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
             JSONArray jsonArray = (JSONArray) jsonObject.get("videos");
@@ -307,7 +309,7 @@ public class FileUploader {
                 String videoTitle = videoInfo.get("title").toString();
                 if (videoTitle.equals(uploadedVideoTitle)) {
                     String videoID = videoInfo.get("id").toString();
-                    videoLocation = "https://gsu.vids.io/videos/" + videoID + "/"+uploadedVideoTitle;
+                    videoLocation = "https://gsu-7zy7zle.vids.io/videos/" + videoID + "/"+uploadedVideoTitle;
                     return videoLocation;
                 }
             }

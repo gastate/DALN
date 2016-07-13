@@ -1,8 +1,13 @@
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 
 import org.mozilla.javascript.Context;
@@ -24,6 +29,36 @@ public class Tester {
                 "\nThis program takes a post ID as " +
                 "input, downloads its contents to your working directory, then uploads" +
                 " the contents of the file to S3 and SpoutVideo. ");
+
+
+        /**Connect to DynamoDB with credentials and initialize wrapper**/
+        /*AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("daln"));
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDBClient);
+
+        Post post = new Post();
+        post.setTitle("some title");
+        post.setAuthor("some author");
+        post.setDate("some date");
+        post.setDescription("some description");
+        post.setDalnId("some daln id");
+
+        HashMap<String,String> asset1 = new HashMap<>();
+        asset1.put("File Type", "asset1 type");
+        asset1.put("File Location", "asset1 location");
+
+        HashMap<String,String> asset2 = new HashMap<>();
+        asset2.put("File Type", "asset2 type");
+        asset2.put("File Location", "asset2 location");
+
+        List<HashMap<String,String>> assetList = new ArrayList<>();
+        assetList.add(asset1);
+        assetList.add(asset2);
+
+        post.setAssetList(assetList);
+        //Enter it into the DB
+        mapper.save(post);*/
+
+
 
         PostImporter videoImporter = new PostImporter();
         FileUploader fileUploader = new FileUploader();
