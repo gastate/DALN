@@ -1,0 +1,19 @@
+Link: http://daln.osu.edu/handle/2374.DALN/3522
+Title: Music In My Life
+Description: This narrative is about the role of music in my life.
+Author: Moyer, Josh
+Date: 2012-10-25
+Files: 2
+	Josh's Interview audio.m4a
+	Screen Shot 2012-12-03 at 8.57.03 PM.png
+
+Post UUID: 5123212f-06e1-46f6-9a0e-7e4479e6e84c
+Asset Info:
+	Josh's Interview audio.m4a
+	579b2541-766f-46eb-8f01-aa9433d76336
+	http://a.clyp.it/i1t2symy.mp3
+	
+	Screen Shot 2012-12-03 at 8.57.03 PM.png
+	f0872bf8-9e4a-4a49-a502-8ae8ee6a3bd7
+	https://s3-us-west-1.amazonaws.com/daln/Posts/3522/Screen Shot 2012-12-03 at 8.57.03 PM.png
+	

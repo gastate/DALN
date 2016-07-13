@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
 /**
  * Created by Shakib on 7/5/2016.
@@ -87,5 +88,22 @@ public class DynamoDBClient {
         assetList.addAll(allAssetUUIDs);
         currentPost.setAssetList(assetList);
         mapper.save(currentPost);
+    }
+
+    //This method checks if the post being uploaded already exists in the database by scanning for the same DALN ID in the Posts table.
+    public boolean checkIfPostAlreadyExistsInDB(String postID)
+    {
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(postID));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("DalnId = :val1")
+                .withExpressionAttributeValues(eav);
+
+        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
+
+        //We only care if at least one result is found, so we check if the list size is 0
+        boolean result = scanResults.size() != 0;
+        return result;
     }
 }

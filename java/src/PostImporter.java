@@ -93,6 +93,7 @@ public class PostImporter
         File newFolder = new File("downloads/"+ postID);
         newFolder.mkdir(); //create a new folder with the post ID
 
+
         //Write the file
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("downloads/"+postID+ "/Post #"+postID + " Data.txt"), "utf-8")))
@@ -107,13 +108,9 @@ public class PostImporter
 
             //list every file name contained in the post
             for(String file : fileNames)
-                writer.write("      " +file + "\r\n");
+                writer.write("\t" +file + "\r\n");
 
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
