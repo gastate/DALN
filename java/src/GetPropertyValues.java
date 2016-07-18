@@ -33,7 +33,7 @@ public class GetPropertyValues
     }
 
     public HashMap<String,String> getSoundCloudClientInfo() throws IOException {
-        HashMap<String,String> soundCloudClientInfo = null;
+        HashMap<String,String> soundCloudClientInfo = new HashMap<>();
         try {
             Properties prop = new Properties();
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);

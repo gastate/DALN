@@ -49,6 +49,7 @@ public class UploadToSoundCloud
         System.out.println("Connecting to SoundCloud...");
         GetPropertyValues properties = new GetPropertyValues();
         HashMap<String,String> credentials = properties.getSoundCloudClientInfo();
+
         soundcloud = new SoundCloud(
                 credentials.get("SoundCloudClientID"),
                 credentials.get("SoundCloudClientSecret"),
