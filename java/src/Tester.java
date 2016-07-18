@@ -1,22 +1,23 @@
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.soundcloud.api.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.lang.reflect.Array;
+import java.security.cert.Certificate;
 import java.util.*;
 
+import de.voidplus.soundcloud.*;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.Scriptable;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by Shakib on 6/25/2016.
@@ -24,45 +25,40 @@ import javax.script.ScriptException;
 public class Tester {
 
     public static void main(String[] args) throws IOException, ParseException {
+
         Scanner scan = new Scanner(System.in);
         System.out.println("OSU's DALN Post Importer and File Uploader" +
                 "\nThis program takes a post ID as " +
                 "input, downloads its contents to your working directory, then uploads" +
                 " the contents of the file to S3 and SpoutVideo. ");
 
+        HashMap<String, Object> postDetails = new HashMap<>();
+        postDetails.put("Current File", "essay3 audio.m4a");
+        postDetails.put("Current Asset ID", "some asset id");
+        postDetails.put("DalnId", "5672");
+        JSONObject jsonMap = new JSONObject(postDetails);
 
-        /**Connect to DynamoDB with credentials and initialize wrapper**/
-        /*AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(new ProfileCredentialsProvider("daln"));
-        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDBClient);
+        /*ApiWrapper wrapper = new ApiWrapper("34f3a0291f39c81b9fe952a0a0508ed6", "ea8e7de9b471b03de72f0276c2b87993", null, null);
+        wrapper.login("rahmed8@gsu.edu", "shakibsoundcloud");
 
-        Post post = new Post();
-        post.setTitle("some title");
-        post.setAuthor("some author");
-        post.setDate("some date");
-        post.setDescription("some description");
-        post.setDalnId("some daln id");
+        String location = "C:\\Users\\Shakib\\Documents\\Programming\\IdeaProjects\\DALN\\downloads\\sample.mp3";
+        //HttpResponse resp = wrapper.get(Request.to("/me"));
+        File file = new File(location);
+        HttpResponse resp = wrapper.post(Request.to(Endpoints.TRACKS)
+                        .add(Params.Track.TITLE,     file.getName())
+                        .add(Params.Track.TAG_LIST, "demo upload")
+                        .withFile(Params.Track.ASSET_DATA, file));
+        try {
+            System.out.println("\n" + Http.getJSON(resp).toString(4));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
 
-        HashMap<String,String> asset1 = new HashMap<>();
-        asset1.put("File Type", "asset1 type");
-        asset1.put("File Location", "asset1 location");
-
-        HashMap<String,String> asset2 = new HashMap<>();
-        asset2.put("File Type", "asset2 type");
-        asset2.put("File Location", "asset2 location");
-
-        List<HashMap<String,String>> assetList = new ArrayList<>();
-        assetList.add(asset1);
-        assetList.add(asset2);
-
-        post.setAssetList(assetList);
-        //Enter it into the DB
-        mapper.save(post);*/
-
-
-
+        GetPropertyValues properties = new GetPropertyValues();
+        //properties.getSproutVideoApiKey();
+        System.out.println(properties.getSproutVideoApiKey());
         PostImporter videoImporter = new PostImporter();
-        FileUploader fileUploader = new FileUploader();
-       // DynamoDBClient client = new DynamoDBClient();
+        //FileUploader fileUploader = new FileUploader();
 
         System.out.println("Enter post ID: ");
         String postID = scan.next();
@@ -79,13 +75,13 @@ public class Tester {
             {
                 case 1:
                     videoImporter.importPost(postID);
-                    fileUploader.upload(postID);
+                    new FileUploader(postID);
                     break;
                 case 2:
                     videoImporter.importPost(postID);
                     break;
                 case 3:
-                    fileUploader.upload(postID);
+                    new FileUploader(postID);
                     break;
                 case -1:
                     System.exit(1);

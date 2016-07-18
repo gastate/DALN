@@ -38,7 +38,6 @@ public class Post
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
 
-    //@DynamoDBMarshalling (marshallerClass = AssetMarshaller.class)
     @DynamoDBAttribute(attributeName = "AssetList")
     public List<HashMap<String,String>> getAssetList() { return assetList; }
     public void setAssetList(List<HashMap<String,String>> assetList) { this.assetList = assetList; }
