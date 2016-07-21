@@ -1,12 +1,5 @@
 import de.voidplus.soundcloud.SoundCloud;
 import de.voidplus.soundcloud.Track;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +7,10 @@ import java.util.HashMap;
 
 /**
  * Created by Shakib on 7/18/2016.
+ *
+ * This class handles the task of uploading an audio to SoundCloud and retrieving its download location.
+ * The constructor extracts all needed values from the HashMap and places them into variables. The values
+ * will be used as inputs for the upload.
  */
 public class UploadToSoundCloud
 {

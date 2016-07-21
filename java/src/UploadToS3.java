@@ -10,6 +10,11 @@ import java.util.HashMap;
 
 /**
  * Created by Shakib on 7/16/2016.
+ *
+ * This class handles the task of uploading all files that aren't videos or audios to S3 and retrieving
+ * its download location. The constructor extracts all needed values from the HashMap and places them into variables.
+ * The values will be used as inputs for the upload. This class only handles single file uploads that are contained in
+ * the original post. It does not create the post folder in S3 or upload its metadata.
  */
 public class UploadToS3
 {

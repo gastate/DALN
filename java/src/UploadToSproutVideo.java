@@ -19,6 +19,10 @@ import java.util.HashMap;
 
 /**
  * Created by Shakib on 7/16/2016.
+ *
+ * This class handles the task of uploading a video to SproutVideo and retrieving its download location.
+ * The constructor extracts all needed values from the HashMap and places them into variables. The values
+ * will be used as inputs for the upload.
  */
 public class UploadToSproutVideo
 {
@@ -88,6 +92,7 @@ public class UploadToSproutVideo
         String videoLocation = "";
         String uploadedVideoTitle = postDetails.get("Current Asset ID").toString();
         CloseableHttpResponse getResponse = null;
+        //The getResponse must be parsed as a JSON to retrieve the downloaded location
         try {
             getResponse = httpClient.execute(getFile);
             String jsonString = EntityUtils.toString(getResponse.getEntity());

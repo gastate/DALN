@@ -6,11 +6,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 import java.io.*;
 import java.util.*;
@@ -18,28 +13,24 @@ import java.util.*;
 /**
  * Created by Shakib on 6/28/2016.
  *
- * The purpose of this class is to upload files that were downloaded to the working directory using the PostImporter.java
+ * The purpose of this class is to upload files that were downloaded to the working directory using the PostImporter
  * class. The upload function takes the post ID as input and searches for this post in the downloads folder
- * of the project directory (which is the default location of post downloads). The method then determines what kind of
- * files are contained within each post, and then chooses which service to upload them to. Video files are uploaded to
- * SproutVideo, audio files are uploaded to Clyp, and the rest are uploaded to S3.
+ * of the project directory (which is the default location of post downloads). It then determines what kind of
+ * files are contained within each post, and then chooses which service to upload them to.Video files are uploaded to
+ * SproutVideo, audio files are uploaded to SoundCloud, and the rest are uploaded to S3. Last, it inserts the information
+ * about the post into the database using the DynamoDBClient and updates the post metadata text file to include
+ * relevant information.
+ *
  */
 public class FileUploader {
 
     private AmazonS3 s3Client;
-    private CloseableHttpClient httpClient;
-    private HttpPost uploadFile;
-    private HttpPost uploadSound;
-    private HttpGet getFile;
-    private HttpGet getSound;
     private DynamoDBClient client;
     private File metadata;
     private HashMap<String, Object> postDetails;
     private String postID;
 
     public FileUploader(String postID) throws IOException {
-        httpClient = HttpClients.createDefault();
-
         /**Connect to S3**/
         //access key and secret access key stored in credentials file on local machine
         //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
@@ -54,9 +45,11 @@ public class FileUploader {
         uploadPost();
     }
 
+    /**Extract fields from the metadata generated from PostImporter so that we can use them as inputs for uploads
+     * and DB entry. All the needed information is stored in a single HashMap so that the number of inputs needed
+     * for all functions is kept to a minimum.**/
     public HashMap<String, Object> getPostDetails()
     {
-        /**Extract fields from metadata so that we can use them as inputs for uploads and DB entry**/
         metadata = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
         Scanner readMetadata = null;
         try {
@@ -116,7 +109,7 @@ public class FileUploader {
         if(client.checkIfPostAlreadyExistsInDB(postID))
         {
             System.out.println("This post ID already exists in the database.");
-           // System.exit(0);
+            System.exit(0);
         }
         System.out.println("You are uploading post #" + postID + ".");
 
@@ -163,9 +156,9 @@ public class FileUploader {
             }
         }
 
-        /**Gather the generated information about the posts assets to be placed into the DB**/
+        /**Gather the generated information about the post's assets to be inserted into the DB**/
         //All of the other post details were gathered from the metadata earlier. The last field we need
-        //for the DB entry is the list of assets with details for each asset.
+        //for the DB entry is the asset list, which contains details for each asset.
         List<HashMap<String,String>> assetList = new ArrayList<>();
         for(int j = 0; j < numberOfAssets; j++)
         {
@@ -212,6 +205,7 @@ public class FileUploader {
         //The metadata file essentially will be recreated with added info
         try {
             List<String> lines = FileUtils.readLines(metadata, "utf-8");
+            //Rewrites the post metadata if it includes old database information
             int indexToRemove = -1;
             for(int i = 0; i<lines.size(); i++)
             {
@@ -239,22 +233,42 @@ public class FileUploader {
 
     }
 
-
-
-    private String checkFiletype(String fileName)
-    {
-        switch(fileName.substring(fileName.lastIndexOf('.')))
+    private String checkFiletype(String fileName) {
+        try {
+            switch (fileName.substring(fileName.lastIndexOf('.'))) {
+                case ".doc":
+                case ".docx":
+                case ".rtf":
+                case ".txt":
+                case ".pdf":
+                    return "Text";
+                case ".jpg":
+                case ".jpeg":
+                case ".gif":
+                case ".png":
+                case ".tiff":
+                    return "Image";
+                case ".mp3":
+                case ".wav":
+                case ".m4a":
+                    return "Audio";
+                case ".mp4":
+                case ".mov":
+                case ".avi":
+                case ".wmv":
+                case ".m4v":
+                    return "Audio/Video";
+                case ".htm":
+                case ".html":
+                    return "Web";
+            }
+        }catch(StringIndexOutOfBoundsException e)
         {
-            case ".doc": case ".docx":case ".rtf":case ".txt":case ".pdf":
-                return "Text";
-            case ".jpg": case ".jpeg":case ".gif":case ".png":case ".tiff":
-                return "Image";
-            case ".mp3":case ".wav":case ".m4a":
-                return "Audio";
-            case ".mp4":case ".mov":case ".avi":case ".wmv":case ".m4v":
-                return "Audio/Video";
-            case ".htm":case ".html":
-                return "Web";
+            System.out.println("The file " + fileName + " does not have a file type specified. This post can't be uploaded. Please" +
+                    " rename the file in your working directory to include a valid extension as well as edit the file name in the" +
+                    " metadata text file that was generated.");
+            System.exit(1);
+
         }
         return fileName.substring(fileName.lastIndexOf('.')+1).toUpperCase() + " File";
     }

@@ -22,7 +22,7 @@ public class PostImporter
 {
     public void importPost(String postID)
     {
-        /**Connect to URL of post**/
+        /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/
         String website = "http://daln.osu.edu/handle/2374.DALN/" + postID;
         Document doc = null;
         try {
@@ -41,7 +41,7 @@ public class PostImporter
         try {
             pageTables = doc.select("table");
 
-            /**Getting the post info**/
+            /**Getting the necessary post info visible on the page**/
             postInfoBody = pageTables.get(0).child(0); //first table of the page
             postInfoTableRows = postInfoBody.select("tr");
         }
@@ -74,7 +74,7 @@ public class PostImporter
 
         //HERE I SOMEHOW GET THE HIDDEN METADATA FOR EACH POST LIKE KEYWORDS, LANGUAGE ETC.
 
-        /**Getting the file(s) info**/
+        /**Getting the necessary file(s) info visible on the page**/
         Element fileInfoBody = pageTables.get(1).child(0); //second table of the page
 
         Elements fileInfoTableRows = fileInfoBody.select("tr");
@@ -89,7 +89,9 @@ public class PostImporter
 
         System.out.println("Downloading metadata and files to directory");
 
-        /**Storing post metadata in a text file**/
+        /**Storing post metadata in a text file. This file will be parsed in the FileUploader class to figure out
+         * the information needed to uploaded each file. This will also be updated at the end to include
+         * relevant information from the database.**/
         File newFolder = new File("downloads/"+ postID);
         newFolder.mkdir(); //create a new folder with the post ID
 
@@ -115,7 +117,7 @@ public class PostImporter
             e.printStackTrace();
         }
 
-        /**Download file(s) to working directory**/
+        /**Download file(s) to working directory. The files are stored on the computer locally before the upload.**/
         URL url = null;
         int i = 0;
         //Navigate to each file and download

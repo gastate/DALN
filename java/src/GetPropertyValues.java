@@ -6,6 +6,10 @@ import java.util.Properties;
 
 /**
  * Created by Shakib on 7/18/2016.
+ *
+ * This class retrieves the values from the config.properties file. That file contains the sensitive information
+ * needed for the services used, such as the API keys for SproutVideo and SoundCloud, as well as login information
+ * for SoundCloud.
  */
 public class GetPropertyValues
 {

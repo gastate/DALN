@@ -14,7 +14,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
  * Created by Shakib on 7/5/2016.
  *
  * The purpose of this class is to act as the client between the program and DynamoDB. In includes methods to insert
- * new posts and to scan for posts to stop duplicate entries. Later on this class may be used to search the database.
+ * new posts and to scan for posts to prevent duplicate entries. Later on this class may be used to search the database.
  */
 
 public class DynamoDBClient {
