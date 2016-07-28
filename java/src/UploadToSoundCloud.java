@@ -43,7 +43,6 @@ public class UploadToSoundCloud
 
     public void connectToSoundCloud() throws IOException {
         /**Connect to SoundCloud**/
-        System.out.println("Connecting to SoundCloud...");
         GetPropertyValues properties = new GetPropertyValues();
         HashMap<String,String> credentials = properties.getSoundCloudClientInfo();
 
@@ -57,8 +56,6 @@ public class UploadToSoundCloud
 
     public void uploadSound()
     {
-        System.out.print("Uploading the audio file " + fileName + " as " + assetID + " to SoundCloud...");
-
         File currentDirectory = null;
         try {
             currentDirectory = new File(new File(".").getCanonicalPath());

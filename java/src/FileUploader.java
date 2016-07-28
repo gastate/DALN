@@ -29,8 +29,12 @@ public class FileUploader {
     private File metadata;
     private HashMap<String, Object> postDetails;
     private String postID;
+    private StatusMessages message;
+    private boolean verboseOutput;
 
-    public FileUploader(String postID) throws IOException {
+    public FileUploader(String postID, boolean verboseOutput) throws IOException {
+        this.verboseOutput = verboseOutput;
+        message = new StatusMessages();
         /**Connect to S3**/
         //access key and secret access key stored in credentials file on local machine
         //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
@@ -55,7 +59,7 @@ public class FileUploader {
         try {
             readMetadata = new Scanner(metadata); //Scanner object to read file
         } catch (FileNotFoundException e) {
-            System.out.println("This post hasn't been downloaded yet or this post does not exist.");
+            if(verboseOutput) message.CannotFindPostToUpload(); else message.FileUploadPostErrorLog(postID);
             System.exit(1);
         }
         String link = readMetadata.nextLine();
@@ -108,13 +112,14 @@ public class FileUploader {
     public void uploadPost() throws IOException {
         if(client.checkIfPostAlreadyExistsInDB(postID))
         {
-            System.out.println("This post ID already exists in the database.");
+            if(verboseOutput) message.PostAlreadyExistsInDB(); else message.FileUploadPostErrorLog(postID);
             System.exit(0);
         }
-        System.out.println("You are uploading post #" + postID + ".");
+
+        if(verboseOutput) message.BeginPostUpload(postID);
 
        /**The first step is to create a folder in S3 specific to this post and include its metadata**/
-        System.out.println("Creating post folder in S3 and uploading metadata.");
+        if(verboseOutput) message.CreateS3Data();
         uploadPostFolder();
 
         /**Every file that the post contains will now be uploaded to a service based on its file type. Each
@@ -138,21 +143,24 @@ public class FileUploader {
 
             if (fileTypes.get(i).equals("Audio/Video"))
             {
+                if(verboseOutput) message.UploadingToSproutVideo(currentFileName, assetID);
                 UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
                 fileLocations.add(SVUploader.getSpoutVideoLocation());
-                System.out.println("Done.");
+                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
             }
             else if(fileTypes.get(i).equals("Audio"))
             {
+                if(verboseOutput) message.UploadingToSoundCloud(currentFileName, assetID);
                 UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
                 fileLocations.add(SCUploader.getSoundLocation());
-                System.out.println("Done.");
+                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
             }
             else {
                 //upload all other files to S3
+                if(verboseOutput) message.UploadingToS3(currentFileName);
                 UploadToS3 S3Uploader = new UploadToS3(postDetails);
                 fileLocations.add(S3Uploader.getS3FileLocation());
-                System.out.println("Done.");
+                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
             }
         }
 
@@ -176,7 +184,7 @@ public class FileUploader {
         //The metadata needs to be updated with information after the uploading and DB insertion is completed
         updatePostMetadata(postID, postUUID, fileNames, fileUUIDs, fileTypes, fileLocations);
 
-        System.out.println("Post #" + postID + " successfully uploaded and added to database.");
+        if(verboseOutput) message.FileUploadPostCompleteVerbose(postID); else message.FileUploadPostCompleteLog(postID);
     }
 
     /**Upload post folder and metadata to S3**/
@@ -201,7 +209,7 @@ public class FileUploader {
     /**this method will update the post metadata text file in S3 with post and asset UUIDs, as well as asset locations.**/
     private void updatePostMetadata(String postID, String postUUID, ArrayList<String> assetNames, ArrayList<String> assetUUIDs, ArrayList<String> assetTypes, ArrayList<String> assetLocations) {
 
-    System.out.println("Updating metadata with database information.");
+    if(verboseOutput) message.UpdatingMetadata();
         //The metadata file essentially will be recreated with added info
         try {
             List<String> lines = FileUtils.readLines(metadata, "utf-8");
@@ -264,9 +272,7 @@ public class FileUploader {
             }
         }catch(StringIndexOutOfBoundsException e)
         {
-            System.out.println("The file " + fileName + " does not have a file type specified. This post can't be uploaded. Please" +
-                    " rename the file in your working directory to include a valid extension as well as edit the file name in the" +
-                    " metadata text file that was generated.");
+            message.NoFileType(fileName);
             System.exit(1);
 
         }

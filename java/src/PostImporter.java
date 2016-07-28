@@ -20,16 +20,17 @@ import java.util.ArrayList;
 
 public class PostImporter
 {
-    public void importPost(String postID)
+    public void importPost(String postID, boolean verboseOutput)
     {
+        StatusMessages message = new StatusMessages();
         /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/
         String website = "http://daln.osu.edu/handle/2374.DALN/" + postID;
         Document doc = null;
         try {
-            System.out.println("Connecting to " + website + "...");
+            if(verboseOutput) message.ConnectingTo(website);
             doc = Jsoup.connect(website).get();
         } catch (IOException e) {
-            System.out.println("Could not connect to the website, or the post you entered does not exist on the DALN website.");
+            if(verboseOutput) message.DALNConnectionError(); else message.PostImportErrorLog(postID);
             System.exit(1);
         }
 
@@ -47,7 +48,7 @@ public class PostImporter
         }
         catch(IndexOutOfBoundsException e)
         {
-            System.out.println("The post you entered does not exist on the DALN website.");
+            if (verboseOutput) message.DALNPostDoesNotExist(); else message.PostImportErrorLog(postID);
             System.exit(1);
         }
 
@@ -87,7 +88,7 @@ public class PostImporter
             fileLinks.add(fileInfoTableRows.get(i).child(0).child(0).attr("abs:href"));
         }
 
-        System.out.println("Downloading metadata and files to directory");
+        if(verboseOutput) message.DownloadingFiles();
 
         /**Storing post metadata in a text file. This file will be parsed in the FileUploader class to figure out
          * the information needed to uploaded each file. This will also be updated at the end to include
@@ -139,6 +140,6 @@ public class PostImporter
             i++;
 
         }
-        System.out.println("Post #"+postID+" successfully downloaded to working directory.");
+        if(verboseOutput) message.PostImportCompleteVerbose(postID); else message.PostImportCompleteLog(postID);
     }
 }

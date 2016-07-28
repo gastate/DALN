@@ -20,22 +20,24 @@ public class UploadToS3
 {
     private AmazonS3Client s3Client;
     private HashMap<String, Object> postDetails;
-    private String dalnId, fileName;
+    private String dalnId, fileName, assetID;
+    private StatusMessages message;
+
     public UploadToS3(HashMap<String, Object> postDetails)
     {
+        message = new StatusMessages();
         s3Client = new AmazonS3Client(new ProfileCredentialsProvider("daln"));
 
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
         fileName = postDetails.get("Current File").toString();
+        assetID = postDetails.get("Current Asset ID").toString();
 
         uploadFile();
     }
 
-    public void uploadFile()
-    {
+    public void uploadFile() {
         try {
-            System.out.print("Uploading " + fileName + " to S3...");
 
             //Specifying the upload location of our in S3 and set it to public read
             File file = new File("downloads/" + dalnId + "/" + fileName);
@@ -43,7 +45,12 @@ public class UploadToS3
                     .withCannedAcl(CannedAccessControlList.PublicRead));
 
 
-        } catch (AmazonServiceException ase) {
+        } catch (AmazonClientException ace)
+        {
+            message.FileUploadAssetErrorLog(assetID);
+        }
+    }
+        /*
             System.out.println();
             System.out.println("Caught an AmazonServiceException, which " +
                     "means your request made it " +
@@ -60,9 +67,7 @@ public class UploadToS3
                     "an internal error while trying to " +
                     "communicate with S3, " +
                     "such as not being able to access the network.");
-            System.out.println("Error Message: " + ace.getMessage());
-        }
-    }
+            System.out.println("Error Message: " + ace.getMessage());*/
 
     public String getS3FileLocation()
     {

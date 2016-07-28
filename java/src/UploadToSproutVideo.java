@@ -11,6 +11,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,8 +32,11 @@ public class UploadToSproutVideo
     private String dalnId, originalLink, title, description, author, date, fileName, assetID, fullDescription;
     private CloseableHttpClient httpClient;
     private HttpPost uploadFile;
+    private HttpGet getFile;
+    private StatusMessages message;
 
     public UploadToSproutVideo(HashMap<String, Object> postDetails) throws IOException {
+        message = new StatusMessages();
         connectToSpoutVideo();
 
         this.postDetails = postDetails;
@@ -55,16 +60,16 @@ public class UploadToSproutVideo
 
     public void connectToSpoutVideo() throws IOException {
         /**Connect to SproutVideo**/
-        System.out.println("Connecting to SproutVideo...");
         GetPropertyValues properties = new GetPropertyValues();
         httpClient = HttpClients.createDefault();
         uploadFile = new HttpPost("https://api.sproutvideo.com/v1/videos");
         uploadFile.addHeader("SproutVideo-Api-Key", properties.getSproutVideoApiKey());
+        getFile =  new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=title");
+        getFile.addHeader("SproutVideo-Api-Key", properties.getSproutVideoApiKey());
     }
 
     public void uploadVideo()
     {
-        System.out.print("Uploading the video file " + fileName + " as " + assetID + " to SproutVideo...");
         //SproutVideo API uploads accept Multipart or Formdata as its format
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         //For the video submission
@@ -79,15 +84,14 @@ public class UploadToSproutVideo
         try {
             postResponse = httpClient.execute(uploadFile);
         } catch (IOException e) {
-            System.out.println("\n"+fileName + " could not be uploaded to SproutVideo.");
+            //System.out.println("\n"+fileName + " could not be uploaded to SproutVideo.");
+            message.FileUploadAssetErrorLog(assetID);
         }
 
     }
 
     public String getSpoutVideoLocation() {
         //The HTTP Response must be parsed to retrieve the location of the uploaded video
-        HttpGet getFile = new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=title");
-        getFile.addHeader("SproutVideo-Api-Key", System.getenv().get("SproutApiKey"));
 
         String videoLocation = "";
         String uploadedVideoTitle = postDetails.get("Current Asset ID").toString();
@@ -96,6 +100,7 @@ public class UploadToSproutVideo
         try {
             getResponse = httpClient.execute(getFile);
             String jsonString = EntityUtils.toString(getResponse.getEntity());
+            //System.out.println(jsonString);
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
             JSONArray jsonArray = (JSONArray) jsonObject.get("videos");
@@ -104,7 +109,10 @@ public class UploadToSproutVideo
                 String videoTitle = videoInfo.get("title").toString();
                 if (videoTitle.equals(uploadedVideoTitle)) {
                     String videoID = videoInfo.get("id").toString();
-                    videoLocation = "https://gsu-7zy7zle.vids.io/videos/" + videoID + "/"+uploadedVideoTitle;
+                    //String embedCode = videoInfo.get("embed_code").toString();
+                    //Element iframe = Jsoup.parse(embedCode).select("iframe").first();
+                    //String videoSource = iframe.attr("src");
+                    videoLocation = "https://mwharker.vids.io/videos/"+videoID+"/"+videoTitle;
                     return videoLocation;
                 }
             }

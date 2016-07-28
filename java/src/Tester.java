@@ -1,3 +1,9 @@
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.*;
@@ -12,14 +18,86 @@ public class Tester {
 
     public static void main(String[] args) throws IOException, ParseException {
 
-        Scanner scan = new Scanner(System.in);
+    if(args.length > 0)
+    {
+        String postID = args[0];
+        String programOption = "full";
+        boolean verboseOutput = true;
+
+        if(args.length >= 2) {
+            switch(args[1])
+            {
+                case "download":
+                    programOption = "download";
+                    break;
+                case "upload":
+                    programOption = "upload";
+                    break;
+                case "log":
+                    verboseOutput = false;
+                    break;
+                default:
+                    programOption = "full";
+                    verboseOutput = true;
+            }
+
+            if(args.length >= 3)
+            {
+                switch(args[2])
+                {
+                    case "log":
+                        verboseOutput = false;
+                        break;
+                    default:
+                        verboseOutput = true;
+                }
+            }
+        }
+
+
+        System.out.println("postid: " + postID);
+        System.out.println("program option: " + programOption);
+        System.out.println("verbose output: " + verboseOutput);
+
+        PostImporter postImporter = new PostImporter();
+        switch (programOption)
+        {
+            case "download":
+                postImporter.importPost(postID, verboseOutput);
+                break;
+            case "upload":
+                new FileUploader(postID, verboseOutput);
+                break;
+            case "full":
+                postImporter.importPost(postID, verboseOutput);
+                new FileUploader(postID, verboseOutput);
+        }
+    }
+    else
+    {
+        System.out.println("You didn't enter any arguments. You must run the program as follows: "
+        + "\njava tester postid [download|upload|full] [verbose|log]");
+        System.exit(1);
+    }
+
+
+
+
+
+
+
+
+
+
+        /*Scanner scan = new Scanner(System.in);
         System.out.println("OSU's DALN Post Importer and File Uploader" +
                 "\nThis program takes a post ID as " +
                 "input, downloads its contents to your working directory, then uploads" +
                 " the files contained within the post to SoundCloud, SpoutVideo, and S3. ");
 
+
         PostImporter videoImporter = new PostImporter();
-        System.out.println("Enter post ID: ");
+        System.out.println("Enter the post ID: ");
         String postID = scan.next();
         System.out.println("\nOptions:" +
                 "\n1) Download post #" + postID + " from DALN, upload, and add to database." +
@@ -27,11 +105,9 @@ public class Tester {
                 "\n3) Upload post #" + postID + " and add to database only." +
                 "\nEnter option number (-1 to quit): ");
         int opt = 0;
-        try
-        {
+        try {
             opt = Integer.parseInt(scan.next());
-            switch(opt)
-            {
+            switch (opt) {
                 case 1:
                     videoImporter.importPost(postID);
                     new FileUploader(postID);
@@ -48,14 +124,10 @@ public class Tester {
                     System.out.println("You didn't enter a valid option.");
                     System.exit(1);
             }
-        }
-        catch(NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("You have to enter a number.");
             System.exit(1);
-        }
+        }*/
+
     }
 }
-
-
-
