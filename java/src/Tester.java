@@ -1,12 +1,6 @@
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 import java.io.*;
-import java.util.*;
+
 /**
  * Created by Shakib on 6/25/2016.
  *

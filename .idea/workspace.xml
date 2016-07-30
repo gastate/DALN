@@ -2,21 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10809723-4f11-45be-aa6d-080d5bcb7f62" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/java/src/StatusMessages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/FileUploader.class" afterPath="$PROJECT_DIR$/production/java/FileUploader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/GetPropertyValues.class" afterPath="$PROJECT_DIR$/production/java/GetPropertyValues.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/PostImporter.class" afterPath="$PROJECT_DIR$/production/java/PostImporter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/Tester.class" afterPath="$PROJECT_DIR$/production/java/Tester.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/UploadToS3.class" afterPath="$PROJECT_DIR$/production/java/UploadToS3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/UploadToSoundCloud.class" afterPath="$PROJECT_DIR$/production/java/UploadToSoundCloud.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/UploadToSproutVideo.class" afterPath="$PROJECT_DIR$/production/java/UploadToSproutVideo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/java/StatusMessages.class" afterPath="$PROJECT_DIR$/production/java/StatusMessages.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/FileUploader.java" afterPath="$PROJECT_DIR$/java/src/FileUploader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/PostImporter.java" afterPath="$PROJECT_DIR$/java/src/PostImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/StatusMessages.java" afterPath="$PROJECT_DIR$/java/src/StatusMessages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/Tester.java" afterPath="$PROJECT_DIR$/java/src/Tester.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToS3.java" afterPath="$PROJECT_DIR$/java/src/UploadToS3.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" afterPath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" afterPath="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" />
     </list>
     <ignored path="DALN.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,42 +39,33 @@
       <file leaf-file-name="FileUploader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1601">
-              <caret line="153" column="56" selection-start-line="153" selection-start-column="56" selection-end-line="153" selection-end-column="56" />
+            <state relative-caret-position="304">
+              <caret line="253" column="28" selection-start-line="253" selection-start-column="28" selection-end-line="253" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
+                <element signature="method#uploadPost#0;class#FileUploader#0" expanded="true" />
                 <element signature="method#updatePostMetadata#0;class#FileUploader#0" expanded="true" />
-                <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
-                <marker date="1469660678505" expanded="true" signature="5137:5284" ph="{...}" />
-                <marker date="1469660678505" expanded="true" signature="6322:7889" ph="{...}" />
-                <marker date="1469660678505" expanded="true" signature="6664:7041" ph="{...}" />
-                <marker date="1469660678505" expanded="true" signature="7108:7477" ph="{...}" />
-                <marker date="1469660678505" expanded="true" signature="7495:7879" ph="{...}" />
-                <marker date="1469660678505" expanded="true" signature="8302:8578" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="5204:5351" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="6389:8029" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="6804:7181" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="7248:7617" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="7635:8019" ph="{...}" />
+                <marker date="1469810429752" expanded="true" signature="8442:8718" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UploadToSproutVideo.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UploadToSproutVideo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/UploadToSproutVideo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
+            <state relative-caret-position="939">
               <caret line="114" column="94" selection-start-line="114" selection-start-column="94" selection-end-line="114" selection-end-column="94" />
               <folding>
                 <element signature="method#connectToSpoutVideo#0;class#UploadToSproutVideo#0" expanded="true" />
                 <element signature="method#uploadVideo#0;class#UploadToSproutVideo#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UploadToSoundCloud.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/src/UploadToSoundCloud.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -98,18 +82,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tester.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Tester.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="72" column="16" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
+            <state relative-caret-position="44">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1469656551916" expanded="true" signature="929:2536" ph="{...}" />
-                <marker date="1469656551916" expanded="true" signature="1071:1874" ph="{...}" />
-                <marker date="1469656551916" expanded="true" signature="1113:1549" ph="{...}" />
-                <marker date="1469656551916" expanded="true" signature="1646:1850" ph="{...}" />
-                <marker date="1469656551916" expanded="false" signature="3724:4290" ph="{...}" />
+                <element signature="method#main#0;class#Tester#0" expanded="true" />
+                <marker date="1469838550592" expanded="true" signature="540:2147" ph="{...}" />
+                <marker date="1469838550592" expanded="true" signature="682:1485" ph="{...}" />
+                <marker date="1469838550592" expanded="true" signature="724:1160" ph="{...}" />
+                <marker date="1469838550592" expanded="true" signature="1257:1461" ph="{...}" />
+                <marker date="1469838550592" expanded="false" signature="3335:3901" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -118,9 +103,31 @@
       <file leaf-file-name="PostImporter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+            <state relative-caret-position="2581">
+              <caret line="131" column="30" selection-start-line="131" selection-start-column="30" selection-end-line="131" selection-end-column="30" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StatusMessages.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="403">
+              <caret line="29" column="109" selection-start-line="29" selection-start-column="109" selection-end-line="29" selection-end-column="109" />
+              <folding>
+                <element signature="method#PostImportCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#PostImportBeginLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#PostImportCompleteLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#PostImportErrorLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadAssetBeginLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadAssetCompleteLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadAssetErrorLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadPostCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadPostBeginLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadPostCompleteLog#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#FileUploadPostErrorLog#0;class#StatusMessages#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -181,14 +188,14 @@
         <option value="$PROJECT_DIR$/java/src/GetPropertyValues.java" />
         <option value="$PROJECT_DIR$/java/src/DynamoDBClient.java" />
         <option value="$PROJECT_DIR$/java/src/Post.java" />
-        <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
         <option value="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
         <option value="$PROJECT_DIR$/java/src/UploadToS3.java" />
-        <option value="$PROJECT_DIR$/java/src/Tester.java" />
-        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
-        <option value="$PROJECT_DIR$/java/src/StatusMessages.java" />
         <option value="$PROJECT_DIR$/production/java/config.properties" />
         <option value="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" />
+        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
+        <option value="$PROJECT_DIR$/java/src/StatusMessages.java" />
+        <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
+        <option value="$PROJECT_DIR$/java/src/Tester.java" />
       </list>
     </option>
   </component>
@@ -1309,7 +1316,7 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="Tester" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="14 upload log" />
+      <option name="PROGRAM_PARAMETERS" value="1350 full log" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -1362,12 +1369,12 @@
       <workItem from="1468863411716" duration="15080000" />
       <workItem from="1469124386386" duration="5936000" />
       <workItem from="1469204654799" duration="5763000" />
-      <workItem from="1469551347613" duration="28762000" />
+      <workItem from="1469551347613" duration="36932000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="305224000" />
+    <option name="totallyTimeSpent" value="313394000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1932" height="1038" extended-state="0" />
@@ -1380,7 +1387,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27765238" sideWeight="0.50214595" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41095892" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27283105" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992464" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3196347" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1601,21 +1608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="72" column="16" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1469656551916" expanded="true" signature="929:2536" ph="{...}" />
-            <marker date="1469656551916" expanded="true" signature="1071:1874" ph="{...}" />
-            <marker date="1469656551916" expanded="true" signature="1113:1549" ph="{...}" />
-            <marker date="1469656551916" expanded="true" signature="1646:1850" ph="{...}" />
-            <marker date="1469656551916" expanded="false" signature="3724:4290" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/UploadToSoundCloud.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -1650,61 +1642,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
+    <entry file="file://$PROJECT_DIR$/java/src/UploadToSproutVideo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
+        <state relative-caret-position="939">
+          <caret line="114" column="94" selection-start-line="114" selection-start-column="94" selection-end-line="114" selection-end-column="94" />
           <folding>
-            <element signature="method#PostImportCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#PostImportCompleteLog#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#PostImportErrorLog#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#CannotFindPostToUpload#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#UploadingToSproutVideo#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#UploadingToSoundCloud#0;class#StatusMessages#0" expanded="true" />
-            <element signature="e#2199#2200#0" expanded="true" />
-            <element signature="e#2279#2280#0" expanded="true" />
-            <element signature="method#FileUploadAssetCompleteLog#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#FileUploadAssetErrorLog#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#FileUploadPostCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#FileUploadPostCompleteLog#0;class#StatusMessages#0" expanded="true" />
-            <element signature="method#FileUploadPostErrorLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#connectToSpoutVideo#0;class#UploadToSproutVideo#0" expanded="true" />
+            <element signature="method#uploadVideo#0;class#UploadToSproutVideo#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1601">
-          <caret line="153" column="56" selection-start-line="153" selection-start-column="56" selection-end-line="153" selection-end-column="56" />
+        <state relative-caret-position="304">
+          <caret line="253" column="28" selection-start-line="253" selection-start-column="28" selection-end-line="253" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
+            <element signature="method#uploadPost#0;class#FileUploader#0" expanded="true" />
             <element signature="method#updatePostMetadata#0;class#FileUploader#0" expanded="true" />
-            <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
-            <marker date="1469660678505" expanded="true" signature="5137:5284" ph="{...}" />
-            <marker date="1469660678505" expanded="true" signature="6322:7889" ph="{...}" />
-            <marker date="1469660678505" expanded="true" signature="6664:7041" ph="{...}" />
-            <marker date="1469660678505" expanded="true" signature="7108:7477" ph="{...}" />
-            <marker date="1469660678505" expanded="true" signature="7495:7879" ph="{...}" />
-            <marker date="1469660678505" expanded="true" signature="8302:8578" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="5204:5351" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="6389:8029" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="6804:7181" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="7248:7617" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="7635:8019" ph="{...}" />
+            <marker date="1469810429752" expanded="true" signature="8442:8718" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="29" column="109" selection-start-line="29" selection-start-column="109" selection-end-line="29" selection-end-column="109" />
+          <folding>
+            <element signature="method#PostImportCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#PostImportBeginLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#PostImportCompleteLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#PostImportErrorLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadAssetBeginLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadAssetCompleteLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadAssetErrorLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadPostCompleteVerbose#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadPostBeginLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadPostCompleteLog#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#FileUploadPostErrorLog#0;class#StatusMessages#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+        <state relative-caret-position="2581">
+          <caret line="131" column="30" selection-start-line="131" selection-start-column="30" selection-end-line="131" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/UploadToSproutVideo.java">
+    <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="114" column="94" selection-start-line="114" selection-start-column="94" selection-end-line="114" selection-end-column="94" />
+        <state relative-caret-position="44">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
-            <element signature="method#connectToSpoutVideo#0;class#UploadToSproutVideo#0" expanded="true" />
-            <element signature="method#uploadVideo#0;class#UploadToSproutVideo#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Tester#0" expanded="true" />
+            <marker date="1469838550592" expanded="true" signature="540:2147" ph="{...}" />
+            <marker date="1469838550592" expanded="true" signature="682:1485" ph="{...}" />
+            <marker date="1469838550592" expanded="true" signature="724:1160" ph="{...}" />
+            <marker date="1469838550592" expanded="true" signature="1257:1461" ph="{...}" />
+            <marker date="1469838550592" expanded="false" signature="3335:3901" ph="{...}" />
           </folding>
         </state>
       </provider>

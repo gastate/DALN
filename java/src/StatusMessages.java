@@ -25,6 +25,11 @@ public class StatusMessages
         System.out.println("Downloading metadata and files to directory");
     }
 
+    public void FileLinkInvalid()
+    {
+        System.out.println("Cannot access the file. The link to the file may be invalid or no files exist.");
+    }
+
 
     /**PostImporter completed/failure messages**/
     public void PostImportCompleteVerbose(String postID)
@@ -32,6 +37,10 @@ public class StatusMessages
         System.out.println("Post #"+postID+" successfully downloaded to working directory.");
     }
 
+    public void PostImportBeginLog(String postID)
+    {
+        System.out.println("postid:"+postID+"|action:download|status:initiated");
+    }
     public void PostImportCompleteLog(String postID)
     {
         System.out.println("postid:"+postID+"|action:download|status:completed");
@@ -86,12 +95,18 @@ public class StatusMessages
 
     public void NoFileType(String fileName)
     {
-        System.out.println("The file " + fileName + " does not have a file type specified. This post can't be uploaded. Please" +
+        System.out.println("The file \"" + fileName + "\" does not have a file type specified. This post can't be uploaded. Please" +
                 " rename the file in your working directory to include a valid extension as well as edit the file name in the" +
                 " metadata text file that was generated.");
     }
 
+
     /**FileUploader completed/failure messages**/
+    public void FileUploadAssetBeginLog(String assetID)
+    {
+        System.out.println("assetid:"+assetID+"|action:upload|status:initiated");
+    }
+
     public void FileUploadAssetCompleteLog(String assetID)
     {
         System.out.println("assetid:"+assetID+"|action:upload|status:completed");
@@ -106,6 +121,11 @@ public class StatusMessages
     public void FileUploadPostCompleteVerbose(String postID)
     {
         System.out.println("Post #" + postID + " successfully uploaded and added to database.");
+    }
+
+    public void FileUploadPostBeginLog(String postID)
+    {
+        System.out.println("postid:"+postID+"|action:upload|status:initiated");
     }
 
     public void FileUploadPostCompleteLog(String postID)

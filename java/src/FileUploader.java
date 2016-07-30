@@ -35,6 +35,7 @@ public class FileUploader {
     public FileUploader(String postID, boolean verboseOutput) throws IOException {
         this.verboseOutput = verboseOutput;
         message = new StatusMessages();
+        if(!verboseOutput) message.FileUploadPostBeginLog(postID);
         /**Connect to S3**/
         //access key and secret access key stored in credentials file on local machine
         //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
@@ -137,6 +138,7 @@ public class FileUploader {
             String currentFileName = fileNames.get(i);
             String assetID = UUID.randomUUID().toString();
             fileUUIDs.add(assetID);
+            if(!verboseOutput) message.FileUploadAssetBeginLog(assetID);
 
             postDetails.put("Current File", currentFileName);
             postDetails.put("Current Asset ID", assetID);
@@ -249,6 +251,7 @@ public class FileUploader {
                 case ".rtf":
                 case ".txt":
                 case ".pdf":
+                case ".odt":
                     return "Text";
                 case ".jpg":
                 case ".jpeg":
@@ -272,7 +275,7 @@ public class FileUploader {
             }
         }catch(StringIndexOutOfBoundsException e)
         {
-            message.NoFileType(fileName);
+            if(verboseOutput)message.NoFileType(fileName);else message.FileUploadPostErrorLog(postID);
             System.exit(1);
 
         }

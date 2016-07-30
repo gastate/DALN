@@ -23,6 +23,7 @@ public class PostImporter
     public void importPost(String postID, boolean verboseOutput)
     {
         StatusMessages message = new StatusMessages();
+        if(!verboseOutput) message.PostImportBeginLog(postID);
         /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/
         String website = "http://daln.osu.edu/handle/2374.DALN/" + postID;
         Document doc = null;
@@ -123,12 +124,13 @@ public class PostImporter
         int i = 0;
         //Navigate to each file and download
         for(String link : fileLinks) {
-
             //navigate to link
             try {
                 url = new URL(link);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                if(verboseOutput) message.FileLinkInvalid(); else message.PostImportErrorLog(postID);
+                System.exit(1);
+                //e.printStackTrace();
             }
 
             //download with specified target and name
