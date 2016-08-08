@@ -1,4 +1,7 @@
 import org.json.simple.parser.ParseException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 
 /**
@@ -10,7 +13,7 @@ import java.io.*;
  */
 public class Tester {
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, TransformerException, ParserConfigurationException {
 
     if(args.length > 0)
     {
@@ -53,17 +56,16 @@ public class Tester {
         System.out.println("program option: " + programOption);
         System.out.println("verbose output: " + verboseOutput);
 
-        PostImporter postImporter = new PostImporter();
         switch (programOption)
         {
             case "download":
-                postImporter.importPost(postID, verboseOutput);
+                new PostImporter(postID, verboseOutput);
                 break;
             case "upload":
                 new FileUploader(postID, verboseOutput);
                 break;
             case "full":
-                postImporter.importPost(postID, verboseOutput);
+                new PostImporter(postID, verboseOutput);
                 new FileUploader(postID, verboseOutput);
         }
     }

@@ -6,6 +6,10 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.util.*;
@@ -31,6 +35,7 @@ public class FileUploader {
     private String postID;
     private StatusMessages message;
     private boolean verboseOutput;
+    private String[] singleEntryFields, multiEntryFields;
 
     public FileUploader(String postID, boolean verboseOutput) throws IOException {
         this.verboseOutput = verboseOutput;
@@ -44,68 +49,77 @@ public class FileUploader {
         /**Connect to DynamoDB**/
         client = new DynamoDBClient();
 
+        PostImporter postImporter = new PostImporter();
+        postImporter.initializeFields();
+        singleEntryFields = postImporter.getSingleEntryFields();
+        multiEntryFields = postImporter.getMultiEntryFields();
+
         this.postID = postID;
         postDetails = new HashMap<>();
         postDetails = getPostDetails();
         uploadPost();
     }
 
+
+
     /**Extract fields from the metadata generated from PostImporter so that we can use them as inputs for uploads
      * and DB entry. All the needed information is stored in a single HashMap so that the number of inputs needed
      * for all functions is kept to a minimum.**/
     public HashMap<String, Object> getPostDetails()
     {
-        metadata = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
-        Scanner readMetadata = null;
+        String metadataPath = "downloads/" + postID + "/Post" + postID + ".xml";
+        metadata = new File(metadataPath);
+        Document doc = null;
         try {
-            readMetadata = new Scanner(metadata); //Scanner object to read file
-        } catch (FileNotFoundException e) {
-            if(verboseOutput) message.CannotFindPostToUpload(); else message.FileUploadPostErrorLog(postID);
+            doc = Jsoup.parse(metadata, "UTF-8"); //Scanner object to read file
+        } catch (IOException e) {
+            if(verboseOutput) message.DALNPostDoesNotExist();
             System.exit(1);
         }
-        String link = readMetadata.nextLine();
-        link = link.substring(link.indexOf(':') + 1).trim(); //extracts everything after ": "
-        String title = readMetadata.nextLine();
-        title = title.substring(title.indexOf(':') + 1).trim();
-        String description = readMetadata.nextLine();
-        description = description.substring(description.indexOf(':') + 1).trim();
-        String author = readMetadata.nextLine();
-        author = author.substring(author.indexOf(':') + 1).trim();
-        String date = readMetadata.nextLine();
-        date = date.substring(date.indexOf(':') + 1).trim();
-        String files = readMetadata.nextLine();
-        int numberOfAssets =Integer.parseInt(files.substring(files.indexOf(':')+1).trim());
 
-        ArrayList<String> fileNames = new ArrayList<>();
-        String line;
-        while (readMetadata.hasNextLine())
+        //Post and file details are gathered from the xml metadata
+        //Details will all be stored in a single hashmap
+        Element root = doc.child(0);
+
+        Element field;
+        for(String fieldName : singleEntryFields)
+            if ((field = root.select(fieldName).first()) != null)
+                postDetails.put(fieldName, field.text());
+
+        for(String fieldName : multiEntryFields)
+            if ((field = root.select(fieldName).first()) != null) {
+                ArrayList<String> tempList = new ArrayList<>();
+                for (Element child : field.children())
+                    tempList.add(child.text());
+
+                postDetails.put(fieldName, tempList);
+            }
+
+        ArrayList<String> fileNames = new ArrayList<>(), fileLinks = new ArrayList<>(),
+                fileDescriptions = new ArrayList<>(), fileTypes = new ArrayList<>();
+        int numberOfAssets;
+
+        Elements allFiles = doc.select("files").first().children();
+        numberOfAssets = allFiles.size();
+        for(Element file : allFiles)
         {
-            //if lines after this point are empty, that means either the file is done
-            //OR the file includes DB data already, which should be ignored
-            line = readMetadata.nextLine();
-            if (line.equals("**DATABASE INFORMATION**"))
-                break;
+            fileNames.add(file.select("fileName").first().text());
+            //File types will determine which service to use for upload
+            fileTypes.add(checkFiletype(file.select("fileName").first().text()));
+            fileLinks.add(file.select("fileLink").first().text());
+
+            Element fileDescriptionField = file.select("fileDescription").first();
+            if(fileDescriptionField == null)
+                fileDescriptions.add("None");
             else
-                fileNames.add(line.trim());
+                fileDescriptions.add(fileDescriptionField.text());
         }
-        readMetadata.close();
-        //HERE I SOMEHOW GET THE INFO FOR THE HIDDEN METADATA FOR EACH
-        /**File types will determine which service to use for upload**/
-        ArrayList<String> fileTypes = new ArrayList<>();
-        for (String fileName : fileNames)
-            fileTypes.add(checkFiletype(fileName));
 
-
-        //Store the details of the post in a hashmap which will be passed on to the db client
         postDetails.put("DalnId", postID);
-        postDetails.put("Description", description);
-        postDetails.put("Author", author);
-        postDetails.put("Title", title);
-        postDetails.put("UploadDate", date);
-        postDetails.put("OriginalLink", link);
         postDetails.put("NumberOfAssets", numberOfAssets);
-        postDetails.put("FileNames", fileNames);
-        postDetails.put("FileTypes", fileTypes);
+        postDetails.put("fileNames", fileNames);
+        postDetails.put("fileTypes", fileTypes);
+        postDetails.put("fileDescriptions", fileDescriptions);
 
         return postDetails;
     }
@@ -130,8 +144,9 @@ public class FileUploader {
         ArrayList<String> fileUUIDs = new ArrayList<>();
         ArrayList<String> fileLocations = new ArrayList<>();
 
-        ArrayList<String> fileNames = (ArrayList<String>)postDetails.get("FileNames");
-        ArrayList<String> fileTypes = (ArrayList<String>)postDetails.get("FileTypes");
+        ArrayList<String> fileNames = (ArrayList<String>)postDetails.get("fileNames");
+        ArrayList<String> fileTypes = (ArrayList<String>)postDetails.get("fileTypes");
+        ArrayList<String> fileDescriptions = (ArrayList<String>)postDetails.get("fileDescriptions");
         int numberOfAssets = (Integer)postDetails.get("NumberOfAssets");
         for (int i = 0; i < numberOfAssets; i++)
         {
@@ -175,16 +190,14 @@ public class FileUploader {
             HashMap<String,String> asset = new HashMap<>();
             asset.put("Asset ID", fileUUIDs.get(j));
             asset.put("Asset Location", fileLocations.get(j));
+            asset.put("Asset Description", fileDescriptions.get(j));
             asset.put("Asset Type", fileTypes.get(j));
             assetList.add(asset);
         }
-        postDetails.put("AssetList", assetList); //this list includes generated asset IDs, locations, and filetypes
+        postDetails.put("assetList", assetList); //this list includes generated asset IDs, locations, and filetypes
 
         //the insert post method returns the randomly generated post UUID.
-        String postUUID = client.insertPost(postDetails);
-
-        //The metadata needs to be updated with information after the uploading and DB insertion is completed
-        updatePostMetadata(postID, postUUID, fileNames, fileUUIDs, fileTypes, fileLocations);
+        client.insertPost(postDetails);
 
         if(verboseOutput) message.FileUploadPostCompleteVerbose(postID); else message.FileUploadPostCompleteLog(postID);
     }
@@ -206,40 +219,6 @@ public class FileUploader {
         // upload metadata to folder and set it to public
         s3Client.putObject(new PutObjectRequest("daln", "Posts/" + postID + "/" + metadata.getName(), metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
-
-    }
-    /**this method will update the post metadata text file in S3 with post and asset UUIDs, as well as asset locations.**/
-    private void updatePostMetadata(String postID, String postUUID, ArrayList<String> assetNames, ArrayList<String> assetUUIDs, ArrayList<String> assetTypes, ArrayList<String> assetLocations) {
-
-    if(verboseOutput) message.UpdatingMetadata();
-        //The metadata file essentially will be recreated with added info
-        try {
-            List<String> lines = FileUtils.readLines(metadata, "utf-8");
-            //Rewrites the post metadata if it includes old database information
-            int indexToRemove = -1;
-            for(int i = 0; i<lines.size(); i++)
-            {
-                if(lines.get(i).equals("**DATABASE INFORMATION**"))
-                {
-                    indexToRemove = i;
-                    for(int j = indexToRemove; j <lines.size();)
-                        lines.remove(j);
-                    break;
-                }
-            }
-            lines.add("**DATABASE INFORMATION**");
-            lines.add("Post UUID: " + postUUID);
-            lines.add("Asset Info:");
-            for(int i = 0; i < assetNames.size(); i++)
-                lines.add("\t"+assetNames.get(i)+"\r\n\t"+assetUUIDs.get(i)+"\r\n\tType: "+assetTypes.get(i)+"\r\n\t"+assetLocations.get(i)+"\r\n\t");
-            FileUtils.forceDelete(metadata);
-            File newFile = new File("downloads/" + postID + "/Post #" + postID + " Data.txt");
-            FileUtils.writeLines(newFile, lines);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        uploadPostFolder();
 
     }
 

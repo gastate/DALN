@@ -41,18 +41,20 @@ public class UploadToSproutVideo
 
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
-        originalLink = postDetails.get("OriginalLink").toString();
-        title = postDetails.get("Title").toString();
-        description = postDetails.get("Description").toString();
-        author = postDetails.get("Author").toString();
-        date = postDetails.get("UploadDate").toString();
+        originalLink = postDetails.get("identifierUri").toString();
+        title = postDetails.get("title").toString();
+        description = postDetails.get("description").toString();
+        ArrayList<String> authors = (ArrayList<String>)postDetails.get("contributorAuthor");
+        for(String anAuthor : authors)
+             author += "\n"+anAuthor;
+        date = postDetails.get("dateCreated").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
         fullDescription = "Original Post Link: " + originalLink
                 + "\nFile Name: " + fileName
                 + "\nDescription: " + description
-                + "\nAuthor: " + author
+                + "Author: " + author
                 + "\nOriginal Date Posted: " + date;
 
         uploadVideo();

@@ -30,12 +30,31 @@ public class DynamoDBClient {
     {
         //Create an instance of the post class, and fill it with information passed from the FileUploader class
         Post post = new Post();
-        post.setTitle(postDetails.get("Title").toString());
-        post.setAuthor(postDetails.get("Author").toString());
-        post.setDate(postDetails.get("UploadDate").toString());
-        post.setDescription(postDetails.get("Description").toString());
+
+        if (postDetails.get("title") != null) post.setTitle(postDetails.get("title").toString());
+        if (postDetails.get("description") != null) post.setDescription(postDetails.get("description").toString());
+        if (postDetails.get("identifierUri") != null) post.setIdentifierUri(postDetails.get("identifierUri").toString());
+        if (postDetails.get("dateAccessioned") != null) post.setDateAccessioned(postDetails.get("dateAccessioned").toString());
+        if (postDetails.get("dateAvailable") != null) post.setDateAvailable(postDetails.get("dateAvailable").toString());
+        if (postDetails.get("dateCreated") != null) post.setDateCreated(postDetails.get("dateCreated").toString());
+        if (postDetails.get("dateIssued") != null) post.setDateIssued(postDetails.get("dateIssued").toString());
+        if (postDetails.get("rightsConsent") != null) post.setRightsConsent(postDetails.get("rightsConsent").toString());
+        if (postDetails.get("rightsRelease") != null) post.setRightsRelease(postDetails.get("rightsRelease").toString());
+        if (postDetails.get("contributorAuthor") != null) post.setContributorAuthor((List<String>)postDetails.get("contributorAuthor"));
+        if (postDetails.get("contributorInterviewer") != null) post.setContributorInterviewer((List<String>)postDetails.get("contributorInterviewer"));
+        if (postDetails.get("creatorGender") != null) post.setCreatorGender((List<String>)postDetails.get("creatorGender"));
+        if (postDetails.get("creatorRaceEthnicity") != null) post.setCreatorRaceEthnicity((List<String>)postDetails.get("creatorRaceEthnicity"));
+        if (postDetails.get("creatorClass") != null) post.setCreatorClass((List<String>)postDetails.get("creatorClass"));
+        if (postDetails.get("creatorYearOfBirth") != null) post.setCreatorYearOfBirth((List<String>)postDetails.get("creatorYearOfBirth"));
+        if (postDetails.get("coverageSpatial") != null) post.setCoverageSpatial((List<String>)postDetails.get("coverageSpatial"));
+        if (postDetails.get("coveragePeriod") != null) post.setCoveragePeriod((List<String>)postDetails.get("coveragePeriod"));
+        if (postDetails.get("coverageRegion") != null) post.setCoverageRegion((List<String>)postDetails.get("coverageRegion"));
+        if (postDetails.get("coverageStateProvince") != null) post.setCoverageStateProvince((List<String>)postDetails.get("coverageStateProvince"));
+        if (postDetails.get("coverageNationality") != null) post.setCoverageNationality((List<String>)postDetails.get("coverageNationality"));
+        if (postDetails.get("language") != null) post.setLanguage((List<String>)postDetails.get("language"));
+        if (postDetails.get("subject") != null) post.setSubject((List<String>)postDetails.get("subject"));
         post.setDalnId(postDetails.get("DalnId").toString());
-        post.setAssetList((List<HashMap<String,String>>)postDetails.get("AssetList"));
+        post.setAssetList((List<HashMap<String,String>>)postDetails.get("assetList"));
         //Enter it into the DB
         mapper.save(post); //post UUID is generated once this function is called
 
@@ -49,7 +68,7 @@ public class DynamoDBClient {
         eav.put(":val1", new AttributeValue().withS(postID));
 
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("DalnId = :val1")
+                .withFilterExpression("dalnId = :val1")
                 .withExpressionAttributeValues(eav);
 
         List<Post> scanResults = mapper.scan(Post.class, scanExpression);
