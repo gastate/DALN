@@ -8,7 +8,6 @@
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jsoup-1.9.2" level="project" />
-    <orderEntry type="library" name="rhino-1.7.7.1" level="project" />
     <orderEntry type="library" name="json-simple-1.1.1" level="project" />
     <orderEntry type="library" name="httpClient" level="project" />
     <orderEntry type="library" name="commons-io-2.5" level="project" />
@@ -17,8 +16,6 @@
     <orderEntry type="library" name="com.fasterxml.jackson.core" level="project" />
     <orderEntry type="library" name="jackson-annotations-2.1.2" level="project" />
     <orderEntry type="library" name="joda-time-2.4" level="project" />
-    <orderEntry type="library" name="jython-standalone-2.7.0" level="project" />
-    <orderEntry type="library" name="soundcloudFull" level="project" />
     <orderEntry type="library" name="soundcloud-0.2.1-jar-with-dependencies" level="project" />
   </component>
 </module>

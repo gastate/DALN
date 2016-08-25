@@ -159,6 +159,12 @@ public class PostImporter
         }
 
         Element root = doc.child(0);
+        if(root.getElementsByTag("h1").text().equals("Resource not found"))
+        {
+            if (verboseOutput) message.DALNPostDoesNotExist();
+            else message.PostImportErrorLog(postID);
+            System.exit(1);
+        }
         Element postInfoRoot = root.child(0);
         Element fileInfoRoot = root.child(1);
 
@@ -264,9 +270,8 @@ public class PostImporter
     public void createMetadataTextFile() throws ParserConfigurationException, TransformerException {
 
 
-        /**Storing post metadata in a text file. This file will be parsed in the FileUploader class to figure out
-         * the information needed to uploaded each file. This will also be updated at the end to include
-         * relevant information from the database.**/
+        /**Storing post metadata in an xml file. This file will be parsed in the FileUploader class to figure out
+         * the information needed to uploaded each file.**/
         File newFolder = new File("downloads/" + postID);
         newFolder.mkdir(); //create a new folder with the post ID
 
@@ -278,6 +283,7 @@ public class PostImporter
         org.w3c.dom.Element rootElement = doc.createElement("post");
         doc.appendChild(rootElement);
 
+        //each of these elements can only have zero or one values
         for(String field : singleEntryFields)
         {
             org.w3c.dom.Element element = doc.createElement(field);
@@ -286,6 +292,7 @@ public class PostImporter
                 rootElement.appendChild(element);
         }
 
+        //each of these elements can have 0 or more values
         for(String field : multiEntryFields)
         {
             org.w3c.dom.Element element = doc.createElement(field);
@@ -298,6 +305,7 @@ public class PostImporter
                 rootElement.appendChild(element);
         }
 
+        //creating the elements for the files
         org.w3c.dom.Element files = doc.createElement("files");
         int numOfFiles = fileNames.size();
         for(int i = 0; i < numOfFiles; i++)
@@ -326,9 +334,6 @@ public class PostImporter
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(new File("downloads/" + postID + "/Post" + postID + ".xml"));
-
-        // Output to console for testing
-        // StreamResult result = new StreamResult(System.out);
 
         transformer.transform(source, result);
 

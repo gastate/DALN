@@ -20,10 +20,9 @@ import java.util.*;
  * The purpose of this class is to upload files that were downloaded to the working directory using the PostImporter
  * class. The upload function takes the post ID as input and searches for this post in the downloads folder
  * of the project directory (which is the default location of post downloads). It then determines what kind of
- * files are contained within each post, and then chooses which service to upload them to.Video files are uploaded to
+ * files are contained within each post, and then chooses which service to upload them to. Video files are uploaded to
  * SproutVideo, audio files are uploaded to SoundCloud, and the rest are uploaded to S3. Last, it inserts the information
- * about the post into the database using the DynamoDBClient and updates the post metadata text file to include
- * relevant information.
+ * about the post into the database using the DynamoDBClient.
  *
  */
 public class FileUploader {
@@ -63,8 +62,7 @@ public class FileUploader {
 
 
     /**Extract fields from the metadata generated from PostImporter so that we can use them as inputs for uploads
-     * and DB entry. All the needed information is stored in a single HashMap so that the number of inputs needed
-     * for all functions is kept to a minimum.**/
+     * and DB entry. All the needed information is stored in a single HashMap.**/
     public HashMap<String, Object> getPostDetails()
     {
         String metadataPath = "downloads/" + postID + "/Post" + postID + ".xml";
@@ -88,11 +86,11 @@ public class FileUploader {
 
         for(String fieldName : multiEntryFields)
             if ((field = root.select(fieldName).first()) != null) {
-                ArrayList<String> tempList = new ArrayList<>();
+                ArrayList<String> listOfValues = new ArrayList<>();
                 for (Element child : field.children())
-                    tempList.add(child.text());
+                    listOfValues.add(child.text());
 
-                postDetails.put(fieldName, tempList);
+                postDetails.put(fieldName, listOfValues);
             }
 
         ArrayList<String> fileNames = new ArrayList<>(), fileLinks = new ArrayList<>(),
