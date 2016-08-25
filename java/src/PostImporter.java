@@ -1,9 +1,10 @@
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.Versioned;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Attr;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,7 +15,6 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -270,7 +270,7 @@ public class PostImporter
     public void createMetadataTextFile() throws ParserConfigurationException, TransformerException {
 
 
-        /**Storing post metadata in an xml file. This file will be parsed in the FileUploader class to figure out
+        /**Storing post metadata in an xml file. This file will be parsed in the main.FileUploader class to figure out
          * the information needed to uploaded each file.**/
         File newFolder = new File("downloads/" + postID);
         newFolder.mkdir(); //create a new folder with the post ID
@@ -336,7 +336,6 @@ public class PostImporter
         StreamResult result = new StreamResult(new File("downloads/" + postID + "/Post" + postID + ".xml"));
 
         transformer.transform(source, result);
-
     }
 
     public void downloadFiles()

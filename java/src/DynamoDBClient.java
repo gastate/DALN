@@ -1,14 +1,11 @@
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
-import java.io.IOException;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.s3.AmazonS3Client;
 
 /**
  * Created by Shakib on 7/5/2016.
@@ -28,7 +25,7 @@ public class DynamoDBClient {
     }
     public String insertPost(HashMap postDetails)
     {
-        //Create an instance of the post class, and fill it with information passed from the FileUploader class
+        //Create an instance of the post class, and fill it with information passed from the main.FileUploader class
         Post post = new Post();
 
         if (postDetails.get("title") != null) post.setTitle(postDetails.get("title").toString());

@@ -5,7 +5,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-import org.apache.commons.io.FileUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.DateTimeZone;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,12 +18,12 @@ import java.util.*;
 /**
  * Created by Shakib on 6/28/2016.
  *
- * The purpose of this class is to upload files that were downloaded to the working directory using the PostImporter
+ * The purpose of this class is to upload files that were downloaded to the working directory using the main.PostImporter
  * class. The upload function takes the post ID as input and searches for this post in the downloads folder
  * of the project directory (which is the default location of post downloads). It then determines what kind of
  * files are contained within each post, and then chooses which service to upload them to. Video files are uploaded to
  * SproutVideo, audio files are uploaded to SoundCloud, and the rest are uploaded to S3. Last, it inserts the information
- * about the post into the database using the DynamoDBClient.
+ * about the post into the database using the main.DynamoDBClient.
  *
  */
 public class FileUploader {
@@ -61,7 +62,7 @@ public class FileUploader {
 
 
 
-    /**Extract fields from the metadata generated from PostImporter so that we can use them as inputs for uploads
+    /**Extract fields from the metadata generated from main.PostImporter so that we can use them as inputs for uploads
      * and DB entry. All the needed information is stored in a single HashMap.**/
     public HashMap<String, Object> getPostDetails()
     {
@@ -75,7 +76,7 @@ public class FileUploader {
             System.exit(1);
         }
 
-        //Post and file details are gathered from the xml metadata
+        //main.Post and file details are gathered from the xml metadata
         //Details will all be stored in a single hashmap
         Element root = doc.child(0);
 

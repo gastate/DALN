@@ -3,7 +3,6 @@ import de.voidplus.soundcloud.Track;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,7 +30,7 @@ public class UploadToSoundCloud
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
-        fullDescription = "Original Post Link: " + originalLink
+        fullDescription = "Original main.Post Link: " + originalLink
                 + "\nFile Name: " + fileName
                 + "\nOriginal Date Posted: " + date;
 

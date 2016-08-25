@@ -1,19 +1,17 @@
-import org.json.simple.parser.ParseException;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Created by Shakib on 6/25/2016.
  *
  * This is the starting point of the program. Parameters supplied are the post ID, a choice between download, upload, or both,
- * and an option for viewing a log output or a verbose output for debugging. It creates instances of the PostImporter and
- * FileUploader classes based on the option chosen.
+ * and an option for viewing a log output or a verbose output for debugging. It creates instances of the main.PostImporter and
+ * main.FileUploader classes based on the option chosen.
  */
 public class Tester {
 
-    public static void main(String[] args) throws IOException, ParseException, TransformerException, ParserConfigurationException {
+    public static void main(String[] args) throws IOException, org.apache.http.ParseException, TransformerException, ParserConfigurationException {
 
     if(args.length > 0)
     {

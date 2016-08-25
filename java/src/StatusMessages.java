@@ -1,3 +1,4 @@
+
 /**
  * Created by Shakib on 7/26/2016.
  */
@@ -8,7 +9,7 @@ public class StatusMessages
         System.out.println("Connecting to " + connection + "...");
     }
 
-    /**PostImporter progress messages**/
+    /**main.PostImporter progress messages**/
     public void DALNConnectionError()
     {
         System.out.println("Could not connect to the website, or the post you entered does not exist on the DALN website.");
@@ -31,10 +32,10 @@ public class StatusMessages
     }
 
 
-    /**PostImporter completed/failure messages**/
+    /**main.PostImporter completed/failure messages**/
     public void PostImportCompleteVerbose(String postID)
     {
-        System.out.println("Post #"+postID+" successfully downloaded to working directory.");
+        System.out.println("main.Post #"+postID+" successfully downloaded to working directory.");
     }
 
     public void PostImportBeginLog(String postID)
@@ -51,7 +52,7 @@ public class StatusMessages
         System.out.println("postid:"+postID+"|action:download|status:error");
     }
 
-    /**FileUploader progress messages**/
+    /**main.FileUploader progress messages**/
     public void CannotFindPostToUpload()
     {
         System.out.println("This post hasn't been downloaded yet or this post does not exist.");
@@ -101,7 +102,7 @@ public class StatusMessages
     }
 
 
-    /**FileUploader completed/failure messages**/
+    /**main.FileUploader completed/failure messages**/
     public void FileUploadAssetBeginLog(String assetID)
     {
         System.out.println("assetid:"+assetID+"|action:upload|status:initiated");
@@ -120,7 +121,7 @@ public class StatusMessages
 
     public void FileUploadPostCompleteVerbose(String postID)
     {
-        System.out.println("Post #" + postID + " successfully uploaded and added to database.");
+        System.out.println("main.Post #" + postID + " successfully uploaded and added to database.");
     }
 
     public void FileUploadPostBeginLog(String postID)
