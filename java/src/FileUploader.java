@@ -1,3 +1,4 @@
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -42,9 +43,22 @@ public class FileUploader {
         message = new StatusMessages();
         if(!verboseOutput) message.FileUploadPostBeginLog(postID);
         /**Connect to S3**/
-        //access key and secret access key stored in credentials file on local machine
-        //https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standardized-Way-to-Manage-Credentials-in-the-AWS-SDKs
-        s3Client = new AmazonS3Client(new ProfileCredentialsProvider("daln"));
+        GetPropertyValues propertyValues = new GetPropertyValues();
+        final HashMap<String, String> credentials =  propertyValues.getAWSCredentials();
+
+        s3Client = new AmazonS3Client(new AWSCredentials() {
+            @Override
+            public String getAWSAccessKeyId() {
+                return credentials.get("AWSAccessKey");
+            }
+
+            @Override
+            public String getAWSSecretKey() {
+                return credentials.get("AWSSecretKey");
+            }
+        });
+
+
 
         /**Connect to DynamoDB**/
         client = new DynamoDBClient();

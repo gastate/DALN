@@ -57,4 +57,24 @@ public class GetPropertyValues
         }
         return soundCloudClientInfo;
     }
+
+    public HashMap<String,String> getAWSCredentials() throws IOException {
+        HashMap<String,String> awsCredentials = new HashMap<>();
+        try {
+            Properties prop = new Properties();
+            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            prop.load(inputStream);
+            awsCredentials.put("AWSAccessKey", prop.getProperty("AWSAccessKey"));
+            awsCredentials.put("AWSSecretKey", prop.getProperty("AWSSecretKey"));
+
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("Property file '" + propFileName + "' not found in the classpath.");
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        } finally {
+            inputStream.close();
+        }
+        return awsCredentials;
+    }
 }

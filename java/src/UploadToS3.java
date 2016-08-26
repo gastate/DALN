@@ -1,11 +1,13 @@
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -23,10 +25,22 @@ public class UploadToS3
     private String dalnId, fileName, assetID;
     private StatusMessages message;
 
-    public UploadToS3(HashMap<String, Object> postDetails)
-    {
+    public UploadToS3(HashMap<String, Object> postDetails) throws IOException {
         message = new StatusMessages();
-        s3Client = new AmazonS3Client(new ProfileCredentialsProvider("daln"));
+        GetPropertyValues propertyValues = new GetPropertyValues();
+        final HashMap<String, String> credentials =  propertyValues.getAWSCredentials();
+
+        s3Client = new AmazonS3Client(new AWSCredentials() {
+            @Override
+            public String getAWSAccessKeyId() {
+                return credentials.get("AWSAccessKey");
+            }
+
+            @Override
+            public String getAWSSecretKey() {
+                return credentials.get("AWSSecretKey");
+            }
+        });
 
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
