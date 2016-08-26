@@ -272,6 +272,8 @@ public class PostImporter
 
         /**Storing post metadata in an xml file. This file will be parsed in the main.FileUploader class to figure out
          * the information needed to uploaded each file.**/
+        File downloadsFolder = new File("downloads");
+        downloadsFolder.mkdir();
         File newFolder = new File("downloads/" + postID);
         newFolder.mkdir(); //create a new folder with the post ID
 

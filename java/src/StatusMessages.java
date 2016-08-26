@@ -32,10 +32,10 @@ public class StatusMessages
     }
 
 
-    /**main.PostImporter completed/failure messages**/
+    /**PostImporter completed/failure messages**/
     public void PostImportCompleteVerbose(String postID)
     {
-        System.out.println("main.Post #"+postID+" successfully downloaded to working directory.");
+        System.out.println("Post #"+postID+" successfully downloaded to working directory.");
     }
 
     public void PostImportBeginLog(String postID)
@@ -121,7 +121,7 @@ public class StatusMessages
 
     public void FileUploadPostCompleteVerbose(String postID)
     {
-        System.out.println("main.Post #" + postID + " successfully uploaded and added to database.");
+        System.out.println("Post #" + postID + " successfully uploaded and added to database.");
     }
 
     public void FileUploadPostBeginLog(String postID)
