@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class UploadToSproutVideo
 {
     private HashMap<String,Object> postDetails;
-    private String dalnId, originalLink, title, description, author, date, fileName, assetID, fullDescription;
+    private String dalnId, originalLink, title,fileName, assetID, fullDescription;
     private CloseableHttpClient httpClient;
     private HttpPost uploadFile;
     private HttpGet getFile;
@@ -41,13 +41,11 @@ public class UploadToSproutVideo
         dalnId = postDetails.get("DalnId").toString();
         originalLink = postDetails.get("identifierUri").toString();
         title = postDetails.get("title").toString();
-        date = postDetails.get("dateCreated").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
         fullDescription = "Original Post Link: " + originalLink
-                + "\nFile Name: " + fileName
-                + "\nOriginal Date Posted: " + date;
+                + "\nFile Name: " + fileName;
 
         uploadVideo();
     }

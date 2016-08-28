@@ -1,3 +1,4 @@
+import de.voidplus.soundcloud.Comment;
 import de.voidplus.soundcloud.SoundCloud;
 import de.voidplus.soundcloud.Track;
 
@@ -26,13 +27,11 @@ public class UploadToSoundCloud
         dalnId = postDetails.get("DalnId").toString();
         originalLink = postDetails.get("identifierUri").toString();
         title = postDetails.get("title").toString();
-        date = postDetails.get("dateCreated").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
-        fullDescription = "Original main.Post Link: " + originalLink
-                + "\nFile Name: " + fileName
-                + "\nOriginal Date Posted: " + date;
+        fullDescription = "Original Post Link: " + originalLink
+                + "\nFile Name: " + fileName;
 
         uploadSound();
     }
@@ -60,8 +59,9 @@ public class UploadToSoundCloud
         }
         String location = currentDirectory + "\\downloads\\"+dalnId+"\\"+fileName;
         Track newTrack = new Track(assetID, location);
-        newTrack.setDescription(fullDescription);
+
         track = soundcloud.postTrack(newTrack);
+        track.setDescription(fullDescription);
     }
 
     public String getSoundLocation()

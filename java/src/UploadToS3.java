@@ -5,9 +5,11 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -85,6 +87,9 @@ public class UploadToS3
 
     public String getS3FileLocation()
     {
-        return "https://s3-us-west-1.amazonaws.com/daln/Posts/" + dalnId + "/" + fileName;
+        String location = s3Client.getResourceUrl("daln", "daln/Posts/"+dalnId+"/"+fileName);
+        location = location.replace("https://daln.s3.", "https://s3-us-west-1.");
+        return location;
+       // return "https://s3-us-west-1.amazonaws.com/daln/Posts/" + dalnId + "/" + fileName;
     }
 }
