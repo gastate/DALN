@@ -138,7 +138,7 @@ public class FileUploader {
     }
 
     public void uploadPost() throws IOException {
-        if(client.checkIfPostAlreadyExistsInDB(postID))
+        if(client.checkIfIDAlreadyExistsInDB(postID))
         {
             if(verboseOutput) message.PostAlreadyExistsInDB(); else message.FileUploadPostErrorLog(postID);
             System.exit(0);
@@ -156,6 +156,7 @@ public class FileUploader {
          * defined currently.**/
         ArrayList<String> fileUUIDs = new ArrayList<>();
         ArrayList<String> fileLocations = new ArrayList<>();
+        ArrayList<Boolean> fileUploadStatuses = new ArrayList<>();
 
         ArrayList<String> fileNames = (ArrayList<String>)postDetails.get("fileNames");
         ArrayList<String> fileTypes = (ArrayList<String>)postDetails.get("fileTypes");
@@ -206,8 +207,14 @@ public class FileUploader {
             asset.put("Asset Description", fileDescriptions.get(j));
             asset.put("Asset Type", fileTypes.get(j));
             assetList.add(asset);
+
+            if(fileLocations.get(j).equals("") || fileLocations.get(j)==null)
+                fileUploadStatuses.add(false);
+            else
+                fileUploadStatuses.add(true);
         }
         postDetails.put("assetList", assetList); //this list includes generated asset IDs, locations, and filetypes
+        postDetails.put("fileUploadStatuses", fileUploadStatuses);
 
         //the insert post method returns the randomly generated post UUID.
         client.insertPost(postDetails);
@@ -237,7 +244,7 @@ public class FileUploader {
 
     private String checkFiletype(String fileName) {
         try {
-            switch (fileName.substring(fileName.lastIndexOf('.'))) {
+            switch (fileName.substring(fileName.lastIndexOf('.')).toLowerCase()) {
                 case ".doc":
                 case ".docx":
                 case ".rtf":

@@ -73,13 +73,12 @@ public class UploadToSproutVideo
         uploadFile.setEntity(multipart);
 
         CloseableHttpResponse postResponse = null;
-        try {
+        try{
             postResponse = httpClient.execute(uploadFile);
-        } catch (IOException e) {
-            //System.out.println("\n"+fileName + " could not be uploaded to SproutVideo.");
+       } catch (IOException e) {
+            System.out.println("\n"+fileName + " could not be uploaded to SproutVideo.");
             message.FileUploadAssetErrorLog(assetID);
         }
-
     }
 
     public String getSpoutVideoLocation() {
@@ -108,11 +107,7 @@ public class UploadToSproutVideo
                     return videoLocation;
                 }
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParseException | IOException | NullPointerException e) {
             e.printStackTrace();
         }
         return videoLocation;

@@ -68,6 +68,11 @@ public class DynamoDBClient {
         if (postDetails.get("subject") != null) post.setSubject((List<String>)postDetails.get("subject"));
         post.setDalnId(postDetails.get("DalnId").toString());
         post.setAssetList((List<HashMap<String,String>>)postDetails.get("assetList"));
+
+        post.setAreAllFilesUploaded(true);
+        for(Boolean bool : (ArrayList<Boolean>)postDetails.get("fileUploadStatuses"))
+            if(bool.equals(false))
+                post.setAreAllFilesUploaded(false);
         //Enter it into the DB
         mapper.save(post); //post UUID is generated once this function is called
 
@@ -75,7 +80,7 @@ public class DynamoDBClient {
     }
 
     //This method checks if the post being uploaded already exists in the database by scanning for the same DALN ID in the Posts table.
-    public boolean checkIfPostAlreadyExistsInDB(String postID)
+    public boolean checkIfIDAlreadyExistsInDB(String postID)
     {
         Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
         eav.put(":val1", new AttributeValue().withS(postID));
@@ -90,4 +95,5 @@ public class DynamoDBClient {
         boolean result = scanResults.size() != 0;
         return result;
     }
+
 }
