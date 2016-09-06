@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Created by Shakib on 6/25/2016.
@@ -19,7 +20,7 @@ public class Tester {
 
     public static void main(String[] args) throws IOException, org.apache.http.ParseException, TransformerException, ParserConfigurationException {
 
-    if(args.length > 0)
+        if(args.length > 0)
     {
         String postID = args[0];
         String programOption = "full";

@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.s3.AmazonS3Client;
 
@@ -94,6 +98,17 @@ public class DynamoDBClient {
         //We only care if at least one result is found, so we check if the list size is 0
         boolean result = scanResults.size() != 0;
         return result;
+    }
+
+    public boolean checkIfUUIDExists(String newUUID)
+    {
+        List<Post> allPosts = mapper.scan(Post.class, new DynamoDBScanExpression());
+        for(Post post : allPosts)
+            if(post.getAssetList() != null)
+                for(HashMap<String, String> asset : post.getAssetList())
+                    if(newUUID.equals(asset.get("Asset ID")))
+                        return true;
+        return false;
     }
 
 }

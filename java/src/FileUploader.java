@@ -165,7 +165,11 @@ public class FileUploader {
         for (int i = 0; i < numberOfAssets; i++)
         {
             String currentFileName = fileNames.get(i);
-            String assetID = UUID.randomUUID().toString();
+            String assetID;
+            do
+                assetID = UUID.randomUUID().toString();
+            while(client.checkIfUUIDExists(assetID));
+
             fileUUIDs.add(assetID);
             if(!verboseOutput) message.FileUploadAssetBeginLog(assetID);
 
