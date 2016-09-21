@@ -8,6 +8,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,6 +27,7 @@ import java.util.HashMap;
  */
 public class UploadToSproutVideo
 {
+    private static Logger log = Logger.getLogger(UploadToSproutVideo.class.getName());
     private HashMap<String,Object> postDetails;
     private String dalnId, originalLink, title,fileName, assetID, fullDescription;
     private CloseableHttpClient httpClient;
@@ -76,8 +78,8 @@ public class UploadToSproutVideo
         try{
             postResponse = httpClient.execute(uploadFile);
        } catch (IOException e) {
-            System.out.println("\n"+fileName + " could not be uploaded to SproutVideo.");
-            message.FileUploadAssetErrorLog(assetID);
+            log.error("\n"+fileName + " could not be uploaded to SproutVideo.");
+            log.error(message.FileUploadAssetErrorLog(assetID));
         }
     }
 
@@ -108,6 +110,7 @@ public class UploadToSproutVideo
                 }
             }
         } catch (ParseException | IOException | NullPointerException e) {
+            log.error("Problem getting video location.");
             e.printStackTrace();
         }
         return videoLocation;

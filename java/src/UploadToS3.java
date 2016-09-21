@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.HashMap;
  */
 public class UploadToS3
 {
+    private static Logger log = Logger.getLogger(UploadToS3.class.getName());
     private AmazonS3Client s3Client;
     private HashMap<String, Object> postDetails;
     private String dalnId, fileName, assetID;
@@ -63,7 +65,7 @@ public class UploadToS3
 
         } catch (AmazonClientException ace)
         {
-            message.FileUploadAssetErrorLog(assetID);
+            log.error(message.FileUploadAssetErrorLog(assetID));
         }
     }
         /*
@@ -90,6 +92,7 @@ public class UploadToS3
         String location = s3Client.getResourceUrl("daln", "daln/Posts/"+dalnId+"/"+fileName);
         location = location.replace("https://daln.s3.", "https://s3-us-west-1.");
         return location;
+
        // return "https://s3-us-west-1.amazonaws.com/daln/Posts/" + dalnId + "/" + fileName;
     }
 }

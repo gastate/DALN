@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.Versioned;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,7 +16,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -28,6 +31,7 @@ import java.util.HashMap;
 
 public class PostImporter
 {
+    private static Logger log = Logger.getLogger(PostImporter.class.getName());
     private StatusMessages message;
     private String postID;
     private boolean verboseOutput;
@@ -55,12 +59,11 @@ public class PostImporter
 
     public PostImporter(){}
 
-    public PostImporter(String postID, boolean verboseOutput) throws TransformerException, ParserConfigurationException {
+    public PostImporter(String postID, boolean verboseOutput) throws TransformerException, ParserConfigurationException, IOException {
         message = new StatusMessages();
         this.postID = postID;
         this.verboseOutput = verboseOutput;
         postDetails = new HashMap<>();
-
 
         title = "";
         description = "";
@@ -145,25 +148,25 @@ public class PostImporter
     }
 
     public void doImport() throws TransformerException, ParserConfigurationException {
-        if (!verboseOutput) message.PostImportBeginLog(postID);
+        if (!verboseOutput) log.info(message.PostImportBeginLog(postID));
         /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/
         String xmlFile = "http://daln.osu.edu/metadata/handle/2374.DALN/" + postID + "/mets.xml";
         Document doc = null;
         try {
-            if (verboseOutput) message.ConnectingTo(xmlFile);
+            if (verboseOutput) log.info(message.ConnectingTo(xmlFile));
             doc = Jsoup.connect(xmlFile).get();
         } catch (IOException e) {
-            if (verboseOutput) message.DALNConnectionError();
-            else message.PostImportErrorLog(postID);
-            System.exit(1);
+            if (verboseOutput) log.error(message.DALNConnectionError());
+            else log.error(message.PostImportErrorLog(postID));
+            //System.exit(1);
         }
 
         Element root = doc.child(0);
         if(root.getElementsByTag("h1").text().equals("Resource not found"))
         {
-            if (verboseOutput) message.DALNPostDoesNotExist();
-            else message.PostImportErrorLog(postID);
-            System.exit(1);
+            if (verboseOutput) log.error(message.DALNPostDoesNotExist());
+            else log.error(message.PostImportErrorLog(postID));
+            //System.exit(1);
         }
         Element postInfoRoot = root.child(0);
         Element fileInfoRoot = root.child(1);
@@ -341,7 +344,8 @@ public class PostImporter
     }
 
     public void downloadFiles()
-    {if (verboseOutput) message.DownloadingFiles();
+    {
+        if (verboseOutput) log.info(message.DownloadingFiles());
 
         /**Download file(s) to working directory. The files are stored on the computer locally before the upload.**/
         URL url = null;
@@ -352,9 +356,9 @@ public class PostImporter
             try {
                 url = new URL("http://daln.osu.edu"+link);
             } catch (MalformedURLException e) {
-                if (verboseOutput) message.FileLinkInvalid();
-                else message.PostImportErrorLog(postID);
-                System.exit(1);
+                if (verboseOutput) log.error(message.FileLinkInvalid());
+                else log.error(message.PostImportErrorLog(postID));
+                //System.exit(1);
                 //e.printStackTrace();
             }
 
@@ -362,12 +366,13 @@ public class PostImporter
             try {
                 FileUtils.copyURLToFile(url, new File("downloads/" + postID + "/" + fileNames.get(i)));
             } catch (IOException e) {
+                log.error("Problem downloading file.");
                 e.printStackTrace();
             }
             i++;
 
         }
-        if (verboseOutput) message.PostImportCompleteVerbose(postID);
-        else message.PostImportCompleteLog(postID);
+        if (verboseOutput) log.info(message.PostImportCompleteVerbose(postID));
+        else log.info(message.PostImportCompleteLog(postID));
     }
 }

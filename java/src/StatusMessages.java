@@ -4,138 +4,138 @@
  */
 public class StatusMessages
 {
-    public void ConnectingTo(String connection)
+    public String ConnectingTo(String connection)
     {
-        System.out.println("Connecting to " + connection + "...");
+        return "Connecting to " + connection + "...";
     }
 
-    /**main.PostImporter progress messages**/
-    public void DALNConnectionError()
+    /**PostImporter progress messages**/
+    public String DALNConnectionError()
     {
-        System.out.println("Could not connect to the website, or the post you entered does not exist on the DALN website.");
+        return "Could not connect to the website, or the post you entered does not exist on the DALN website.";
     }
 
-    public void DALNPostDoesNotExist()
+    public String DALNPostDoesNotExist()
     {
-        System.out.println("The post you entered does not exist on the DALN website.");
+        return "The post you entered does not exist on the DALN website.";
     }
 
-    public void DownloadingFiles()
+    public String DownloadingFiles()
     {
 
-        System.out.println("Downloading metadata and files to directory");
+        return "Downloading metadata and files to directory";
     }
 
-    public void FileLinkInvalid()
+    public String FileLinkInvalid()
     {
-        System.out.println("Cannot access the file. The link to the file may be invalid or no files exist.");
+        return "Cannot access the file. The link to the file may be invalid or no files exist.";
     }
 
 
     /**PostImporter completed/failure messages**/
-    public void PostImportCompleteVerbose(String postID)
+    public String PostImportCompleteVerbose(String postID)
     {
-        System.out.println("Post #"+postID+" successfully downloaded to working directory.");
+        return "Post #"+postID+" successfully downloaded to working directory.";
     }
 
-    public void PostImportBeginLog(String postID)
+    public String PostImportBeginLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:download|status:initiated");
+        return "postid:"+postID+"|action:download|status:initiated";
     }
-    public void PostImportCompleteLog(String postID)
+    public String PostImportCompleteLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:download|status:completed");
+        return "postid:"+postID+"|action:download|status:completed";
     }
 
-    public void PostImportErrorLog(String postID)
+    public String PostImportErrorLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:download|status:error");
+        return "postid:"+postID+"|action:download|status:error";
     }
 
     /**main.FileUploader progress messages**/
-    public void CannotFindPostToUpload()
+    public String CannotFindPostToUpload()
     {
-        System.out.println("This post hasn't been downloaded yet or this post does not exist.");
+        return "This post hasn't been downloaded yet or this post does not exist.";
     }
 
-    public void PostAlreadyExistsInDB()
+    public String PostAlreadyExistsInDB()
     {
-        System.out.println("This post ID already exists in the database.");
+        return "This post ID already exists in the database.";
     }
 
-    public void BeginPostUpload(String postID)
+    public String BeginPostUpload(String postID)
     {
-        System.out.println("You are uploading post #" + postID + ".");
+        return "You are uploading post #" + postID + ".";
     }
 
-    public void CreateS3Data()
+    public String CreateS3Data()
     {
-        System.out.println("Creating post folder in S3 and uploading metadata.");
+        return "Creating post folder in S3 and uploading metadata.";
     }
 
-    public void UploadingToSproutVideo(String fileName, String assetID)
+    public String UploadingToSproutVideo(String fileName, String assetID)
     {
-        System.out.print("Uploading the video file " + fileName + " as " + assetID + " to SproutVideo...");
+        return "Uploading the video file " + fileName + " as " + assetID + " to SproutVideo...";
     }
 
-    public void UploadingToSoundCloud(String fileName, String assetID)
+    public String UploadingToSoundCloud(String fileName, String assetID)
     {
-        System.out.print("Uploading the audio file " + fileName + " as " + assetID + " to SoundCloud...");
+        return "Uploading the audio file " + fileName + " as " + assetID + " to SoundCloud...";
     }
 
-    public void UploadingToS3(String fileName)
+    public String UploadingToS3(String fileName)
     {
-        System.out.print("Uploading the file " + fileName + " to S3...");
+        return "Uploading the file " + fileName + " to S3...";
     }
 
 
-    public void UpdatingMetadata()
+    public String UpdatingMetadata()
     {
-        System.out.println("Updating metadata with database information.");
+        return "Updating metadata with database information.";
     }
 
-    public void NoFileType(String fileName)
+    public String NoFileType(String fileName)
     {
-        System.out.println("The file \"" + fileName + "\" does not have a file type specified. This post can't be uploaded. Please" +
+        return "The file \"" + fileName + "\" does not have a file type specified. This post can't be uploaded. Please" +
                 " rename the file in your working directory to include a valid extension as well as edit the file name in the" +
-                " metadata text file that was generated.");
+                " metadata text file that was generated.";
     }
 
 
     /**main.FileUploader completed/failure messages**/
-    public void FileUploadAssetBeginLog(String assetID)
+    public String FileUploadAssetBeginLog(String assetID)
     {
-        System.out.println("assetid:"+assetID+"|action:upload|status:initiated");
+        return "assetid:"+assetID+"|action:upload|status:initiated";
     }
 
-    public void FileUploadAssetCompleteLog(String assetID)
+    public String FileUploadAssetCompleteLog(String assetID)
     {
-        System.out.println("assetid:"+assetID+"|action:upload|status:completed");
+        return "assetid:"+assetID+"|action:upload|status:completed";
     }
 
-    public void FileUploadAssetErrorLog(String assetID)
+    public String FileUploadAssetErrorLog(String assetID)
     {
-        System.out.println("assetid:"+assetID+"|action:upload|status:error");
+        return "assetid:"+assetID+"|action:upload|status:error";
     }
 
 
-    public void FileUploadPostCompleteVerbose(String postID)
+    public String FileUploadPostCompleteVerbose(String postID)
     {
-        System.out.println("Post #" + postID + " successfully uploaded and added to database.");
+        return "Post #" + postID + " successfully uploaded and added to database.";
     }
 
-    public void FileUploadPostBeginLog(String postID)
+    public String FileUploadPostBeginLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:upload|status:initiated");
+        return "postid:"+postID+"|action:upload|status:initiated";
     }
 
-    public void FileUploadPostCompleteLog(String postID)
+    public String FileUploadPostCompleteLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:upload|status:completed");
+        return "postid:"+postID+"|action:upload|status:completed";
     }
 
-    public void FileUploadPostErrorLog(String postID)
+    public String FileUploadPostErrorLog(String postID)
     {
-        System.out.println("postid:"+postID+"|action:upload|status:error");
+        return "postid:"+postID+"|action:upload|status:error";
     }
 }

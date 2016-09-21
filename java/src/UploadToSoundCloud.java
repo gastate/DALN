@@ -1,6 +1,7 @@
 import de.voidplus.soundcloud.Comment;
 import de.voidplus.soundcloud.SoundCloud;
 import de.voidplus.soundcloud.Track;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
  */
 public class UploadToSoundCloud
 {
+    private static Logger log = Logger.getLogger(UploadToSoundCloud.class.getName());
     private HashMap<String,Object> postDetails;
     private String dalnId, originalLink, title, description, author, date, fileName, assetID, fullDescription;
     private SoundCloud soundcloud;
@@ -54,14 +56,14 @@ public class UploadToSoundCloud
         File currentDirectory = null;
         try {
             currentDirectory = new File(new File(".").getCanonicalPath());
-        } catch (IOException e) {
+            String location = currentDirectory + "\\downloads\\"+dalnId+"\\"+fileName;
+            Track newTrack = new Track(assetID, location);
+            track = soundcloud.postTrack(newTrack);
+            track.setDescription(fullDescription);
+        } catch (IOException | NullPointerException e) {
+            log.error("Problem uploading to SoundCloud.");
             e.printStackTrace();
         }
-        String location = currentDirectory + "\\downloads\\"+dalnId+"\\"+fileName;
-        Track newTrack = new Track(assetID, location);
-
-        track = soundcloud.postTrack(newTrack);
-        track.setDescription(fullDescription);
     }
 
     public String getSoundLocation()

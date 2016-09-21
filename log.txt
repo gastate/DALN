@@ -1,0 +1,16 @@
+2016-09-21 13:07:30 INFO  PostImporter:151 - postid:999|action:download|status:initiated
+2016-09-21 13:07:31 ERROR PostImporter:160 - postid:999|action:download|status:error
+2016-09-21 13:08:22 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/999/mets.xml...
+2016-09-21 13:08:22 ERROR PostImporter:159 - Could not connect to the website, or the post you entered does not exist on the DALN website.
+2016-09-21 14:25:16 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/999/mets.xml...
+2016-09-21 14:25:17 INFO  PostImporter:348 - Downloading metadata and files to directory
+2016-09-21 14:25:17 INFO  PostImporter:375 - Post #999 successfully downloaded to working directory.
+2016-09-21 14:25:44 ERROR FileUploader:145 - This post ID already exists in the database.
+2016-09-21 14:25:44 INFO  FileUploader:149 - You are uploading post #999.
+2016-09-21 14:25:44 INFO  FileUploader:152 - Creating post folder in S3 and uploading metadata.
+2016-09-21 14:25:49 INFO  FileUploader:200 - File Uploaded.
+2016-09-21 14:25:50 INFO  FileUploader:228 - Post #999 successfully uploaded and added to database.
+2016-09-21 14:29:08 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/999/mets.xml...
+2016-09-21 14:29:08 INFO  PostImporter:348 - Downloading metadata and files to directory
+2016-09-21 14:29:09 INFO  PostImporter:375 - Post #999 successfully downloaded to working directory.
+2016-09-21 14:29:11 ERROR FileUploader:145 - This post ID already exists in the database.

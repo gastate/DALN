@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTimeZone;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,6 +30,7 @@ import java.util.*;
  */
 public class FileUploader {
 
+    private static Logger log = Logger.getLogger(FileUploader.class.getName());
     private AmazonS3 s3Client;
     private DynamoDBClient client;
     private File metadata;
@@ -41,7 +43,7 @@ public class FileUploader {
     public FileUploader(String postID, boolean verboseOutput) throws IOException {
         this.verboseOutput = verboseOutput;
         message = new StatusMessages();
-        if(!verboseOutput) message.FileUploadPostBeginLog(postID);
+        if(!verboseOutput) log.info(message.FileUploadPostBeginLog(postID));
         /**Connect to S3**/
         GetPropertyValues propertyValues = new GetPropertyValues();
         final HashMap<String, String> credentials =  propertyValues.getAWSCredentials();
@@ -86,8 +88,8 @@ public class FileUploader {
         try {
             doc = Jsoup.parse(metadata, "UTF-8"); //Scanner object to read file
         } catch (IOException e) {
-            if(verboseOutput) message.DALNPostDoesNotExist();
-            System.exit(1);
+            if(verboseOutput) log.error(message.DALNPostDoesNotExist());
+            //System.exit(1);
         }
 
         //main.Post and file details are gathered from the xml metadata
@@ -140,14 +142,14 @@ public class FileUploader {
     public void uploadPost() throws IOException {
         if(client.checkIfIDAlreadyExistsInDB(postID))
         {
-            if(verboseOutput) message.PostAlreadyExistsInDB(); else message.FileUploadPostErrorLog(postID);
+            if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(postID));
             System.exit(0);
         }
 
-        if(verboseOutput) message.BeginPostUpload(postID);
+        if(verboseOutput) log.info(message.BeginPostUpload(postID));
 
        /**The first step is to create a folder in S3 specific to this post and include its metadata**/
-        if(verboseOutput) message.CreateS3Data();
+        if(verboseOutput) log.info(message.CreateS3Data());
         uploadPostFolder();
 
         /**Every file that the post contains will now be uploaded to a service based on its file type. Each
@@ -171,31 +173,31 @@ public class FileUploader {
             while(client.checkIfUUIDExists(assetID));
 
             fileUUIDs.add(assetID);
-            if(!verboseOutput) message.FileUploadAssetBeginLog(assetID);
+            if(!verboseOutput) log.info(message.FileUploadAssetBeginLog(assetID));
 
             postDetails.put("Current File", currentFileName);
             postDetails.put("Current Asset ID", assetID);
 
             if (fileTypes.get(i).equals("Audio/Video"))
             {
-                if(verboseOutput) message.UploadingToSproutVideo(currentFileName, assetID);
+                if(verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
                 UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
                 fileLocations.add(SVUploader.getSpoutVideoLocation());
-                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
+                if(verboseOutput)log.info("Video Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
             }
             else if(fileTypes.get(i).equals("Audio"))
             {
-                if(verboseOutput) message.UploadingToSoundCloud(currentFileName, assetID);
+                if(verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
                 UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
                 fileLocations.add(SCUploader.getSoundLocation());
-                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
+                if(verboseOutput)log.info("Audio Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
             }
             else {
                 //upload all other files to S3
                 if(verboseOutput) message.UploadingToS3(currentFileName);
                 UploadToS3 S3Uploader = new UploadToS3(postDetails);
                 fileLocations.add(S3Uploader.getS3FileLocation());
-                if(verboseOutput)System.out.println("Done."); else message.FileUploadAssetCompleteLog(assetID);
+                if(verboseOutput)log.info("File Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
             }
         }
 
@@ -223,7 +225,7 @@ public class FileUploader {
         //the insert post method returns the randomly generated post UUID.
         client.insertPost(postDetails);
 
-        if(verboseOutput) message.FileUploadPostCompleteVerbose(postID); else message.FileUploadPostCompleteLog(postID);
+        if(verboseOutput) log.info(message.FileUploadPostCompleteVerbose(postID)); else log.info(message.FileUploadPostCompleteLog(postID));
     }
 
     /**Upload post folder and metadata to S3**/
@@ -278,8 +280,8 @@ public class FileUploader {
             }
         }catch(StringIndexOutOfBoundsException e)
         {
-            if(verboseOutput)message.NoFileType(fileName);else message.FileUploadPostErrorLog(postID);
-            System.exit(1);
+            if(verboseOutput) log.error(message.NoFileType(fileName)); else log.error(message.FileUploadPostErrorLog(postID));
+            //System.exit(1);
 
         }
         return fileName.substring(fileName.lastIndexOf('.')+1).toUpperCase() + " File";
