@@ -73,7 +73,10 @@ public class FileUploader {
         this.postID = postID;
         postDetails = new HashMap<>();
         postDetails = getPostDetails();
-        uploadPost();
+        if(postDetails != null)
+            uploadPost();
+        else
+            if (verboseOutput)log.error(message.DALNPostDoesNotExist()); else log.error(message.FileUploadPostErrorLog(postID));
     }
 
 
@@ -92,7 +95,8 @@ public class FileUploader {
             //System.exit(1);
         }
 
-        //main.Post and file details are gathered from the xml metadata
+        if(doc == null) return null;
+        //Post and file details are gathered from the xml metadata
         //Details will all be stored in a single hashmap
         Element root = doc.child(0);
 
