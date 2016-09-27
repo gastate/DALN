@@ -168,106 +168,108 @@ public class PostImporter
             else log.error(message.PostImportErrorLog(postID));
             //System.exit(1);
         }
-        Element postInfoRoot = root.child(0);
-        Element fileInfoRoot = root.child(1);
+        else
+        {
+            Element postInfoRoot = root.child(0);
+            Element fileInfoRoot = root.child(1);
 
-        //GETTING POST INFO//
-        Element postDataRoot = postInfoRoot.child(0).child(0).child(0);
-        Elements postData = postDataRoot.children();
-        for (Element field : postData) {
-            String element = field.attr("element");
-            String qualifier = field.attr("qualifier");
-            String fieldText = field.ownText();
+            //GETTING POST INFO//
+            Element postDataRoot = postInfoRoot.child(0).child(0).child(0);
+            Elements postData = postDataRoot.children();
+            for (Element field : postData) {
+                String element = field.attr("element");
+                String qualifier = field.attr("qualifier");
+                String fieldText = field.ownText();
 
-            String combinedAttr = element + " " + qualifier;
-            switch (combinedAttr) {
-                case "title ":
-                    title = fieldText;
-                    break;
-                case "description ":
-                    description = fieldText;
-                    break;
-                case "date created":
-                    dateCreated = fieldText;
-                    break;
-                case "date accessioned":
-                    dateAccessioned = fieldText;
-                    break;
-                case "date available":
-                    dateAvailable = fieldText;
-                    break;
-                case "date issued":
-                    dateIssued = fieldText;
-                    break;
-                case "identifier uri":
-                    identifierUri = fieldText;
-                    break;
-                case "rights consent":
-                    rightsConsent = fieldText;
-                    break;
-                case "rights release":
-                    rightsRelease = fieldText;
-                    break;
-                case "contributor author":
-                    contributorAuthor.add(fieldText);
-                    break;
-                case "contributor interviewer":
-                    contributorInterviewer.add(fieldText);
-                    break;
-                case "coverage spatial":
-                    coverageSpatial.add(fieldText);
-                    break;
-                case "coverage period":
-                    coveragePeriod.add(fieldText);
-                    break;
-                case "coverage region":
-                    coverageRegion.add(fieldText);
-                    break;
-                case "coverage stateprovince":
-                    coverageStateProvince.add(fieldText);
-                    break;
-                case "coverage nationality":
-                    coverageNationality.add(fieldText);
-                    break;
-                case "creator gender":
-                    creatorGender.add(fieldText);
-                    break;
-                case "creator raceethnicity":
-                    creatorRaceEthnicity.add(fieldText);
-                    break;
-                case "creator class":
-                    creatorClass.add(fieldText);
-                    break;
-                case "creator yearofbirth":
-                    creatorYearOfBirth.add(fieldText);
-                    break;
-                case "subject ":
-                    subject.add(fieldText);
-                    break;
-                case "language ":
-                    language.add(fieldText);
-                    break;
+                String combinedAttr = element + " " + qualifier;
+                switch (combinedAttr) {
+                    case "title ":
+                        title = fieldText;
+                        break;
+                    case "description ":
+                        description = fieldText;
+                        break;
+                    case "date created":
+                        dateCreated = fieldText;
+                        break;
+                    case "date accessioned":
+                        dateAccessioned = fieldText;
+                        break;
+                    case "date available":
+                        dateAvailable = fieldText;
+                        break;
+                    case "date issued":
+                        dateIssued = fieldText;
+                        break;
+                    case "identifier uri":
+                        identifierUri = fieldText;
+                        break;
+                    case "rights consent":
+                        rightsConsent = fieldText;
+                        break;
+                    case "rights release":
+                        rightsRelease = fieldText;
+                        break;
+                    case "contributor author":
+                        contributorAuthor.add(fieldText);
+                        break;
+                    case "contributor interviewer":
+                        contributorInterviewer.add(fieldText);
+                        break;
+                    case "coverage spatial":
+                        coverageSpatial.add(fieldText);
+                        break;
+                    case "coverage period":
+                        coveragePeriod.add(fieldText);
+                        break;
+                    case "coverage region":
+                        coverageRegion.add(fieldText);
+                        break;
+                    case "coverage stateprovince":
+                        coverageStateProvince.add(fieldText);
+                        break;
+                    case "coverage nationality":
+                        coverageNationality.add(fieldText);
+                        break;
+                    case "creator gender":
+                        creatorGender.add(fieldText);
+                        break;
+                    case "creator raceethnicity":
+                        creatorRaceEthnicity.add(fieldText);
+                        break;
+                    case "creator class":
+                        creatorClass.add(fieldText);
+                        break;
+                    case "creator yearofbirth":
+                        creatorYearOfBirth.add(fieldText);
+                        break;
+                    case "subject ":
+                        subject.add(fieldText);
+                        break;
+                    case "language ":
+                        language.add(fieldText);
+                        break;
+                }
+
             }
 
+            //GETTING FILE INFO//
+            Elements allFileData = fileInfoRoot.select("[USE=CONTENT]").first().children();
+            for (Element file : allFileData) {
+                Element mainFileInfo = file.select("[loctype=URL]").first();
+                String fileName = mainFileInfo.attr("xlink:title");
+                String fileLink = mainFileInfo.attr("xlink:href");
+                String fileDescription = mainFileInfo.attr("xlink:label");
+
+                fileNames.add(fileName);
+                fileLinks.add(fileLink);
+                fileDescriptions.add(fileDescription);
+            }
+
+            initializeFields();
+            createMetadataTextFile();
+            downloadFiles();
         }
-
-        //GETTING FILE INFO//
-        Elements allFileData = fileInfoRoot.select("[USE=CONTENT]").first().children();
-        for(Element file : allFileData)
-        {
-            Element mainFileInfo = file.select("[loctype=URL]").first();
-            String fileName = mainFileInfo.attr("xlink:title");
-            String fileLink = mainFileInfo.attr("xlink:href");
-            String fileDescription = mainFileInfo.attr("xlink:label");
-
-            fileNames.add(fileName);
-            fileLinks.add(fileLink);
-            fileDescriptions.add(fileDescription);
-        }
-
-        initializeFields();
-        createMetadataTextFile();
-        downloadFiles();
     }
 
     public void createMetadataTextFile() throws ParserConfigurationException, TransformerException {

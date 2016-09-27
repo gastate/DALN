@@ -209,6 +209,7 @@ public class FileUploader {
         {
             HashMap<String,String> asset = new HashMap<>();
             asset.put("Asset ID", fileUUIDs.get(j));
+            asset.put("Asset Name", fileNames.get(j));
             asset.put("Asset Location", fileLocations.get(j));
             asset.put("Asset Description", fileDescriptions.get(j));
             asset.put("Asset Type", fileTypes.get(j));
