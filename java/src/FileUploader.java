@@ -147,90 +147,88 @@ public class FileUploader {
         if(client.checkIfIDAlreadyExistsInDB(postID))
         {
             if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(postID));
-            System.exit(0);
+            //System.exit(0);
+            return;
         }
+            if (verboseOutput) log.info(message.BeginPostUpload(postID));
 
-        if(verboseOutput) log.info(message.BeginPostUpload(postID));
+            /**The first step is to create a folder in S3 specific to this post and include its metadata**/
+            if (verboseOutput) log.info(message.CreateS3Data());
+            uploadPostFolder();
 
-       /**The first step is to create a folder in S3 specific to this post and include its metadata**/
-        if(verboseOutput) log.info(message.CreateS3Data());
-        uploadPostFolder();
+            /**Every file that the post contains will now be uploaded to a service based on its file type. Each
+             * file will be issued a random UUID and each file will return a location after its upload. These two lists
+             * will be added to the postDetails HashMap once all the files are uploaded, as these two details are not
+             * defined currently.**/
+            ArrayList<String> fileUUIDs = new ArrayList<>();
+            ArrayList<String> fileLocations = new ArrayList<>();
+            ArrayList<Boolean> fileUploadStatuses = new ArrayList<>();
 
-        /**Every file that the post contains will now be uploaded to a service based on its file type. Each
-         * file will be issued a random UUID and each file will return a location after its upload. These two lists
-         * will be added to the postDetails HashMap once all the files are uploaded, as these two details are not
-         * defined currently.**/
-        ArrayList<String> fileUUIDs = new ArrayList<>();
-        ArrayList<String> fileLocations = new ArrayList<>();
-        ArrayList<Boolean> fileUploadStatuses = new ArrayList<>();
+            ArrayList<String> fileNames = (ArrayList<String>) postDetails.get("fileNames");
+            ArrayList<String> fileTypes = (ArrayList<String>) postDetails.get("fileTypes");
+            ArrayList<String> fileDescriptions = (ArrayList<String>) postDetails.get("fileDescriptions");
+            int numberOfAssets = (Integer) postDetails.get("NumberOfAssets");
+            for (int i = 0; i < numberOfAssets; i++) {
+                String currentFileName = fileNames.get(i);
+                String assetID;
+                do
+                    assetID = UUID.randomUUID().toString();
+                while (client.checkIfUUIDExists(assetID));
 
-        ArrayList<String> fileNames = (ArrayList<String>)postDetails.get("fileNames");
-        ArrayList<String> fileTypes = (ArrayList<String>)postDetails.get("fileTypes");
-        ArrayList<String> fileDescriptions = (ArrayList<String>)postDetails.get("fileDescriptions");
-        int numberOfAssets = (Integer)postDetails.get("NumberOfAssets");
-        for (int i = 0; i < numberOfAssets; i++)
-        {
-            String currentFileName = fileNames.get(i);
-            String assetID;
-            do
-                assetID = UUID.randomUUID().toString();
-            while(client.checkIfUUIDExists(assetID));
+                fileUUIDs.add(assetID);
+                if (!verboseOutput) log.info(message.FileUploadAssetBeginLog(assetID));
 
-            fileUUIDs.add(assetID);
-            if(!verboseOutput) log.info(message.FileUploadAssetBeginLog(assetID));
+                postDetails.put("Current File", currentFileName);
+                postDetails.put("Current Asset ID", assetID);
 
-            postDetails.put("Current File", currentFileName);
-            postDetails.put("Current Asset ID", assetID);
-
-            if (fileTypes.get(i).equals("Audio/Video"))
-            {
-                if(verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
-                UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
-                fileLocations.add(SVUploader.getSpoutVideoLocation());
-                if(verboseOutput)log.info("Video Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
+                if (fileTypes.get(i).equals("Audio/Video")) {
+                    if (verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
+                    UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
+                    fileLocations.add(SVUploader.getSpoutVideoLocation());
+                    if (verboseOutput) log.info("Video Uploaded.");
+                    else log.info(message.FileUploadAssetCompleteLog(assetID));
+                } else if (fileTypes.get(i).equals("Audio")) {
+                    if (verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
+                    UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
+                    fileLocations.add(SCUploader.getSoundLocation());
+                    if (verboseOutput) log.info("Audio Uploaded.");
+                    else log.info(message.FileUploadAssetCompleteLog(assetID));
+                } else {
+                    //upload all other files to S3
+                    if (verboseOutput) message.UploadingToS3(currentFileName);
+                    UploadToS3 S3Uploader = new UploadToS3(postDetails);
+                    fileLocations.add(S3Uploader.getS3FileLocation());
+                    if (verboseOutput) log.info("File Uploaded.");
+                    else log.info(message.FileUploadAssetCompleteLog(assetID));
+                }
             }
-            else if(fileTypes.get(i).equals("Audio"))
-            {
-                if(verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
-                UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
-                fileLocations.add(SCUploader.getSoundLocation());
-                if(verboseOutput)log.info("Audio Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
+
+            /**Gather the generated information about the post's assets to be inserted into the DB**/
+            //All of the other post details were gathered from the metadata earlier. The last field we need
+            //for the DB entry is the asset list, which contains details for each asset.
+            List<HashMap<String, String>> assetList = new ArrayList<>();
+            for (int j = 0; j < numberOfAssets; j++) {
+                HashMap<String, String> asset = new HashMap<>();
+                asset.put("Asset ID", fileUUIDs.get(j));
+                asset.put("Asset Name", fileNames.get(j));
+                asset.put("Asset Location", fileLocations.get(j));
+                asset.put("Asset Description", fileDescriptions.get(j));
+                asset.put("Asset Type", fileTypes.get(j));
+                assetList.add(asset);
+
+                if (fileLocations.get(j).equals("") || fileLocations.get(j) == null)
+                    fileUploadStatuses.add(false);
+                else
+                    fileUploadStatuses.add(true);
             }
-            else {
-                //upload all other files to S3
-                if(verboseOutput) message.UploadingToS3(currentFileName);
-                UploadToS3 S3Uploader = new UploadToS3(postDetails);
-                fileLocations.add(S3Uploader.getS3FileLocation());
-                if(verboseOutput)log.info("File Uploaded."); else log.info(message.FileUploadAssetCompleteLog(assetID));
-            }
-        }
+            postDetails.put("assetList", assetList); //this list includes generated asset IDs, locations, and filetypes
+            postDetails.put("fileUploadStatuses", fileUploadStatuses);
 
-        /**Gather the generated information about the post's assets to be inserted into the DB**/
-        //All of the other post details were gathered from the metadata earlier. The last field we need
-        //for the DB entry is the asset list, which contains details for each asset.
-        List<HashMap<String,String>> assetList = new ArrayList<>();
-        for(int j = 0; j < numberOfAssets; j++)
-        {
-            HashMap<String,String> asset = new HashMap<>();
-            asset.put("Asset ID", fileUUIDs.get(j));
-            asset.put("Asset Name", fileNames.get(j));
-            asset.put("Asset Location", fileLocations.get(j));
-            asset.put("Asset Description", fileDescriptions.get(j));
-            asset.put("Asset Type", fileTypes.get(j));
-            assetList.add(asset);
+            //the insert post method returns the randomly generated post UUID.
+            client.insertPost(postDetails);
 
-            if(fileLocations.get(j).equals("") || fileLocations.get(j)==null)
-                fileUploadStatuses.add(false);
-            else
-                fileUploadStatuses.add(true);
-        }
-        postDetails.put("assetList", assetList); //this list includes generated asset IDs, locations, and filetypes
-        postDetails.put("fileUploadStatuses", fileUploadStatuses);
-
-        //the insert post method returns the randomly generated post UUID.
-        client.insertPost(postDetails);
-
-        if(verboseOutput) log.info(message.FileUploadPostCompleteVerbose(postID)); else log.info(message.FileUploadPostCompleteLog(postID));
+            if (verboseOutput) log.info(message.FileUploadPostCompleteVerbose(postID));
+            else log.info(message.FileUploadPostCompleteLog(postID));
     }
 
     /**Upload post folder and metadata to S3**/
