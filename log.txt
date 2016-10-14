@@ -34,3 +34,96 @@
 2016-09-27 18:40:39 ERROR PostImporter:168 - postid:16|action:download|status:error
 2016-09-27 18:40:39 INFO  FileUploader:46 - postid:16|action:upload|status:initiated
 2016-09-27 18:40:41 ERROR FileUploader:79 - postid:16|action:upload|status:error
+2016-10-12 12:39:49 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:39:53 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:40:11 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:40:14 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:40:21 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:40:25 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:45:23 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:45:26 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:45:26 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 12:48:02 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:48:06 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:48:06 ERROR PostImporter:278 - postid:148|action:download|status:error
+2016-10-12 12:48:06 INFO  FileUploader:46 - postid:148|action:upload|status:initiated
+2016-10-12 12:48:10 ERROR FileUploader:79 - postid:148|action:upload|status:error
+2016-10-12 12:48:51 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 12:48:54 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 12:48:54 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:23:33 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:23:38 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:23:38 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:23:55 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:24:32 INFO  PostImporter:385 - postid:148|action:download|status:completed
+2016-10-12 13:24:36 INFO  FileUploader:46 - postid:148|action:upload|status:initiated
+2016-10-12 13:25:08 ERROR FileUploader:149 - postid:148|action:upload|status:error
+2016-10-12 13:25:35 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:25:43 INFO  PostImporter:385 - postid:148|action:download|status:completed
+2016-10-12 13:25:43 INFO  FileUploader:46 - postid:148|action:upload|status:initiated
+2016-10-12 13:25:56 INFO  FileUploader:180 - assetid:512b3d73-6a3a-48c0-b32c-94e0f7e5a864|action:upload|status:initiated
+2016-10-12 13:25:57 INFO  FileUploader:203 - assetid:512b3d73-6a3a-48c0-b32c-94e0f7e5a864|action:upload|status:completed
+2016-10-12 13:25:57 INFO  FileUploader:180 - assetid:8d684eab-bac4-46a8-9c12-bea4383869ed|action:upload|status:initiated
+2016-10-12 13:26:30 INFO  FileUploader:190 - assetid:8d684eab-bac4-46a8-9c12-bea4383869ed|action:upload|status:completed
+2016-10-12 13:26:30 INFO  FileUploader:232 - postid:148|action:upload|status:completed
+2016-10-12 13:37:09 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:37:13 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:37:13 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:38:49 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:38:52 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:38:52 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:39:10 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:39:13 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:39:13 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:39:30 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:39:33 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:39:33 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:39:59 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:40:02 ERROR PostImporter:160 - postid:148|action:download|status:error
+2016-10-12 13:40:02 ERROR PostImporter:170 - postid:148|action:download|status:error
+2016-10-12 13:40:53 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:41:16 INFO  PostImporter:385 - postid:148|action:download|status:completed
+2016-10-12 13:41:17 INFO  FileUploader:46 - postid:148|action:upload|status:initiated
+2016-10-12 13:41:22 INFO  FileUploader:180 - assetid:d8e34c57-1305-40ff-a62b-fcd460224cd0|action:upload|status:initiated
+2016-10-12 13:41:23 INFO  FileUploader:204 - assetid:d8e34c57-1305-40ff-a62b-fcd460224cd0|action:upload|status:completed
+2016-10-12 13:41:23 INFO  FileUploader:180 - assetid:b924d0ee-c508-484f-9bf8-552d048b03da|action:upload|status:initiated
+2016-10-12 13:41:33 INFO  FileUploader:191 - assetid:b924d0ee-c508-484f-9bf8-552d048b03da|action:upload|status:completed
+2016-10-12 13:41:33 INFO  FileUploader:233 - postid:148|action:upload|status:completed
+2016-10-12 13:47:33 INFO  PostImporter:151 - postid:148|action:download|status:initiated
+2016-10-12 13:47:50 INFO  PostImporter:385 - postid:148|action:download|status:completed
+2016-10-12 13:47:50 INFO  FileUploader:46 - postid:148|action:upload|status:initiated
+2016-10-12 13:47:54 INFO  FileUploader:180 - assetid:ccf4686c-b7d8-45d3-b24f-01bb440e0023|action:upload|status:initiated
+2016-10-12 13:47:56 INFO  FileUploader:204 - assetid:ccf4686c-b7d8-45d3-b24f-01bb440e0023|action:upload|status:completed
+2016-10-12 13:47:56 INFO  FileUploader:180 - assetid:0ef441c0-6f03-4e36-9d5a-fac839174890|action:upload|status:initiated
+2016-10-12 13:48:29 INFO  FileUploader:191 - assetid:0ef441c0-6f03-4e36-9d5a-fac839174890|action:upload|status:completed
+2016-10-12 13:48:29 INFO  FileUploader:233 - postid:148|action:upload|status:completed
+2016-10-12 14:26:28 INFO  PostImporter:151 - postid:100|action:download|status:initiated
+2016-10-12 14:26:58 INFO  PostImporter:385 - postid:100|action:download|status:completed
+2016-10-12 14:26:59 INFO  FileUploader:46 - postid:100|action:upload|status:initiated
+2016-10-12 14:27:05 INFO  FileUploader:180 - assetid:e2f87aa2-6cb4-4f64-bc02-41179e38272b|action:upload|status:initiated
+2016-10-12 14:27:45 INFO  FileUploader:196 - assetid:e2f87aa2-6cb4-4f64-bc02-41179e38272b|action:upload|status:completed
+2016-10-12 14:27:45 INFO  FileUploader:232 - postid:100|action:upload|status:completed
+2016-10-12 14:46:58 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/149/mets.xml...
+2016-10-12 14:46:58 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-12 14:47:19 INFO  PostImporter:384 - Post #149 successfully downloaded to working directory.
+2016-10-12 14:47:21 INFO  FileUploader:155 - This post exists but not all media is present. Re-uploading post.
+2016-10-12 14:47:23 INFO  FileUploader:159 - You are uploading post #149.
+2016-10-12 14:47:23 INFO  FileUploader:162 - Creating post folder in S3 and uploading metadata.
+2016-10-12 14:47:24 INFO  FileUploader:207 - File Uploaded.
+2016-10-12 14:47:26 INFO  FileUploader:191 - Uploading the video file brian.bailie.mov as bb9e3a7b-ad9a-400a-a925-3ca9c9b464b3 to SproutVideo...
+2016-10-12 14:48:13 INFO  FileUploader:194 - Video Uploaded.
+2016-10-12 14:48:13 INFO  FileUploader:236 - Post #149 successfully uploaded and added to database.
+2016-10-13 21:18:35 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/149/mets.xml...
+2016-10-13 21:18:36 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-13 21:18:42 INFO  PostImporter:384 - Post #149 successfully downloaded to working directory.
+2016-10-13 21:18:48 INFO  FileUploader:155 - This post exists but not all media is present. Re-uploading post.
+2016-10-13 21:18:48 INFO  FileUploader:159 - You are uploading post #149.
+2016-10-13 21:18:48 INFO  FileUploader:162 - Creating post folder in S3 and uploading metadata.
+2016-10-13 21:18:50 INFO  FileUploader:207 - File Uploaded.
+2016-10-13 21:18:50 INFO  FileUploader:191 - Uploading the video file brian.bailie.mov as 37afda90-ad06-4a3e-a88d-567466c78c4d to SproutVideo...
+2016-10-13 21:19:22 INFO  FileUploader:194 - Video Uploaded.
+2016-10-13 21:19:22 INFO  FileUploader:236 - Post #149 successfully uploaded and added to database.
+2016-10-13 21:20:06 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/149/mets.xml...
+2016-10-13 21:20:07 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-13 21:20:11 INFO  PostImporter:384 - Post #149 successfully downloaded to working directory.
+2016-10-13 21:20:13 ERROR FileUploader:151 - This post ID already exists in the database.

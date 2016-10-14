@@ -161,7 +161,14 @@ public class PostImporter
             //System.exit(1);
         }
 
-        Element root = doc.child(0);
+        Element root = null;
+        try {
+            root = doc.child(0);
+        }catch(NullPointerException e)
+        {
+            if (verboseOutput) log.error(message.DALNConnectionError());
+            else log.error(message.PostImportErrorLog(postID));
+        }
         if(root.getElementsByTag("h1").text().equals("Resource not found"))
         {
             if (verboseOutput) log.error(message.DALNPostDoesNotExist());

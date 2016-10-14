@@ -146,9 +146,15 @@ public class FileUploader {
     public void uploadPost() throws IOException {
         if(client.checkIfIDAlreadyExistsInDB(postID))
         {
-            if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(postID));
-            //System.exit(0);
-            return;
+            if(client.areAllFilesUploaded(postID))
+            {
+                if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(postID));
+                return;
+            }else
+            {
+                log.info("This post exists but not all media is present. Re-uploading post.");
+                client.deletePost(postID);
+            }
         }
             if (verboseOutput) log.info(message.BeginPostUpload(postID));
 

@@ -111,4 +111,40 @@ public class DynamoDBClient {
         return false;
     }
 
+    public boolean areAllFilesUploaded(String postID)
+    {
+        boolean isUploaded = false;
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(postID));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("dalnId = :val1")
+                .withExpressionAttributeValues(eav);
+
+        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
+
+        if(scanResults!=null)
+        {
+            Post post = scanResults.get(0);
+            isUploaded = post.getAreAllFilesUploaded();
+        }
+        return isUploaded;
+    }
+
+    public void deletePost(String postID)
+    {
+        boolean isUploaded = false;
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(postID));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("dalnId = :val1")
+                .withExpressionAttributeValues(eav);
+
+        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
+
+        mapper.delete(scanResults.get(0));
+    }
+
+
 }

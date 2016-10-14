@@ -56,7 +56,7 @@ public class UploadToSoundCloud
         File currentDirectory = null;
         try {
             currentDirectory = new File(new File(".").getCanonicalPath());
-            String location = currentDirectory + "\\downloads\\"+dalnId+"\\"+fileName;
+            String location = currentDirectory + "/downloads/"+dalnId+"/"+fileName;
             Track newTrack = new Track(assetID, location);
             track = soundcloud.postTrack(newTrack);
             track.setDescription(fullDescription);
