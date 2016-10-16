@@ -28,7 +28,7 @@ public class UploadToSoundCloud
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
         originalLink = postDetails.get("identifierUri").toString();
-        title = postDetails.get("title").toString();
+        //title = postDetails.get("title").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
