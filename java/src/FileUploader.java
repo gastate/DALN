@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTimeZone;
 import org.jsoup.Jsoup;
@@ -15,6 +16,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -215,11 +218,11 @@ public class FileUploader {
             List<HashMap<String, String>> assetList = new ArrayList<>();
             for (int j = 0; j < numberOfAssets; j++) {
                 HashMap<String, String> asset = new HashMap<>();
-                asset.put("Asset ID", fileUUIDs.get(j));
-                asset.put("Asset Name", fileNames.get(j));
-                asset.put("Asset Location", fileLocations.get(j));
-                asset.put("Asset Description", fileDescriptions.get(j));
-                asset.put("Asset Type", fileTypes.get(j));
+                asset.put("assetID", fileUUIDs.get(j));
+                asset.put("assetName", fileNames.get(j));
+                asset.put("assetLocation", fileLocations.get(j));
+                asset.put("assetDescription", fileDescriptions.get(j));
+                asset.put("assetType", fileTypes.get(j));
                 assetList.add(asset);
 
                 if (fileLocations.get(j).equals("") || fileLocations.get(j) == null)
@@ -232,6 +235,7 @@ public class FileUploader {
 
             //the insert post method returns the randomly generated post UUID.
             client.insertPost(postDetails);
+            deleteFolder();
 
             if (verboseOutput) log.info(message.FileUploadPostCompleteVerbose(postID));
             else log.info(message.FileUploadPostCompleteLog(postID));
@@ -254,6 +258,12 @@ public class FileUploader {
         // upload metadata to folder and set it to public
         s3Client.putObject(new PutObjectRequest("daln", "Posts/" + postID + "/" + metadata.getName(), metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
+
+    }
+
+    private void deleteFolder() throws IOException {
+        File folder = new File("downloads/" + postID);
+        FileUtils.deleteDirectory(folder);
 
     }
 

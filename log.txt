@@ -127,3 +127,24 @@
 2016-10-13 21:20:07 INFO  PostImporter:357 - Downloading metadata and files to directory
 2016-10-13 21:20:11 INFO  PostImporter:384 - Post #149 successfully downloaded to working directory.
 2016-10-13 21:20:13 ERROR FileUploader:151 - This post ID already exists in the database.
+2016-10-31 14:13:01 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/6963/mets.xml...
+2016-10-31 14:13:02 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 14:13:04 INFO  PostImporter:384 - Post #6963 successfully downloaded to working directory.
+2016-10-31 14:13:08 INFO  FileUploader:159 - You are uploading post #6963.
+2016-10-31 14:13:08 INFO  FileUploader:162 - Creating post folder in S3 and uploading metadata.
+2016-10-31 14:13:12 INFO  FileUploader:207 - File Uploaded.
+2016-10-31 14:13:12 INFO  FileUploader:237 - Post #6963 successfully uploaded and added to database.
+2016-10-31 14:24:16 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/6963/mets.xml...
+2016-10-31 14:24:16 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 14:24:17 INFO  PostImporter:384 - Post #6963 successfully downloaded to working directory.
+2016-10-31 14:24:20 INFO  FileUploader:159 - You are uploading post #6963.
+2016-10-31 14:24:20 INFO  FileUploader:162 - Creating post folder in S3 and uploading metadata.
+2016-10-31 14:24:25 INFO  FileUploader:207 - File Uploaded.
+2016-10-31 14:24:25 INFO  FileUploader:237 - Post #6963 successfully uploaded and added to database.
+2016-10-31 14:27:59 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/6963/mets.xml...
+2016-10-31 14:28:00 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 14:28:01 INFO  PostImporter:384 - Post #6963 successfully downloaded to working directory.
+2016-10-31 14:28:04 INFO  FileUploader:162 - You are uploading post #6963.
+2016-10-31 14:28:04 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 14:28:08 INFO  FileUploader:210 - File Uploaded.
+2016-10-31 14:28:09 INFO  FileUploader:240 - Post #6963 successfully uploaded and added to database.
