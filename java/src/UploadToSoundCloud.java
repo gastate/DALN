@@ -68,6 +68,6 @@ public class UploadToSoundCloud
 
     public String getSoundLocation()
     {
-        return track.getPermalinkUrl();
+        return track.getUri();
     }
 }

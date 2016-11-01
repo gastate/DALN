@@ -148,3 +148,150 @@
 2016-10-31 14:28:04 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
 2016-10-31 14:28:08 INFO  FileUploader:210 - File Uploaded.
 2016-10-31 14:28:09 INFO  FileUploader:240 - Post #6963 successfully uploaded and added to database.
+2016-10-31 16:28:01 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/4400/mets.xml...
+2016-10-31 16:28:02 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:28:41 INFO  PostImporter:384 - Post #4400 successfully downloaded to working directory.
+2016-10-31 16:29:55 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/4400/mets.xml...
+2016-10-31 16:29:56 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:30:28 INFO  PostImporter:384 - Post #4400 successfully downloaded to working directory.
+2016-10-31 16:30:30 INFO  FileUploader:162 - You are uploading post #4400.
+2016-10-31 16:30:30 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 16:30:33 INFO  FileUploader:194 - Uploading the video file NFL literacy story 2.mov as 9aeba176-18b0-4b7a-ad20-954af6ea0b0c to SproutVideo...
+2016-10-31 16:32:05 INFO  FileUploader:197 - Video Uploaded.
+2016-10-31 16:32:06 INFO  FileUploader:210 - File Uploaded.
+2016-10-31 16:32:06 INFO  FileUploader:240 - Post #4400 successfully uploaded and added to database.
+2016-10-31 16:34:48 ERROR FileUploader:97 - The post you entered does not exist on the DALN website.
+2016-10-31 16:34:48 ERROR FileUploader:82 - The post you entered does not exist on the DALN website.
+2016-10-31 16:34:58 ERROR FileUploader:97 - The post you entered does not exist on the DALN website.
+2016-10-31 16:34:58 ERROR FileUploader:82 - The post you entered does not exist on the DALN website.
+2016-10-31 16:36:08 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/4400/mets.xml...
+2016-10-31 16:36:11 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:36:45 INFO  PostImporter:384 - Post #4400 successfully downloaded to working directory.
+2016-10-31 16:36:47 INFO  FileUploader:158 - This post exists but not all media is present. Re-uploading post.
+2016-10-31 16:36:47 INFO  FileUploader:162 - You are uploading post #4400.
+2016-10-31 16:36:47 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 16:36:49 INFO  FileUploader:194 - Uploading the video file NFL literacy story 2.mov as 7ae5ef98-2677-4a61-a986-7aba19e9f978 to SproutVideo...
+2016-10-31 16:38:44 INFO  FileUploader:197 - Video Uploaded.
+2016-10-31 16:38:46 INFO  FileUploader:210 - File Uploaded.
+2016-10-31 16:38:46 INFO  FileUploader:240 - Post #4400 successfully uploaded and added to database.
+2016-10-31 16:43:51 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/100/mets.xml...
+2016-10-31 16:43:51 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:44:15 INFO  PostImporter:384 - Post #100 successfully downloaded to working directory.
+2016-10-31 16:44:18 INFO  FileUploader:162 - You are uploading post #100.
+2016-10-31 16:44:18 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 16:44:19 INFO  FileUploader:200 - Uploading the audio file ac_final.mp3 as 7c9dadd4-5beb-4ccf-99fa-5c28f206c83e to SoundCloud...
+2016-10-31 16:44:36 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/100/mets.xml...
+2016-10-31 16:44:36 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:45:02 INFO  PostImporter:384 - Post #100 successfully downloaded to working directory.
+2016-10-31 16:45:04 INFO  FileUploader:162 - You are uploading post #100.
+2016-10-31 16:45:04 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 16:45:06 INFO  FileUploader:200 - Uploading the audio file ac_final.mp3 as 7e699b24-b06f-4ec9-8611-933e5f174219 to SoundCloud...
+2016-10-31 16:46:00 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/100/mets.xml...
+2016-10-31 16:46:00 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-10-31 16:46:26 INFO  PostImporter:384 - Post #100 successfully downloaded to working directory.
+2016-10-31 16:46:28 INFO  FileUploader:162 - You are uploading post #100.
+2016-10-31 16:46:28 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-10-31 16:46:30 INFO  FileUploader:200 - Uploading the audio file ac_final.mp3 as ecdf3cb6-e6bf-40f4-8798-83d37eb99c39 to SoundCloud...
+2016-10-31 16:47:07 INFO  FileUploader:203 - Audio Uploaded.
+2016-10-31 16:47:08 INFO  FileUploader:240 - Post #100 successfully uploaded and added to database.
+2016-11-01 18:01:03 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/100/mets.xml...
+2016-11-01 18:01:05 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:01:29 INFO  PostImporter:384 - Post #100 successfully downloaded to working directory.
+2016-11-01 18:01:34 ERROR FileUploader:154 - This post ID already exists in the database.
+2016-11-01 18:03:12 INFO  FileUploader:162 - You are uploading post #100.
+2016-11-01 18:03:12 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:03:13 INFO  FileUploader:200 - Uploading the audio file ac_final.mp3 as 5edf325a-6bca-42dc-a026-4b6e47c9a19c to SoundCloud...
+2016-11-01 18:05:52 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2454/mets.xml...
+2016-11-01 18:05:52 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:05:55 INFO  PostImporter:384 - Post #2454 successfully downloaded to working directory.
+2016-11-01 18:05:57 INFO  FileUploader:162 - You are uploading post #2454.
+2016-11-01 18:05:57 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:05:58 INFO  FileUploader:194 - Uploading the video file a book video.avi as 0805e2cc-d3dd-4764-ab22-ce6e403c4718 to SproutVideo...
+2016-11-01 18:06:01 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:06:01 INFO  FileUploader:194 - Uploading the video file a book video.avi as 9b55dcfe-a606-43a3-b03b-5418ae026c0a to SproutVideo...
+2016-11-01 18:06:03 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:06:03 INFO  FileUploader:240 - Post #2454 successfully uploaded and added to database.
+2016-11-01 18:22:40 ERROR FileUploader:97 - The post you entered does not exist on the DALN website.
+2016-11-01 18:22:40 ERROR FileUploader:82 - The post you entered does not exist on the DALN website.
+2016-11-01 18:22:53 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2454/mets.xml...
+2016-11-01 18:22:53 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:22:55 INFO  PostImporter:384 - Post #2454 successfully downloaded to working directory.
+2016-11-01 18:22:57 INFO  FileUploader:162 - You are uploading post #2454.
+2016-11-01 18:22:57 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:22:58 INFO  FileUploader:194 - Uploading the video file a book video.avi as a70581dc-c9d6-4012-9978-f5066a5f4c91 to SproutVideo...
+2016-11-01 18:23:00 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:23:01 INFO  FileUploader:194 - Uploading the video file a book video.avi as de4fa9cb-37eb-4190-a236-3d181d0ceccf to SproutVideo...
+2016-11-01 18:23:03 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:23:03 INFO  FileUploader:240 - Post #2454 successfully uploaded and added to database.
+2016-11-01 18:28:10 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:28:10 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:28:15 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:28:16 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:28:16 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:28:18 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as f4249dfe-d1c9-474d-8ed2-3ae72bfc8107 to SproutVideo...
+2016-11-01 18:28:24 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:28:24 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 18:31:50 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:31:50 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:31:53 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:31:55 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:31:55 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:31:56 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as 1a11e8c7-17e2-44eb-94d4-194ab3e9ca3b to SproutVideo...
+2016-11-01 18:32:02 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:32:02 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 18:32:59 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:32:59 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:33:02 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:33:04 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:33:04 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:33:05 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as 79b95f70-ca50-439f-9be1-a220fcb5b5a4 to SproutVideo...
+2016-11-01 18:33:11 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:33:11 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 18:47:38 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:47:39 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:47:42 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:47:44 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:47:44 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:47:46 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as d736f57b-9a73-463d-806d-1bd694c0a097 to SproutVideo...
+2016-11-01 18:47:51 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:47:52 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 18:52:34 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:52:34 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:52:39 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:52:40 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:52:40 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:52:41 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as 29bc064d-acd2-4444-8ee7-9f45c5c48a7f to SproutVideo...
+2016-11-01 18:52:47 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:52:47 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 18:56:30 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 18:56:30 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 18:56:33 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 18:56:35 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 18:56:35 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 18:56:36 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as ab073187-5d43-4b03-9e7f-2794b1132032 to SproutVideo...
+2016-11-01 18:56:42 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 18:56:42 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 19:00:17 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 19:00:18 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 19:00:21 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 19:00:23 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 19:00:23 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 19:00:24 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as 399a2b5a-ba97-4dec-bf66-040776f23e17 to SproutVideo...
+2016-11-01 19:00:31 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 19:00:31 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 19:03:42 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 19:03:42 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 19:03:46 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 19:03:48 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 19:03:48 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 19:03:49 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as 8b10a1b4-f7a5-464b-ae8d-92d43fa179d2 to SproutVideo...
+2016-11-01 19:03:55 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 19:03:55 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.
+2016-11-01 19:04:55 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/2456/mets.xml...
+2016-11-01 19:04:55 INFO  PostImporter:357 - Downloading metadata and files to directory
+2016-11-01 19:04:59 INFO  PostImporter:384 - Post #2456 successfully downloaded to working directory.
+2016-11-01 19:05:01 INFO  FileUploader:162 - You are uploading post #2456.
+2016-11-01 19:05:01 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-01 19:05:02 INFO  FileUploader:194 - Uploading the video file 110913-110942.wmv as a5e85db0-3c5f-4c70-87e0-6402a8c33f00 to SproutVideo...
+2016-11-01 19:05:09 INFO  FileUploader:197 - Video Uploaded.
+2016-11-01 19:05:09 INFO  FileUploader:240 - Post #2456 successfully uploaded and added to database.

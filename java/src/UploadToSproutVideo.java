@@ -13,6 +13,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +52,7 @@ public class UploadToSproutVideo
         fullDescription = "Original Post Link: " + originalLink
                 + "\nFile Name: " + fileName;
 
+
         uploadVideo();
     }
 
@@ -59,7 +62,7 @@ public class UploadToSproutVideo
         httpClient = HttpClients.createDefault();
         uploadFile = new HttpPost("https://api.sproutvideo.com/v1/videos");
         uploadFile.addHeader("SproutVideo-Api-Key", properties.getSproutVideoApiKey());
-        getFile =  new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=title");
+        getFile =  new HttpGet("https://api.sproutvideo.com/v1/videos?order_by=created_at&order_dir=desc");
         getFile.addHeader("SproutVideo-Api-Key", properties.getSproutVideoApiKey());
     }
 
@@ -101,12 +104,13 @@ public class UploadToSproutVideo
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject videoInfo = (JSONObject) jsonArray.get(i);
                 String videoTitle = videoInfo.get("title").toString();
-                if (videoTitle.equals(uploadedVideoTitle)) {
-                    String videoID = videoInfo.get("id").toString();
-                    //String embedCode = videoInfo.get("embed_code").toString();
-                    //Element iframe = Jsoup.parse(embedCode).select("iframe").first();
-                    //String videoSource = iframe.attr("src");
-                    videoLocation = "https://mwharker.vids.io/videos/"+videoID+"/"+videoTitle;
+               if (videoTitle.equals(uploadedVideoTitle)) {
+                    //String videoID = videoInfo.get("id").toString();
+                    String embedCode = videoInfo.get("embed_code").toString();
+                    Element iframe = Jsoup.parse(embedCode).select("iframe").first();
+                    videoLocation = iframe.attr("src");
+                    System.out.println(videoLocation);
+                    //videoLocation = "https://mwharker.vids.io/videos/"+videoID+"/"+videoTitle;
                     return videoLocation;
                 }
             }
