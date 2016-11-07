@@ -171,6 +171,7 @@ public class FileUploader {
              * defined currently.**/
             ArrayList<String> fileUUIDs = new ArrayList<>();
             ArrayList<String> fileLocations = new ArrayList<>();
+            ArrayList<String> fileEmbedLinks = new ArrayList<>();
             ArrayList<Boolean> fileUploadStatuses = new ArrayList<>();
 
             ArrayList<String> fileNames = (ArrayList<String>) postDetails.get("fileNames");
@@ -193,13 +194,15 @@ public class FileUploader {
                 if (fileTypes.get(i).equals("Audio/Video")) {
                     if (verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
                     UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
-                    fileLocations.add(SVUploader.getSpoutVideoLocation());
+                    fileLocations.add(SVUploader.getSpoutVideoLocation()[0]);
+                    fileEmbedLinks.add(SVUploader.getSpoutVideoLocation()[1]);
                     if (verboseOutput) log.info("Video Uploaded.");
                     else log.info(message.FileUploadAssetCompleteLog(assetID));
                 } else if (fileTypes.get(i).equals("Audio")) {
                     if (verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
                     UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
-                    fileLocations.add(SCUploader.getSoundLocation());
+                    fileLocations.add(SCUploader.getSoundLocation()[0]);
+                    fileEmbedLinks.add(SCUploader.getSoundLocation()[1]);
                     if (verboseOutput) log.info("Audio Uploaded.");
                     else log.info(message.FileUploadAssetCompleteLog(assetID));
                 } else {
@@ -221,6 +224,7 @@ public class FileUploader {
                 asset.put("assetID", fileUUIDs.get(j));
                 asset.put("assetName", fileNames.get(j));
                 asset.put("assetLocation", fileLocations.get(j));
+                asset.put("assetEmbedLink", fileEmbedLinks.get(j));
                 asset.put("assetDescription", fileDescriptions.get(j));
                 asset.put("assetType", fileTypes.get(j));
                 assetList.add(asset);

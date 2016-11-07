@@ -18,7 +18,7 @@ public class UploadToSoundCloud
 {
     private static Logger log = Logger.getLogger(UploadToSoundCloud.class.getName());
     private HashMap<String,Object> postDetails;
-    private String dalnId, originalLink, title, description, author, date, fileName, assetID, fullDescription;
+    private String dalnId, originalLink, originalPostTitle, description, author, date, fileName, assetID, fullDescription, fullTitle;
     private SoundCloud soundcloud;
     private Track track;
 
@@ -28,10 +28,12 @@ public class UploadToSoundCloud
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
         originalLink = postDetails.get("identifierUri").toString();
-        //title = postDetails.get("title").toString();
+        originalPostTitle = postDetails.get("title").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
+        String fileNameNoExt = fileName.substring(0, fileName.lastIndexOf('.'));
+        fullTitle = originalPostTitle + " - " + fileNameNoExt;
         fullDescription = "Original Post Link: " + originalLink
                 + "\nFile Name: " + fileName;
 
@@ -54,20 +56,25 @@ public class UploadToSoundCloud
     public void uploadSound()
     {
         File currentDirectory = null;
+        String fileNameNoExt = fileName.substring(0, fileName.lastIndexOf('.'));
         try {
             currentDirectory = new File(new File(".").getCanonicalPath());
             String location = currentDirectory + "/downloads/"+dalnId+"/"+fileName;
-            Track newTrack = new Track(assetID, location);
+            Track newTrack = new Track(fullTitle, location);
+            newTrack.setTagList(assetID);
             track = soundcloud.postTrack(newTrack);
-            track.setDescription(fullDescription);
+            //track.setDescription(fullDescription);
         } catch (IOException | NullPointerException e) {
             log.error("Problem uploading to SoundCloud.");
             e.printStackTrace();
         }
     }
 
-    public String getSoundLocation()
+    public String[] getSoundLocation()
     {
-        return track.getUri();
+        String[] soundLocations = new String[2];
+        soundLocations[0] = track.getPermalinkUrl();
+        soundLocations[1] = track.getUri();
+        return soundLocations;
     }
 }

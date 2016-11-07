@@ -31,7 +31,7 @@ public class UploadToSproutVideo
 {
     private static Logger log = Logger.getLogger(UploadToSproutVideo.class.getName());
     private HashMap<String,Object> postDetails;
-    private String dalnId, originalLink, title,fileName, assetID, fullDescription;
+    private String dalnId, originalLink, originalPostTitle,fileName, assetID, fullDescription, fullTitle;
     private CloseableHttpClient httpClient;
     private HttpPost uploadFile;
     private HttpGet getFile;
@@ -45,10 +45,12 @@ public class UploadToSproutVideo
         dalnId = postDetails.get("DalnId").toString();
         originalLink = postDetails.get("identifierUri").toString();
 
-        //title = postDetails.get("title").toString();
+        originalPostTitle = postDetails.get("title").toString();
         fileName = postDetails.get("Current File").toString();
         assetID = postDetails.get("Current Asset ID").toString();
 
+        String fileNameNoExt = fileName.substring(0, fileName.lastIndexOf('.'));
+        fullTitle = originalPostTitle + " - " + fileNameNoExt;
         fullDescription = "Original Post Link: " + originalLink
                 + "\nFile Name: " + fileName;
 
@@ -68,12 +70,15 @@ public class UploadToSproutVideo
 
     public void uploadVideo()
     {
+
         //SproutVideo API uploads accept Multipart or Formdata as its format
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         //For the video submission
-        builder.addTextBody("title", assetID, ContentType.TEXT_PLAIN);
+
+        builder.addTextBody("title", fullTitle, ContentType.TEXT_PLAIN); //combination
         builder.addTextBody("description", fullDescription, ContentType.TEXT_PLAIN);
         builder.addTextBody("privacy", 2 + "", ContentType.TEXT_PLAIN);
+        builder.addTextBody("tag_names", assetID, ContentType.TEXT_PLAIN);
         builder.addBinaryBody("source_video", new File("downloads/" + dalnId + "/" + fileName), ContentType.APPLICATION_OCTET_STREAM, fileName);
         HttpEntity multipart = builder.build();
         uploadFile.setEntity(multipart);
@@ -87,11 +92,12 @@ public class UploadToSproutVideo
         }
     }
 
-    public String getSpoutVideoLocation() {
+    public String[] getSpoutVideoLocation() {
         //The HTTP Response must be parsed to retrieve the location of the uploaded video
 
-        String videoLocation = "";
-        String uploadedVideoTitle = postDetails.get("Current Asset ID").toString();
+        String[] videoLocations = new String[2];
+        //String uploadedVideoTitle = postDetails.get("Current Asset ID").toString();
+
         CloseableHttpResponse getResponse = null;
         //The getResponse must be parsed as a JSON to retrieve the downloaded location
         try {
@@ -104,21 +110,21 @@ public class UploadToSproutVideo
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject videoInfo = (JSONObject) jsonArray.get(i);
                 String videoTitle = videoInfo.get("title").toString();
-               if (videoTitle.equals(uploadedVideoTitle)) {
-                    //String videoID = videoInfo.get("id").toString();
+               if (videoTitle.equals(fullTitle)) {
+                    String videoID = videoInfo.get("id").toString();
                     String embedCode = videoInfo.get("embed_code").toString();
                     Element iframe = Jsoup.parse(embedCode).select("iframe").first();
-                    videoLocation = iframe.attr("src");
-                    System.out.println(videoLocation);
-                    //videoLocation = "https://mwharker.vids.io/videos/"+videoID+"/"+videoTitle;
-                    return videoLocation;
+                    videoLocations[0] = "https://mwharker.vids.io/videos/"+videoID+"/"+videoTitle;
+                    videoLocations[1] = iframe.attr("src");
+
+                    return videoLocations;
                 }
             }
         } catch (ParseException | IOException | NullPointerException e) {
             log.error("Problem getting video location.");
             e.printStackTrace();
         }
-        return videoLocation;
+        return videoLocations;
     }
 
 

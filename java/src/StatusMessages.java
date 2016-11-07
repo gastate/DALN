@@ -75,12 +75,12 @@ public class StatusMessages
 
     public String UploadingToSproutVideo(String fileName, String assetID)
     {
-        return "Uploading the video file " + fileName + " as " + assetID + " to SproutVideo...";
+        return "Uploading the video file " + fileName + " (" + assetID + ") to SproutVideo...";
     }
 
     public String UploadingToSoundCloud(String fileName, String assetID)
     {
-        return "Uploading the audio file " + fileName + " as " + assetID + " to SoundCloud...";
+        return "Uploading the audio file " + fileName + ", (" + assetID + ") to SoundCloud...";
     }
 
     public String UploadingToS3(String fileName)
