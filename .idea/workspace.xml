@@ -7,12 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10809723-4f11-45be-aa6d-080d5bcb7f62" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/FileUploader.java" afterPath="$PROJECT_DIR$/java/src/FileUploader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/StatusMessages.java" afterPath="$PROJECT_DIR$/java/src/StatusMessages.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" afterPath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" afterPath="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.txt" afterPath="$PROJECT_DIR$/log.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/PostImporter.java" afterPath="$PROJECT_DIR$/java/src/PostImporter.java" />
     </list>
     <ignored path="DALN.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,15 +75,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostImporter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PostImporter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="174" column="63" selection-start-line="174" selection-start-column="63" selection-end-line="174" selection-end-column="63" />
+            <state relative-caret-position="240">
+              <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
               <folding>
                 <element signature="method#PostImporter#1;class#PostImporter#0" expanded="true" />
                 <element signature="method#downloadFiles#0;class#PostImporter#0" expanded="true" />
-                <marker date="1476290929265" expanded="false" signature="7669:10513" ph="{...}" />
+                <marker date="1478555958997" expanded="false" signature="7689:10533" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -135,7 +130,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StatusMessages.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StatusMessages.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -214,7 +209,6 @@
         <option value="$PROJECT_DIR$/java/src/Post.java" />
         <option value="$PROJECT_DIR$/production/java/log4j.properties" />
         <option value="$PROJECT_DIR$/java/src/UploadToS3.java" />
-        <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
         <option value="$PROJECT_DIR$/java/src/DynamoDBClient.java" />
         <option value="$PROJECT_DIR$/production/java/config.properties" />
         <option value="$PROJECT_DIR$/java/src/Tester.java" />
@@ -222,6 +216,7 @@
         <option value="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" />
         <option value="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
         <option value="$PROJECT_DIR$/java/src/StatusMessages.java" />
+        <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
       </list>
     </option>
   </component>
@@ -1514,12 +1509,12 @@
       <workItem from="1477944111448" duration="2979000" />
       <workItem from="1478034676632" duration="6537000" />
       <workItem from="1478111680398" duration="65000" />
-      <workItem from="1478475592133" duration="6256000" />
+      <workItem from="1478475592133" duration="6494000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="488938000" />
+    <option name="totallyTimeSpent" value="489176000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="8" width="1920" height="1030" extended-state="0" />
@@ -1533,8 +1528,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3194131" sideWeight="0.5075107" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3329493" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49248928" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3329493" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32718894" sideWeight="0.49248928" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1608884" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1763,18 +1758,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="174" column="63" selection-start-line="174" selection-start-column="63" selection-end-line="174" selection-end-column="63" />
-          <folding>
-            <element signature="method#PostImporter#1;class#PostImporter#0" expanded="true" />
-            <element signature="method#downloadFiles#0;class#PostImporter#0" expanded="true" />
-            <marker date="1476290929265" expanded="false" signature="7669:10513" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-432">
@@ -1793,21 +1776,6 @@
         <state relative-caret-position="2577">
           <caret line="122" column="42" selection-start-line="122" selection-start-column="42" selection-end-line="122" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
-            <element signature="docComment;method#getPostDetails#0;class#FileUploader#0" expanded="false" />
-            <element signature="method#getPostDetails#0;class#FileUploader#0" expanded="true" />
-            <element signature="method#deleteFolder#0;class#FileUploader#0" expanded="true" />
-            <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1842,6 +1810,33 @@
           <caret line="82" column="76" selection-start-line="82" selection-start-column="76" selection-end-line="82" selection-end-column="76" />
           <folding>
             <element signature="method#UploadingToSproutVideo#0;class#StatusMessages#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
+            <element signature="docComment;method#getPostDetails#0;class#FileUploader#0" expanded="false" />
+            <element signature="method#getPostDetails#0;class#FileUploader#0" expanded="true" />
+            <element signature="method#deleteFolder#0;class#FileUploader#0" expanded="true" />
+            <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
+          <folding>
+            <element signature="method#PostImporter#1;class#PostImporter#0" expanded="true" />
+            <element signature="method#downloadFiles#0;class#PostImporter#0" expanded="true" />
+            <marker date="1478555958997" expanded="false" signature="7689:10533" ph="{...}" />
           </folding>
         </state>
       </provider>

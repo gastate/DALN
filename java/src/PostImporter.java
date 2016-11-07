@@ -173,6 +173,7 @@ public class PostImporter
         {
             if (verboseOutput) log.error(message.DALNPostDoesNotExist());
             else log.error(message.PostImportErrorLog(postID));
+            return;
             //System.exit(1);
         }
         else
