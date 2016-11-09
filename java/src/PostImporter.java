@@ -36,6 +36,7 @@ public class PostImporter
     private String postID;
     private boolean verboseOutput;
     private HashMap<String,Object> postDetails;
+    private DynamoDBClient client;
 
     //fields with one or more entry possible
     private ArrayList<String>
@@ -64,6 +65,7 @@ public class PostImporter
         this.postID = postID;
         this.verboseOutput = verboseOutput;
         postDetails = new HashMap<>();
+        client = new DynamoDBClient();
 
         title = "";
         description = "";
@@ -148,6 +150,19 @@ public class PostImporter
     }
 
     public void doImport() throws TransformerException, ParserConfigurationException {
+        if(client.checkIfIDAlreadyExistsInDB(postID))
+        {
+            if(client.areAllFilesUploaded(postID))
+            {
+                if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(postID));
+                return;
+            }else
+            {
+                log.info("This post exists but not all media is present. Re-downloading post.");
+                client.deletePost(postID);
+            }
+        }
+
         if (!verboseOutput) log.info(message.PostImportBeginLog(postID));
         /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/
         String xmlFile = "http://daln.osu.edu/metadata/handle/2374.DALN/" + postID + "/mets.xml";

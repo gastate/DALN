@@ -7,7 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10809723-4f11-45be-aa6d-080d5bcb7f62" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/FileUploader.java" afterPath="$PROJECT_DIR$/java/src/FileUploader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/PostImporter.java" afterPath="$PROJECT_DIR$/java/src/PostImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/StatusMessages.java" afterPath="$PROJECT_DIR$/java/src/StatusMessages.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" afterPath="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.txt" afterPath="$PROJECT_DIR$/log.txt" />
     </list>
     <ignored path="DALN.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,7 +41,7 @@
       <file leaf-file-name="DynamoDBClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-432">
+            <state relative-caret-position="22">
               <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
               <folding>
                 <element signature="method#insertPost#0;class#DynamoDBClient#0" expanded="true" />
@@ -51,13 +56,13 @@
       <file leaf-file-name="FileUploader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+            <state relative-caret-position="279">
+              <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
                 <element signature="docComment;method#getPostDetails#0;class#FileUploader#0" expanded="false" />
-                <element signature="method#getPostDetails#0;class#FileUploader#0" expanded="true" />
+                <element signature="method#uploadPost#0;class#FileUploader#0" expanded="true" />
                 <element signature="method#deleteFolder#0;class#FileUploader#0" expanded="true" />
                 <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
               </folding>
@@ -68,9 +73,62 @@
       <file leaf-file-name="Post.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/Post.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2577">
+            <state relative-caret-position="2640">
               <caret line="122" column="42" selection-start-line="122" selection-start-column="42" selection-end-line="122" selection-end-column="42" />
-              <folding />
+              <folding>
+                <element signature="method#getPostId#0;class#Post#0" expanded="false" />
+                <element signature="method#setPostId#0;class#Post#0" expanded="false" />
+                <element signature="method#getDalnId#0;class#Post#0" expanded="false" />
+                <element signature="method#setDalnId#0;class#Post#0" expanded="false" />
+                <element signature="method#getTitle#0;class#Post#0" expanded="false" />
+                <element signature="method#setTitle#0;class#Post#0" expanded="false" />
+                <element signature="method#getDescription#0;class#Post#0" expanded="false" />
+                <element signature="method#setDescription#0;class#Post#0" expanded="false" />
+                <element signature="method#getIdentifierUri#0;class#Post#0" expanded="false" />
+                <element signature="method#setIdentifierUri#0;class#Post#0" expanded="false" />
+                <element signature="method#getDateAccessioned#0;class#Post#0" expanded="false" />
+                <element signature="method#setDateAccessioned#0;class#Post#0" expanded="false" />
+                <element signature="method#getDateAvailable#0;class#Post#0" expanded="false" />
+                <element signature="method#setDateAvailable#0;class#Post#0" expanded="false" />
+                <element signature="method#getDateCreated#0;class#Post#0" expanded="false" />
+                <element signature="method#setDateCreated#0;class#Post#0" expanded="false" />
+                <element signature="method#getDateIssued#0;class#Post#0" expanded="false" />
+                <element signature="method#setDateIssued#0;class#Post#0" expanded="false" />
+                <element signature="method#getRightsConsent#0;class#Post#0" expanded="false" />
+                <element signature="method#setRightsConsent#0;class#Post#0" expanded="false" />
+                <element signature="method#getRightsRelease#0;class#Post#0" expanded="false" />
+                <element signature="method#setRightsRelease#0;class#Post#0" expanded="false" />
+                <element signature="method#getContributorAuthor#0;class#Post#0" expanded="false" />
+                <element signature="method#setContributorAuthor#0;class#Post#0" expanded="false" />
+                <element signature="method#getContributorInterviewer#0;class#Post#0" expanded="false" />
+                <element signature="method#setContributorInterviewer#0;class#Post#0" expanded="false" />
+                <element signature="method#getCreatorGender#0;class#Post#0" expanded="false" />
+                <element signature="method#setCreatorGender#0;class#Post#0" expanded="false" />
+                <element signature="method#getCreatorRaceEthnicity#0;class#Post#0" expanded="false" />
+                <element signature="method#setCreatorRaceEthnicity#0;class#Post#0" expanded="false" />
+                <element signature="method#getCreatorClass#0;class#Post#0" expanded="false" />
+                <element signature="method#setCreatorClass#0;class#Post#0" expanded="false" />
+                <element signature="method#getCreatorYearOfBirth#0;class#Post#0" expanded="false" />
+                <element signature="method#setCreatorYearOfBirth#0;class#Post#0" expanded="false" />
+                <element signature="method#getCoverageSpatial#0;class#Post#0" expanded="false" />
+                <element signature="method#setCoverageSpatial#0;class#Post#0" expanded="false" />
+                <element signature="method#getCoveragePeriod#0;class#Post#0" expanded="false" />
+                <element signature="method#setCoveragePeriod#0;class#Post#0" expanded="false" />
+                <element signature="method#getCoverageRegion#0;class#Post#0" expanded="false" />
+                <element signature="method#setCoverageRegion#0;class#Post#0" expanded="false" />
+                <element signature="method#getCoverageStateProvince#0;class#Post#0" expanded="false" />
+                <element signature="method#setCoverageStateProvince#0;class#Post#0" expanded="false" />
+                <element signature="method#getCoverageNationality#0;class#Post#0" expanded="false" />
+                <element signature="method#setCoverageNationality#0;class#Post#0" expanded="false" />
+                <element signature="method#getLanguage#0;class#Post#0" expanded="false" />
+                <element signature="method#setLanguage#0;class#Post#0" expanded="false" />
+                <element signature="method#getSubject#0;class#Post#0" expanded="false" />
+                <element signature="method#setSubject#0;class#Post#0" expanded="false" />
+                <element signature="method#getAssetList#0;class#Post#0" expanded="false" />
+                <element signature="method#setAssetList#0;class#Post#0" expanded="false" />
+                <element signature="method#getAreAllFilesUploaded#0;class#Post#0" expanded="false" />
+                <element signature="method#setAreAllFilesUploaded#0;class#Post#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,12 +136,12 @@
       <file leaf-file-name="PostImporter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
+            <state relative-caret-position="328">
+              <caret line="161" column="42" selection-start-line="161" selection-start-column="42" selection-end-line="161" selection-end-column="42" />
               <folding>
                 <element signature="method#PostImporter#1;class#PostImporter#0" expanded="true" />
                 <element signature="method#downloadFiles#0;class#PostImporter#0" expanded="true" />
-                <marker date="1478555958997" expanded="false" signature="7689:10533" ph="{...}" />
+                <marker date="1478713338069" expanded="false" signature="8247:11091" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -92,11 +150,9 @@
       <file leaf-file-name="Tester.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1320">
+            <state relative-caret-position="216">
               <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -104,7 +160,7 @@
       <file leaf-file-name="UploadToSproutVideo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/UploadToSproutVideo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="682">
               <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="52" selection-end-column="62" />
               <folding>
                 <element signature="method#connectToSpoutVideo#0;class#UploadToSproutVideo#0" expanded="true" />
@@ -119,11 +175,12 @@
       <file leaf-file-name="UploadToSoundCloud.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/UploadToSoundCloud.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="63" column="41" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
+            <state relative-caret-position="180">
+              <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
               <folding>
                 <element signature="method#UploadToSoundCloud#0;class#UploadToSoundCloud#0" expanded="true" />
                 <element signature="method#connectToSoundCloud#0;class#UploadToSoundCloud#0" expanded="true" />
+                <element signature="method#uploadSound#0;class#UploadToSoundCloud#0" expanded="true" />
                 <element signature="method#getSoundLocation#0;class#UploadToSoundCloud#0" expanded="true" />
               </folding>
             </state>
@@ -133,10 +190,12 @@
       <file leaf-file-name="StatusMessages.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="82" column="76" selection-start-line="82" selection-start-column="76" selection-end-line="82" selection-end-column="76" />
+            <state relative-caret-position="242">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
+                <element signature="method#CannotFindPostToUpload#0;class#StatusMessages#0" expanded="true" />
                 <element signature="method#UploadingToSproutVideo#0;class#StatusMessages#0" expanded="true" />
+                <element signature="method#UploadingToSoundCloud#0;class#StatusMessages#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -212,11 +271,11 @@
         <option value="$PROJECT_DIR$/java/src/DynamoDBClient.java" />
         <option value="$PROJECT_DIR$/production/java/config.properties" />
         <option value="$PROJECT_DIR$/java/src/Tester.java" />
-        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
         <option value="$PROJECT_DIR$/java/src/UploadToSproutVideo.java" />
         <option value="$PROJECT_DIR$/java/src/UploadToSoundCloud.java" />
-        <option value="$PROJECT_DIR$/java/src/StatusMessages.java" />
         <option value="$PROJECT_DIR$/java/src/PostImporter.java" />
+        <option value="$PROJECT_DIR$/java/src/FileUploader.java" />
+        <option value="$PROJECT_DIR$/java/src/StatusMessages.java" />
       </list>
     </option>
   </component>
@@ -330,12 +389,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane />
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files" />
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -439,6 +494,10 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files" />
+      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1430,7 +1489,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="Tester" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="410 full verbose" />
+      <option name="PROGRAM_PARAMETERS" value="60 full verbose" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -1509,16 +1568,17 @@
       <workItem from="1477944111448" duration="2979000" />
       <workItem from="1478034676632" duration="6537000" />
       <workItem from="1478111680398" duration="65000" />
-      <workItem from="1478475592133" duration="6494000" />
+      <workItem from="1478475592133" duration="6577000" />
+      <workItem from="1478712318452" duration="1680000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="489176000" />
+    <option name="totallyTimeSpent" value="490939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="8" width="1920" height="1030" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1528,8 +1588,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3194131" sideWeight="0.5075107" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3329493" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32718894" sideWeight="0.49248928" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3329493" sideWeight="0.49785408" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.49248928" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1608884" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1744,44 +1804,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-432">
-          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
-          <folding>
-            <element signature="method#insertPost#0;class#DynamoDBClient#0" expanded="true" />
-            <element signature="method#checkIfIDAlreadyExistsInDB#0;class#DynamoDBClient#0" expanded="true" />
-            <element signature="method#checkIfUUIDExists#0;class#DynamoDBClient#0" expanded="true" />
-            <element signature="method#areAllFilesUploaded#0;class#DynamoDBClient#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/Post.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2577">
+        <state relative-caret-position="2640">
           <caret line="122" column="42" selection-start-line="122" selection-start-column="42" selection-end-line="122" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="method#getPostId#0;class#Post#0" expanded="false" />
+            <element signature="method#setPostId#0;class#Post#0" expanded="false" />
+            <element signature="method#getDalnId#0;class#Post#0" expanded="false" />
+            <element signature="method#setDalnId#0;class#Post#0" expanded="false" />
+            <element signature="method#getTitle#0;class#Post#0" expanded="false" />
+            <element signature="method#setTitle#0;class#Post#0" expanded="false" />
+            <element signature="method#getDescription#0;class#Post#0" expanded="false" />
+            <element signature="method#setDescription#0;class#Post#0" expanded="false" />
+            <element signature="method#getIdentifierUri#0;class#Post#0" expanded="false" />
+            <element signature="method#setIdentifierUri#0;class#Post#0" expanded="false" />
+            <element signature="method#getDateAccessioned#0;class#Post#0" expanded="false" />
+            <element signature="method#setDateAccessioned#0;class#Post#0" expanded="false" />
+            <element signature="method#getDateAvailable#0;class#Post#0" expanded="false" />
+            <element signature="method#setDateAvailable#0;class#Post#0" expanded="false" />
+            <element signature="method#getDateCreated#0;class#Post#0" expanded="false" />
+            <element signature="method#setDateCreated#0;class#Post#0" expanded="false" />
+            <element signature="method#getDateIssued#0;class#Post#0" expanded="false" />
+            <element signature="method#setDateIssued#0;class#Post#0" expanded="false" />
+            <element signature="method#getRightsConsent#0;class#Post#0" expanded="false" />
+            <element signature="method#setRightsConsent#0;class#Post#0" expanded="false" />
+            <element signature="method#getRightsRelease#0;class#Post#0" expanded="false" />
+            <element signature="method#setRightsRelease#0;class#Post#0" expanded="false" />
+            <element signature="method#getContributorAuthor#0;class#Post#0" expanded="false" />
+            <element signature="method#setContributorAuthor#0;class#Post#0" expanded="false" />
+            <element signature="method#getContributorInterviewer#0;class#Post#0" expanded="false" />
+            <element signature="method#setContributorInterviewer#0;class#Post#0" expanded="false" />
+            <element signature="method#getCreatorGender#0;class#Post#0" expanded="false" />
+            <element signature="method#setCreatorGender#0;class#Post#0" expanded="false" />
+            <element signature="method#getCreatorRaceEthnicity#0;class#Post#0" expanded="false" />
+            <element signature="method#setCreatorRaceEthnicity#0;class#Post#0" expanded="false" />
+            <element signature="method#getCreatorClass#0;class#Post#0" expanded="false" />
+            <element signature="method#setCreatorClass#0;class#Post#0" expanded="false" />
+            <element signature="method#getCreatorYearOfBirth#0;class#Post#0" expanded="false" />
+            <element signature="method#setCreatorYearOfBirth#0;class#Post#0" expanded="false" />
+            <element signature="method#getCoverageSpatial#0;class#Post#0" expanded="false" />
+            <element signature="method#setCoverageSpatial#0;class#Post#0" expanded="false" />
+            <element signature="method#getCoveragePeriod#0;class#Post#0" expanded="false" />
+            <element signature="method#setCoveragePeriod#0;class#Post#0" expanded="false" />
+            <element signature="method#getCoverageRegion#0;class#Post#0" expanded="false" />
+            <element signature="method#setCoverageRegion#0;class#Post#0" expanded="false" />
+            <element signature="method#getCoverageStateProvince#0;class#Post#0" expanded="false" />
+            <element signature="method#setCoverageStateProvince#0;class#Post#0" expanded="false" />
+            <element signature="method#getCoverageNationality#0;class#Post#0" expanded="false" />
+            <element signature="method#setCoverageNationality#0;class#Post#0" expanded="false" />
+            <element signature="method#getLanguage#0;class#Post#0" expanded="false" />
+            <element signature="method#setLanguage#0;class#Post#0" expanded="false" />
+            <element signature="method#getSubject#0;class#Post#0" expanded="false" />
+            <element signature="method#setSubject#0;class#Post#0" expanded="false" />
+            <element signature="method#getAssetList#0;class#Post#0" expanded="false" />
+            <element signature="method#setAssetList#0;class#Post#0" expanded="false" />
+            <element signature="method#getAreAllFilesUploaded#0;class#Post#0" expanded="false" />
+            <element signature="method#setAreAllFilesUploaded#0;class#Post#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/UploadToSproutVideo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="682">
           <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="52" selection-end-column="62" />
           <folding>
             <element signature="method#connectToSpoutVideo#0;class#UploadToSproutVideo#0" expanded="true" />
@@ -1794,49 +1883,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/UploadToSoundCloud.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="63" column="41" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
+        <state relative-caret-position="180">
+          <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
           <folding>
             <element signature="method#UploadToSoundCloud#0;class#UploadToSoundCloud#0" expanded="true" />
             <element signature="method#connectToSoundCloud#0;class#UploadToSoundCloud#0" expanded="true" />
+            <element signature="method#uploadSound#0;class#UploadToSoundCloud#0" expanded="true" />
             <element signature="method#getSoundLocation#0;class#UploadToSoundCloud#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
+    <entry file="file://$PROJECT_DIR$/java/src/DynamoDBClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="82" column="76" selection-start-line="82" selection-start-column="76" selection-end-line="82" selection-end-column="76" />
+        <state relative-caret-position="22">
+          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
           <folding>
-            <element signature="method#UploadingToSproutVideo#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#insertPost#0;class#DynamoDBClient#0" expanded="true" />
+            <element signature="method#checkIfIDAlreadyExistsInDB#0;class#DynamoDBClient#0" expanded="true" />
+            <element signature="method#checkIfUUIDExists#0;class#DynamoDBClient#0" expanded="true" />
+            <element signature="method#areAllFilesUploaded#0;class#DynamoDBClient#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/Tester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/src/FileUploader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+        <state relative-caret-position="279">
+          <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#FileUploader#0;class#FileUploader#0" expanded="true" />
             <element signature="docComment;method#getPostDetails#0;class#FileUploader#0" expanded="false" />
-            <element signature="method#getPostDetails#0;class#FileUploader#0" expanded="true" />
+            <element signature="method#uploadPost#0;class#FileUploader#0" expanded="true" />
             <element signature="method#deleteFolder#0;class#FileUploader#0" expanded="true" />
             <element signature="method#checkFiletype#0;class#FileUploader#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/StatusMessages.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="method#CannotFindPostToUpload#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#UploadingToSproutVideo#0;class#StatusMessages#0" expanded="true" />
+            <element signature="method#UploadingToSoundCloud#0;class#StatusMessages#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/PostImporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
+        <state relative-caret-position="328">
+          <caret line="161" column="42" selection-start-line="161" selection-start-column="42" selection-end-line="161" selection-end-column="42" />
           <folding>
             <element signature="method#PostImporter#1;class#PostImporter#0" expanded="true" />
             <element signature="method#downloadFiles#0;class#PostImporter#0" expanded="true" />
-            <marker date="1478555958997" expanded="false" signature="7689:10533" ph="{...}" />
+            <marker date="1478713338069" expanded="false" signature="8247:11091" ph="{...}" />
           </folding>
         </state>
       </provider>

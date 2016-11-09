@@ -79,7 +79,7 @@ public class FileUploader {
         if(postDetails != null)
             uploadPost();
         else
-            if (verboseOutput)log.error(message.DALNPostDoesNotExist()); else log.error(message.FileUploadPostErrorLog(postID));
+            if (verboseOutput)log.error(message.CannotFindPostToUpload()); else log.error(message.FileUploadPostErrorLog(postID));
     }
 
 
@@ -94,8 +94,8 @@ public class FileUploader {
         try {
             doc = Jsoup.parse(metadata, "UTF-8"); //Scanner object to read file
         } catch (IOException e) {
-            if(verboseOutput) log.error(message.DALNPostDoesNotExist());
-            //System.exit(1);
+            //if(verboseOutput) log.error(message.CannotFindPostToUpload());
+            return null;
         }
 
         if(doc == null) return null;

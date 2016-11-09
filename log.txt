@@ -379,3 +379,34 @@
 2016-11-07 16:51:30 INFO  FileUploader:195 - Uploading the video file video.mp4 as daa9d0d0-ab15-42c9-8f92-c2408d11e2c4 to SproutVideo...
 2016-11-07 16:51:56 INFO  FileUploader:199 - Video Uploaded.
 2016-11-07 16:51:56 INFO  FileUploader:244 - Post #410 successfully uploaded and added to database.
+2016-11-09 12:33:20 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/4007/mets.xml...
+2016-11-09 12:33:26 INFO  PostImporter:358 - Downloading metadata and files to directory
+2016-11-09 12:33:40 INFO  PostImporter:385 - Post #4007 successfully downloaded to working directory.
+2016-11-09 12:36:09 INFO  PostImporter:156 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/5007/mets.xml...
+2016-11-09 12:36:09 INFO  PostImporter:358 - Downloading metadata and files to directory
+2016-11-09 12:36:12 INFO  PostImporter:385 - Post #5007 successfully downloaded to working directory.
+2016-11-09 12:36:26 INFO  FileUploader:162 - You are uploading post #5007.
+2016-11-09 12:36:26 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-09 12:36:27 INFO  FileUploader:202 - Uploading the audio file Vocaroo_s1qyVzfICP7N.mp3, (62fddce3-2435-4373-99f8-6ee8e36323e7) to SoundCloud...
+2016-11-09 12:36:33 INFO  FileUploader:206 - Audio Uploaded.
+2016-11-09 12:37:23 INFO  FileUploader:244 - Post #5007 successfully uploaded and added to database.
+2016-11-09 12:42:23 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-11-09 12:42:23 ERROR FileUploader:97 - The post you entered does not exist on the DALN website.
+2016-11-09 12:42:23 ERROR FileUploader:82 - The post you entered does not exist on the DALN website.
+2016-11-09 12:44:18 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-11-09 12:44:18 ERROR FileUploader:97 - The post you entered does not exist on the DALN website.
+2016-11-09 12:44:18 ERROR FileUploader:82 - This post ID already exists in the database.
+2016-11-09 12:48:05 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-11-09 12:48:05 ERROR FileUploader:82 - This post hasn't been downloaded yet or this post does not exist.
+2016-11-09 12:50:20 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-11-09 12:50:20 ERROR FileUploader:82 - Cannot find post folder in local directory, or this post does not exist.
+2016-11-09 12:51:03 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-11-09 12:51:03 ERROR FileUploader:82 - Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.
+2016-11-09 12:52:30 INFO  PostImporter:171 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/60/mets.xml...
+2016-11-09 12:52:30 INFO  PostImporter:373 - Downloading metadata and files to directory
+2016-11-09 12:55:40 INFO  PostImporter:400 - Post #60 successfully downloaded to working directory.
+2016-11-09 12:55:41 INFO  FileUploader:162 - You are uploading post #60.
+2016-11-09 12:55:41 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-09 12:55:54 INFO  FileUploader:202 - Uploading the audio file Josh Brunner_final.mp3, (69ba1c85-d454-43d6-8c21-6b70048f3cfd) to SoundCloud...
+2016-11-09 12:56:01 INFO  FileUploader:206 - Audio Uploaded.
+2016-11-09 12:56:01 INFO  FileUploader:244 - Post #60 successfully uploaded and added to database.

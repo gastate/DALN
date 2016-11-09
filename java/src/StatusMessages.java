@@ -52,10 +52,10 @@ public class StatusMessages
         return "postid:"+postID+"|action:download|status:error";
     }
 
-    /**main.FileUploader progress messages**/
+    /**FileUploader progress messages**/
     public String CannotFindPostToUpload()
     {
-        return "This post hasn't been downloaded yet or this post does not exist.";
+        return "Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.";
     }
 
     public String PostAlreadyExistsInDB()
@@ -102,7 +102,7 @@ public class StatusMessages
     }
 
 
-    /**main.FileUploader completed/failure messages**/
+    /**FileUploader completed/failure messages**/
     public String FileUploadAssetBeginLog(String assetID)
     {
         return "assetid:"+assetID+"|action:upload|status:initiated";

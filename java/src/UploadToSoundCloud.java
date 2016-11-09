@@ -56,7 +56,6 @@ public class UploadToSoundCloud
     public void uploadSound()
     {
         File currentDirectory = null;
-        String fileNameNoExt = fileName.substring(0, fileName.lastIndexOf('.'));
         try {
             currentDirectory = new File(new File(".").getCanonicalPath());
             String location = currentDirectory + "/downloads/"+dalnId+"/"+fileName;
