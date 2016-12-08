@@ -209,7 +209,9 @@ public class FileUploader {
                     //upload all other files to S3
                     if (verboseOutput) message.UploadingToS3(currentFileName);
                     UploadToS3 S3Uploader = new UploadToS3(postDetails);
-                    fileLocations.add(S3Uploader.getS3FileLocation());
+                    fileLocations.add(S3Uploader.getS3FileLocation()[0]);
+                    fileEmbedLinks.add(S3Uploader.getS3FileLocation()[1]);
+
                     if (verboseOutput) log.info("File Uploaded.");
                     else log.info(message.FileUploadAssetCompleteLog(assetID));
                 }

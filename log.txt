@@ -410,3 +410,23 @@
 2016-11-09 12:55:54 INFO  FileUploader:202 - Uploading the audio file Josh Brunner_final.mp3, (69ba1c85-d454-43d6-8c21-6b70048f3cfd) to SoundCloud...
 2016-11-09 12:56:01 INFO  FileUploader:206 - Audio Uploaded.
 2016-11-09 12:56:01 INFO  FileUploader:244 - Post #60 successfully uploaded and added to database.
+2016-11-29 18:07:09 INFO  PostImporter:171 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/12/mets.xml...
+2016-11-29 18:07:12 INFO  PostImporter:373 - Downloading metadata and files to directory
+2016-11-29 18:08:07 INFO  PostImporter:400 - Post #12 successfully downloaded to working directory.
+2016-11-29 18:08:07 INFO  FileUploader:162 - You are uploading post #12.
+2016-11-29 18:08:07 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-11-29 18:08:09 INFO  FileUploader:213 - File Uploaded.
+2016-11-29 18:08:09 INFO  FileUploader:195 - Uploading the video file KrisBlairLD.mov (34d9dcc1-d9f0-4857-b2fe-7bd2d35bd222) to SproutVideo...
+2016-11-29 18:09:11 INFO  FileUploader:199 - Video Uploaded.
+2016-11-29 18:09:12 INFO  FileUploader:213 - File Uploaded.
+2016-11-29 18:09:14 INFO  FileUploader:213 - File Uploaded.
+2016-11-29 18:09:15 INFO  FileUploader:213 - File Uploaded.
+2016-12-08 12:22:47 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-12-08 12:22:47 ERROR FileUploader:82 - Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.
+2016-12-08 12:23:52 INFO  PostImporter:171 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/101/mets.xml...
+2016-12-08 12:23:54 INFO  PostImporter:373 - Downloading metadata and files to directory
+2016-12-08 12:23:54 INFO  PostImporter:400 - Post #101 successfully downloaded to working directory.
+2016-12-08 12:23:55 INFO  FileUploader:162 - You are uploading post #101.
+2016-12-08 12:23:55 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-12-08 12:23:57 INFO  FileUploader:215 - File Uploaded.
+2016-12-08 12:24:04 INFO  FileUploader:246 - Post #101 successfully uploaded and added to database.

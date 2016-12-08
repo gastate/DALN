@@ -2,3 +2,4 @@ config.properties
 partialJythonImplementation
 lib/soundcloudFull
 lib/certifi
+.idea

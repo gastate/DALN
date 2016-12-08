@@ -87,11 +87,14 @@ public class UploadToS3
                     "such as not being able to access the network.");
             System.out.println("Error Message: " + ace.getMessage());*/
 
-    public String getS3FileLocation()
+    public String[] getS3FileLocation()
     {
+        String[] locations = new String[2];
         String location = s3Client.getResourceUrl("daln", "daln/Posts/"+dalnId+"/"+fileName);
         location = location.replace("https://daln.s3.", "https://s3-us-west-1.");
-        return location;
+        locations[0] = location;
+        locations[1] = location;
+        return locations;
 
        // return "https://s3-us-west-1.amazonaws.com/daln/Posts/" + dalnId + "/" + fileName;
     }
