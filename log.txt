@@ -430,3 +430,22 @@
 2016-12-08 12:23:55 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
 2016-12-08 12:23:57 INFO  FileUploader:215 - File Uploaded.
 2016-12-08 12:24:04 INFO  FileUploader:246 - Post #101 successfully uploaded and added to database.
+2016-12-08 22:44:36 INFO  PostImporter:171 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/102/mets.xml...
+2016-12-08 22:44:37 INFO  PostImporter:373 - Downloading metadata and files to directory
+2016-12-08 22:44:41 INFO  PostImporter:400 - Post #102 successfully downloaded to working directory.
+2016-12-08 22:44:42 INFO  FileUploader:162 - You are uploading post #102.
+2016-12-08 22:44:42 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-12-08 22:44:44 ERROR UploadToS3:71 - assetid:72a72ce6-bb4c-4591-839e-ee51f4d18f04|action:upload|status:error
+2016-12-08 22:44:44 INFO  FileUploader:215 - File Uploaded.
+2016-12-08 22:44:44 INFO  FileUploader:246 - Post #102 successfully uploaded and added to database.
+2016-12-08 22:46:32 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-12-08 22:46:32 ERROR FileUploader:82 - Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.
+2016-12-08 22:46:40 ERROR PostImporter:157 - This post ID already exists in the database.
+2016-12-08 22:46:41 ERROR FileUploader:82 - Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.
+2016-12-08 22:47:40 INFO  PostImporter:171 - Connecting to http://daln.osu.edu/metadata/handle/2374.DALN/102/mets.xml...
+2016-12-08 22:47:41 INFO  PostImporter:373 - Downloading metadata and files to directory
+2016-12-08 22:47:42 INFO  PostImporter:400 - Post #102 successfully downloaded to working directory.
+2016-12-08 22:47:42 INFO  FileUploader:162 - You are uploading post #102.
+2016-12-08 22:47:42 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
+2016-12-08 22:47:46 INFO  FileUploader:215 - File Uploaded.
+2016-12-08 22:47:46 INFO  FileUploader:246 - Post #102 successfully uploaded and added to database.

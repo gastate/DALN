@@ -26,7 +26,7 @@ public class UploadToS3
     private static Logger log = Logger.getLogger(UploadToS3.class.getName());
     private AmazonS3Client s3Client;
     private HashMap<String, Object> postDetails;
-    private String dalnId, fileName, assetID;
+    private String dalnId, fileName, assetID, s3Bucket, s3Directory;
     private StatusMessages message;
 
     public UploadToS3(HashMap<String, Object> postDetails) throws IOException {
@@ -46,6 +46,9 @@ public class UploadToS3
             }
         });
 
+        s3Bucket = credentials.get("S3Bucket");
+        s3Directory = credentials.get("S3Directory");
+
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
         fileName = postDetails.get("Current File").toString();
@@ -59,7 +62,7 @@ public class UploadToS3
 
             //Specifying the upload location of our in S3 and set it to public read
             File file = new File("downloads/" + dalnId + "/" + fileName);
-            s3Client.putObject(new PutObjectRequest("daln", "Posts/" + dalnId + "/" + fileName, file)
+            s3Client.putObject(new PutObjectRequest(s3Bucket, s3Directory + dalnId + "/" + fileName, file)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
 
 

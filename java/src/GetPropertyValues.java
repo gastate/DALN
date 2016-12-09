@@ -66,6 +66,8 @@ public class GetPropertyValues
             prop.load(inputStream);
             awsCredentials.put("AWSAccessKey", prop.getProperty("AWSAccessKey"));
             awsCredentials.put("AWSSecretKey", prop.getProperty("AWSSecretKey"));
+            awsCredentials.put("S3Bucket", prop.getProperty("S3Bucket"));
+            awsCredentials.put("S3Directory", prop.getProperty("S3Directory"));
 
         } catch (FileNotFoundException e)
         {
