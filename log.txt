@@ -449,3 +449,5 @@
 2016-12-08 22:47:42 INFO  FileUploader:165 - Creating post folder in S3 and uploading metadata.
 2016-12-08 22:47:46 INFO  FileUploader:215 - File Uploaded.
 2016-12-08 22:47:46 INFO  FileUploader:246 - Post #102 successfully uploaded and added to database.
+2017-01-24 10:48:08 ERROR PostImporter:157 - This post ID already exists in the database.
+2017-01-24 10:48:08 ERROR FileUploader:82 - Cannot find post folder in local directory. This post may have already been uploaded or this post does not exist.

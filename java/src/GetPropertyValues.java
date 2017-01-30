@@ -1,6 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -79,4 +77,25 @@ public class GetPropertyValues
         }
         return awsCredentials;
     }
+
+    public HashMap<String,String> getEndpoints() throws IOException {
+        HashMap<String,String> endpoints = new HashMap<>();
+        try {
+            Properties prop = new Properties();
+            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            prop.load(inputStream);
+            endpoints.put("searchEndpoint", prop.getProperty("searchEndpoint"));
+            endpoints.put("documentEndpoint", prop.getProperty("documentEndpoint"));
+
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("Property file '" + propFileName + "' not found in the classpath.");
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        } finally {
+            inputStream.close();
+        }
+        return endpoints;
+    }
+
 }
