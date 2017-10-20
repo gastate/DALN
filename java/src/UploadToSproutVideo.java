@@ -58,6 +58,7 @@ public class UploadToSproutVideo
         uploadVideo();
     }
 
+    public UploadToSproutVideo(){}
     public void connectToSpoutVideo() throws IOException {
         /**Connect to SproutVideo**/
         GetPropertyValues properties = new GetPropertyValues();

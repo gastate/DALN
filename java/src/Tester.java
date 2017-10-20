@@ -2,6 +2,8 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.soundcloud.api.CloudAPI;
+import de.voidplus.soundcloud.SoundCloud;
 import org.json.simple.parser.ParseException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,8 +22,6 @@ import java.util.UUID;
 public class Tester {
 
     public static void main(String[] args) throws IOException, org.apache.http.ParseException, TransformerException, ParserConfigurationException, ParseException {
-
-        //UploadToCloudSearch uploadToCloudSearch = new UploadToCloudSearch(); //can use methods from this class when needed
 
         if(args.length > 0)
     {
@@ -84,4 +84,5 @@ public class Tester {
         System.exit(1);
     }
     }
+
 }

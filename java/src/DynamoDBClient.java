@@ -48,6 +48,7 @@ public class DynamoDBClient {
         //Create an instance of the post class, and fill it with information passed from the main.FileUploader class
         Post post = new Post();
 
+        if (postDetails.get("postId") != null) post.setPostId(postDetails.get("postId").toString());
         if (postDetails.get("title") != null) post.setTitle(postDetails.get("title").toString());
         if (postDetails.get("description") != null) post.setDescription(postDetails.get("description").toString());
         if (postDetails.get("identifierUri") != null) post.setIdentifierUri(postDetails.get("identifierUri").toString());
@@ -70,24 +71,51 @@ public class DynamoDBClient {
         if (postDetails.get("coverageNationality") != null) post.setCoverageNationality((List<String>)postDetails.get("coverageNationality"));
         if (postDetails.get("language") != null) post.setLanguage((List<String>)postDetails.get("language"));
         if (postDetails.get("subject") != null) post.setSubject((List<String>)postDetails.get("subject"));
+        if (postDetails.get("isPostNotApproved") != null) post.setIsPostNotApproved((boolean)postDetails.get("isPostNotApproved"));
+
         post.setDalnId(postDetails.get("DalnId").toString());
         post.setAssetList((List<HashMap<String,String>>)postDetails.get("assetList"));
 
+        //post.setIsPostNotApproved(false);
         post.setAreAllFilesUploaded(true);
         for(Boolean bool : (ArrayList<Boolean>)postDetails.get("fileUploadStatuses"))
             if(bool.equals(false))
                 post.setAreAllFilesUploaded(false);
         //Enter it into the DB
-        mapper.save(post); //post UUID is generated once this function is called
+
+        //System.out.println("#3" + post.getPostId());
+            mapper.save(post); //post UUID is generated once this function is called
 
         return post.getPostId(); //return the UUID generated from the insertion into DB
     }
 
+
+
+
+    public Post getPostFromTableUsingDALNId(String dalnId)
+    {
+        Post post = new Post();
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(dalnId));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("dalnId = :val1")
+                .withExpressionAttributeValues(eav);
+
+        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
+        if(scanResults.size() == 0) //post was not found (doesn't exist)
+            post = null;
+        else
+            post = scanResults.get(0);
+        return post;
+    }
+
+
     //This method checks if the post being uploaded already exists in the database by scanning for the same DALN ID in the Posts table.
-    public boolean checkIfIDAlreadyExistsInDB(String postID)
+    public boolean checkIfIDAlreadyExistsInDB(String dalnId)
     {
         Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":val1", new AttributeValue().withS(postID));
+        eav.put(":val1", new AttributeValue().withS(dalnId));
 
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("dalnId = :val1")
@@ -100,6 +128,18 @@ public class DynamoDBClient {
         return result;
     }
 
+    public boolean areAllFilesUploaded(Post post)
+    {
+        boolean isUploaded = post.getAreAllFilesUploaded();
+        return isUploaded;
+    }
+
+    public void deletePost(Post post)
+    {
+        mapper.delete(post);
+    }
+
+
     public boolean checkIfUUIDExists(String newUUID)
     {
         List<Post> allPosts = mapper.scan(Post.class, new DynamoDBScanExpression());
@@ -111,40 +151,6 @@ public class DynamoDBClient {
         return false;
     }
 
-    public boolean areAllFilesUploaded(String postID)
-    {
-        boolean isUploaded = false;
-        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":val1", new AttributeValue().withS(postID));
-
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("dalnId = :val1")
-                .withExpressionAttributeValues(eav);
-
-        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
-
-        if(scanResults!=null)
-        {
-            Post post = scanResults.get(0);
-            isUploaded = post.getAreAllFilesUploaded();
-        }
-        return isUploaded;
-    }
-
-    public void deletePost(String postID)
-    {
-        boolean isUploaded = false;
-        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":val1", new AttributeValue().withS(postID));
-
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("dalnId = :val1")
-                .withExpressionAttributeValues(eav);
-
-        List<Post> scanResults = mapper.scan(Post.class, scanExpression);
-
-        mapper.delete(scanResults.get(0));
-    }
 
 
 }

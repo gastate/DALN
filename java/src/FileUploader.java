@@ -38,15 +38,15 @@ public class FileUploader {
     private DynamoDBClient client;
     private File metadata;
     private HashMap<String, Object> postDetails;
-    private String postID;
+    private String dalnId, s3Bucket;
     private StatusMessages message;
     private boolean verboseOutput;
     private String[] singleEntryFields, multiEntryFields;
 
-    public FileUploader(String postID, boolean verboseOutput) throws IOException {
+    public FileUploader(String dalnId, boolean verboseOutput) throws IOException {
         this.verboseOutput = verboseOutput;
         message = new StatusMessages();
-        if(!verboseOutput) log.info(message.FileUploadPostBeginLog(postID));
+        if(!verboseOutput) log.info(message.FileUploadPostBeginLog(dalnId));
         /**Connect to S3**/
         GetPropertyValues propertyValues = new GetPropertyValues();
         final HashMap<String, String> credentials =  propertyValues.getAWSCredentials();
@@ -63,7 +63,7 @@ public class FileUploader {
             }
         });
 
-
+        s3Bucket = credentials.get("S3Bucket");
 
         /**Connect to DynamoDB**/
         client = new DynamoDBClient();
@@ -73,13 +73,13 @@ public class FileUploader {
         singleEntryFields = postImporter.getSingleEntryFields();
         multiEntryFields = postImporter.getMultiEntryFields();
 
-        this.postID = postID;
+        this.dalnId = dalnId;
         postDetails = new HashMap<>();
         postDetails = getPostDetails();
         if(postDetails != null)
             uploadPost();
         else
-            if (verboseOutput)log.error(message.CannotFindPostToUpload()); else log.error(message.FileUploadPostErrorLog(postID));
+            if (verboseOutput)log.error(message.CannotFindPostToUpload()); else log.error(message.FileUploadPostErrorLog(dalnId));
     }
 
 
@@ -88,7 +88,7 @@ public class FileUploader {
      * and DB entry. All the needed information is stored in a single HashMap.**/
     public HashMap<String, Object> getPostDetails()
     {
-        String metadataPath = "downloads/" + postID + "/Post" + postID + ".xml";
+        String metadataPath = "downloads/" + dalnId + "/Post" + dalnId + ".xml";
         metadata = new File(metadataPath);
         Document doc = null;
         try {
@@ -105,8 +105,9 @@ public class FileUploader {
 
         Element field;
         for(String fieldName : singleEntryFields)
-            if ((field = root.select(fieldName).first()) != null)
+            if ((field = root.select(fieldName).first()) != null) {
                 postDetails.put(fieldName, field.text());
+            }
 
         for(String fieldName : multiEntryFields)
             if ((field = root.select(fieldName).first()) != null) {
@@ -137,17 +138,18 @@ public class FileUploader {
                 fileDescriptions.add(fileDescriptionField.text());
         }
 
-        postDetails.put("DalnId", postID);
+        postDetails.put("DalnId", dalnId);
         postDetails.put("NumberOfAssets", numberOfAssets);
         postDetails.put("fileNames", fileNames);
         postDetails.put("fileTypes", fileTypes);
         postDetails.put("fileDescriptions", fileDescriptions);
 
+
         return postDetails;
     }
 
     public void uploadPost() throws IOException {
-        if(client.checkIfIDAlreadyExistsInDB(postID))
+        /*if(client.checkIfIDAlreadyExistsInDB(postID))
         {
             if(client.areAllFilesUploaded(postID))
             {
@@ -158,8 +160,28 @@ public class FileUploader {
                 log.info("This post exists but not all media is present. Re-uploading post.");
                 client.deletePost(postID);
             }
+        }*/
+        Post post = client.getPostFromTableUsingDALNId(dalnId);
+        boolean dalnIdAlreadyExists = false;
+        String postId = "";
+        if(post != null)
+        {
+            dalnIdAlreadyExists = true;
+            postId = post.getPostId();
+            //log.info("1:" + postId);
+            if(client.areAllFilesUploaded(post))
+            {
+                if(verboseOutput) log.error(message.PostAlreadyExistsInDB()); else log.error(message.FileUploadPostErrorLog(dalnId));
+                log.info("This post is fully uploaded, so the post's files will only be uploaded to S3 and the record will be updated.");
+            }
+            else
+            {
+                log.info("This post exists but not all media is present. Re-uploading post.");
+                //client.deletePost(post);
+            }
         }
-            if (verboseOutput) log.info(message.BeginPostUpload(postID));
+
+            if (verboseOutput) log.info(message.BeginPostUpload(dalnId));
 
             /**The first step is to create a folder in S3 specific to this post and include its metadata**/
             if (verboseOutput) log.info(message.CreateS3Data());
@@ -172,6 +194,7 @@ public class FileUploader {
             ArrayList<String> fileUUIDs = new ArrayList<>();
             ArrayList<String> fileLocations = new ArrayList<>();
             ArrayList<String> fileEmbedLinks = new ArrayList<>();
+            ArrayList<String> fileS3Links = new ArrayList<>();
             ArrayList<Boolean> fileUploadStatuses = new ArrayList<>();
 
             ArrayList<String> fileNames = (ArrayList<String>) postDetails.get("fileNames");
@@ -180,40 +203,69 @@ public class FileUploader {
             int numberOfAssets = (Integer) postDetails.get("NumberOfAssets");
             for (int i = 0; i < numberOfAssets; i++) {
                 String currentFileName = fileNames.get(i);
-                String assetID;
-                do
-                    assetID = UUID.randomUUID().toString();
-                while (client.checkIfUUIDExists(assetID));
 
-                fileUUIDs.add(assetID);
-                if (!verboseOutput) log.info(message.FileUploadAssetBeginLog(assetID));
+                //if (!verboseOutput) log.info(message.FileUploadAssetBeginLog(assetID));
 
                 postDetails.put("Current File", currentFileName);
-                postDetails.put("Current Asset ID", assetID);
+                //upload every file to S3
+                if (verboseOutput) message.UploadingToS3(currentFileName);
+                UploadToS3 S3Uploader = new UploadToS3(postDetails);
+                fileS3Links.add(S3Uploader.getS3FileLocation()[0]);
 
-                if (fileTypes.get(i).equals("Audio/Video")) {
-                    if (verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
-                    UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
-                    fileLocations.add(SVUploader.getSpoutVideoLocation()[0]);
-                    fileEmbedLinks.add(SVUploader.getSpoutVideoLocation()[1]);
-                    if (verboseOutput) log.info("Video Uploaded.");
-                    else log.info(message.FileUploadAssetCompleteLog(assetID));
-                } else if (fileTypes.get(i).equals("Audio")) {
-                    if (verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
-                    UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
-                    fileLocations.add(SCUploader.getSoundLocation()[0]);
-                    fileEmbedLinks.add(SCUploader.getSoundLocation()[1]);
-                    if (verboseOutput) log.info("Audio Uploaded.");
-                    else log.info(message.FileUploadAssetCompleteLog(assetID));
-                } else {
-                    //upload all other files to S3
-                    if (verboseOutput) message.UploadingToS3(currentFileName);
-                    UploadToS3 S3Uploader = new UploadToS3(postDetails);
-                    fileLocations.add(S3Uploader.getS3FileLocation()[0]);
-                    fileEmbedLinks.add(S3Uploader.getS3FileLocation()[1]);
 
-                    if (verboseOutput) log.info("File Uploaded.");
-                    else log.info(message.FileUploadAssetCompleteLog(assetID));
+                //Generate a new asset ID only if it's a new post
+                //Generating a new id for the asset
+                String assetID = "";
+                if(!dalnIdAlreadyExists)
+                {
+                    //do
+                        assetID = UUID.randomUUID().toString();
+                    //while (client.checkIfUUIDExists(assetID));
+                    fileUUIDs.add(assetID);
+                    postDetails.put("Current Asset ID", assetID);
+                }
+                else
+                    fileUUIDs.add(post.getAssetList().get(i).get("assetID"));
+
+
+                if (verboseOutput) log.info("File Uploaded to S3.");
+                else log.info(message.FileUploadAssetCompleteLog(assetID));
+
+                //if this post hasn't been uploaded yet, then upload to CDNs
+                if(!dalnIdAlreadyExists)
+                {
+                    //if the file is a video, also upload it to sproutvideo
+                    if (fileTypes.get(i).equals("Audio/Video")) {
+
+                        if (verboseOutput) log.info(message.UploadingToSproutVideo(currentFileName, assetID));
+                        UploadToSproutVideo SVUploader = new UploadToSproutVideo(postDetails);
+                        fileLocations.add(SVUploader.getSpoutVideoLocation()[0]);
+                        fileEmbedLinks.add(SVUploader.getSpoutVideoLocation()[1]);
+                        if (verboseOutput) log.info("Video Uploaded.");
+                        else log.info(message.FileUploadAssetCompleteLog(assetID));
+                    } else if (fileTypes.get(i).equals("Audio")) {
+                        //if the file is an audio, also upload it to soundcloud
+                        if (verboseOutput) log.info(message.UploadingToSoundCloud(currentFileName, assetID));
+
+
+                        UploadToSoundCloud SCUploader = new UploadToSoundCloud(postDetails);
+
+
+
+                        fileLocations.add(SCUploader.getSoundLocation()[0]);
+                        fileEmbedLinks.add(SCUploader.getSoundLocation()[1]);
+                        if (verboseOutput) log.info("Audio Uploaded.");
+                        else log.info(message.FileUploadAssetCompleteLog(assetID));
+                    } else {
+                        //if the file isn't a video or an audio, all 3 links are the same
+                        fileLocations.add(S3Uploader.getS3FileLocation()[0]);
+                        fileEmbedLinks.add(S3Uploader.getS3FileLocation()[1]);
+                    }
+                }
+                else //if the post has already been uploaded, then get its current values
+                {
+                    fileLocations.add(post.getAssetList().get(i).get("assetLocation"));
+                    fileEmbedLinks.add(post.getAssetList().get(i).get("assetEmbedLink"));
                 }
             }
 
@@ -227,6 +279,7 @@ public class FileUploader {
                 asset.put("assetName", fileNames.get(j));
                 asset.put("assetLocation", fileLocations.get(j));
                 asset.put("assetEmbedLink", fileEmbedLinks.get(j));
+                asset.put("assetS3Link", fileS3Links.get(j));
                 asset.put("assetDescription", fileDescriptions.get(j));
                 asset.put("assetType", fileTypes.get(j));
                 assetList.add(asset);
@@ -238,13 +291,19 @@ public class FileUploader {
             }
             postDetails.put("assetList", assetList); //this list includes generated asset IDs, locations, and filetypes
             postDetails.put("fileUploadStatuses", fileUploadStatuses);
+            postDetails.put("isPostNotApproved", false);
 
             //the insert post method returns the randomly generated post UUID.
+            if(post != null)
+            {
+                postDetails.put("postId", postId);
+                //log.info("#2" + postId);
+            }
             client.insertPost(postDetails);
             deleteFolder();
 
-            if (verboseOutput) log.info(message.FileUploadPostCompleteVerbose(postID));
-            else log.info(message.FileUploadPostCompleteLog(postID));
+            if (verboseOutput) log.info(message.FileUploadPostCompleteVerbose(dalnId));
+            else log.info(message.FileUploadPostCompleteLog(dalnId));
     }
 
     /**Upload post folder and metadata to S3**/
@@ -256,19 +315,19 @@ public class FileUploader {
         InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
 
         //PutObjectRequest used for creating an object to be uploaded
-        PutObjectRequest putObjectRequest = new PutObjectRequest("daln",
-                "Posts/" + postID + "/", emptyContent, folderMetadata);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(s3Bucket,
+                "Posts/" + dalnId + "/", emptyContent, folderMetadata);
         // send request to S3 to create folder
         s3Client.putObject(putObjectRequest);
 
         // upload metadata to folder and set it to public
-        s3Client.putObject(new PutObjectRequest("daln", "Posts/" + postID + "/" + metadata.getName(), metadata)
+        s3Client.putObject(new PutObjectRequest(s3Bucket, "Posts/" + dalnId + "/" + metadata.getName(), metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
     }
 
     private void deleteFolder() throws IOException {
-        File folder = new File("downloads/" + postID);
+        File folder = new File("downloads/" + dalnId);
         FileUtils.deleteDirectory(folder);
 
     }
@@ -305,7 +364,7 @@ public class FileUploader {
             }
         }catch(StringIndexOutOfBoundsException e)
         {
-            if(verboseOutput) log.error(message.NoFileType(fileName)); else log.error(message.FileUploadPostErrorLog(postID));
+            if(verboseOutput) log.error(message.NoFileType(fileName)); else log.error(message.FileUploadPostErrorLog(dalnId));
             //System.exit(1);
 
         }

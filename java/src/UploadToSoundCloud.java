@@ -1,3 +1,4 @@
+import com.soundcloud.api.CloudAPI;
 import de.voidplus.soundcloud.Comment;
 import de.voidplus.soundcloud.SoundCloud;
 import de.voidplus.soundcloud.Track;
@@ -23,7 +24,16 @@ public class UploadToSoundCloud
     private Track track;
 
     public UploadToSoundCloud(HashMap<String, Object> postDetails) throws IOException {
-        connectToSoundCloud();
+        //Connect to SoundCloud
+        boolean isSoundCloudConnected;
+        do {
+            isSoundCloudConnected = connectToSoundCloud();
+            if(!isSoundCloudConnected)
+                System.out.println("SoundCloud connection failed. Retrying..." );
+            else
+                System.out.println("SoundCloud connection successful.");
+        }
+        while(!isSoundCloudConnected);
 
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
@@ -40,17 +50,29 @@ public class UploadToSoundCloud
         uploadSound();
     }
 
-    public void connectToSoundCloud() throws IOException {
+    public UploadToSoundCloud(){}
+    public boolean connectToSoundCloud() throws IOException {
         /**Connect to SoundCloud**/
         GetPropertyValues properties = new GetPropertyValues();
-        HashMap<String,String> credentials = properties.getSoundCloudClientInfo();
+        HashMap<String, String> credentials = properties.getSoundCloudClientInfo();
 
         soundcloud = new SoundCloud(
                 credentials.get("SoundCloudClientID"),
-                credentials.get("SoundCloudClientSecret"),
+                credentials.get("SoundCloudClientSecret"));
+        soundcloud.login(
                 credentials.get("SoundCloudUser"),
-                credentials.get("SoundCloudPassword")
-        );
+                credentials.get("SoundCloudPassword"));
+
+
+        try {
+            if (soundcloud.getMe().toString() == null)
+                return false;
+        }
+        catch(NullPointerException e)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void uploadSound()

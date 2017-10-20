@@ -150,6 +150,7 @@ public class PostImporter
     }
 
     public void doImport() throws TransformerException, ParserConfigurationException {
+        /*
         if(client.checkIfIDAlreadyExistsInDB(postID))
         {
             if(client.areAllFilesUploaded(postID))
@@ -161,7 +162,7 @@ public class PostImporter
                 log.info("This post exists but not all media is present. Re-downloading post.");
                 client.deletePost(postID);
             }
-        }
+        }*/
 
         if (!verboseOutput) log.info(message.PostImportBeginLog(postID));
         /**Connect to the URL of post so that we can parse the elements on the page to find the necessary information.**/

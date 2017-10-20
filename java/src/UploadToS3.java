@@ -46,13 +46,16 @@ public class UploadToS3
             }
         });
 
+
         s3Bucket = credentials.get("S3Bucket");
         s3Directory = credentials.get("S3Directory");
 
         this.postDetails = postDetails;
         dalnId = postDetails.get("DalnId").toString();
         fileName = postDetails.get("Current File").toString();
-        assetID = postDetails.get("Current Asset ID").toString();
+        assetID = "";
+        if(postDetails.get("Current Asset ID") != null)
+            assetID = postDetails.get("Current Asset ID").toString();
 
         uploadFile();
     }
@@ -68,7 +71,7 @@ public class UploadToS3
 
         } catch (AmazonClientException ace)
         {
-            log.error(message.FileUploadAssetErrorLog(assetID));
+            //log.error(message.FileUploadAssetErrorLog(assetID));
         }
     }
         /*
@@ -93,8 +96,8 @@ public class UploadToS3
     public String[] getS3FileLocation()
     {
         String[] locations = new String[2];
-        String location = s3Client.getResourceUrl("daln", "daln/Posts/"+dalnId+"/"+fileName);
-        location = location.replace("https://daln.s3.", "https://s3-us-west-1.");
+        String location = s3Client.getResourceUrl(s3Bucket, "Posts/"+dalnId+"/"+fileName);
+        //location = location.replace("https://daln.s3.", "https://s3-us-west-1.");
         locations[0] = location;
         locations[1] = location;
         return locations;

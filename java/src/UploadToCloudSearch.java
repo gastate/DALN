@@ -34,6 +34,7 @@ public class UploadToCloudSearch
     AmazonDynamoDB amazonDynamoDB;//used for mapper
     DynamoDBMapper mapper;
     AmazonCloudSearchDomainClient cloudSearchClient;
+    Table table;
 
     public UploadToCloudSearch() throws IOException, ParseException {
         GetPropertyValues propertyValues = new GetPropertyValues();
@@ -43,16 +44,18 @@ public class UploadToCloudSearch
         /**Authenticate clients**/
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(credentials.get("AWSAccessKey"), credentials.get("AWSSecretKey"));
         dynamoDB = new DynamoDB(new AmazonDynamoDBClient(awsCredentials));
+        table = dynamoDB.getTable("DALN-Posts");
         amazonDynamoDB = new AmazonDynamoDBClient(awsCredentials);
         mapper = new DynamoDBMapper((amazonDynamoDB));
         cloudSearchClient = new AmazonCloudSearchDomainClient(awsCredentials);
+        System.out.println(endpoints.get("documentEndpoint"));
         cloudSearchClient.setEndpoint(endpoints.get("documentEndpoint"));
+
     }
 
     /**Convert single post to SDF**/
     public JSONObject convertDynamoEntryToAddSDF(String postID) throws ParseException, IOException {
         //Retrieve the post
-        Table table = dynamoDB.getTable("DALN-Posts");
         Item post = table.getItem("PostId", postID);
 
         JSONParser parser = new JSONParser();
@@ -68,6 +71,7 @@ public class UploadToCloudSearch
         JSONArray assetDescriptions = new JSONArray();
         JSONArray assetTypes = new JSONArray();
         JSONArray assetIDs = new JSONArray();
+        JSONArray assetS3Links = new JSONArray();
         JSONArray assetEmbedLinks = new JSONArray();
         JSONArray assetLocations = new JSONArray();
 
@@ -78,14 +82,28 @@ public class UploadToCloudSearch
             assetDescriptions.add(asset.get("assetDescription"));
             assetTypes.add(asset.get("assetType"));
             assetIDs.add(asset.get("assetID"));
+            if(asset.get("assetS3Link") != null)
+                assetS3Links.add(asset.get("assetS3Link"));
+            else
+                assetS3Links.add("");
             assetEmbedLinks.add(asset.get("assetEmbedLink"));
             assetLocations.add(asset.get("assetLocation"));
         }
 
 
+
         fields.put("areallfilesuploaded", post.getInt("areAllFilesUploaded"));
+        try {
+            if (post.getInt("isPostNotApproved") == 0)
+                fields.put("ispostnotapproved", post.getInt("isPostNotApproved"));
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println(postID + " isPostNotApproved is null");
+        }
         fields.put("assetdescription", assetDescriptions);
         fields.put("assetembedlink", assetEmbedLinks);
+        fields.put("assets3link", assetS3Links);
         fields.put("assetid", assetIDs);
         fields.put("assetlocation", assetLocations);
         fields.put("assetname", assetNames);
@@ -144,10 +162,22 @@ public class UploadToCloudSearch
 
         List<Post> allPosts = mapper.scan(Post.class, new DynamoDBScanExpression().withProjectionExpression("PostId"));
         JSONArray documentBatch = new JSONArray();
-        for(Post post : allPosts)
+        //for(Post post : allPosts)
+        for(int i = 6000; i < 7097; i++)
         {
+            Post post = allPosts.get(i);
+            System.out.println(post.getPostId());
             documentBatch.add(convertDynamoEntryToAddSDF(post.getPostId()));
+
         }
+
+        /*for(int i = 3500; i < allPosts.size(); i++)
+        {
+            Post post = allPosts.get(i);
+            System.out.println(post.getPostId());
+            documentBatch.add(convertDynamoEntryToAddSDF(post.getPostId()));
+
+        }*/
 
         //5242880 = 5mb
         byte[] bytes = documentBatch.toJSONString().getBytes();
